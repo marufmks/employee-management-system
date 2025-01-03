@@ -1,17 +1,17 @@
 import { __ } from '@wordpress/i18n';
 import { Card, CardHeader, CardBody } from '@wordpress/components';
 
-const AdminDashboard = () => {
+const Employees = () => {
     return (
         <Card>
             <CardHeader>
-                <h1>{__('Employee Management System', 'ems')}</h1>
+                <h2>{__('Employees', 'ems')}</h2>
             </CardHeader>
             <CardBody>
-                <h2>{__('Welcome to Employee Management System', 'ems')}</h2>
+                {/* Add employees list/management here */}
             </CardBody>
         </Card>
     );
 };
 
-export default AdminDashboard; 
+export default Employees; 

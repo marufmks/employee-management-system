@@ -27,7 +27,13 @@ class EMS_Loader {
         $asset_file = is_file(EMS_PLUGIN_DIR . 'build/index.asset.php')
             ? include(EMS_PLUGIN_DIR . 'build/index.asset.php')
             : [
-                'dependencies' => ['wp-element', 'wp-components', 'wp-i18n'],
+                'dependencies' => [
+                    'wp-element',
+                    'wp-components',
+                    'wp-i18n',
+                    'wp-primitives',
+                    'wp-url'
+                ],
                 'version' => EMS_VERSION,
             ];
 
@@ -39,13 +45,15 @@ class EMS_Loader {
             true
         );
 
+        wp_enqueue_style(
+            'wp-components'
+        );
+        
         wp_localize_script('ems-admin', 'emsData', array(
             'restUrl' => esc_url_raw(rest_url('ems/v1')),
             'nonce' => wp_create_nonce('wp_rest'),
             'userId' => get_current_user_id()
         ));
-
-        wp_enqueue_style('wp-components');
     }
 
     public function register_admin_menu() {
@@ -58,19 +66,10 @@ class EMS_Loader {
             'dashicons-groups',
             30
         );
-
-        add_submenu_page(
-            'employee-management',
-            __('Employee Dashboard', 'ems'),
-            __('Employee Dashboard', 'ems'),
-            'read',
-            'employee-dashboard',
-            array($this, 'render_employee_page')
-        );
     }
 
     public function render_admin_page() {
-        echo '<div id="ems-admin-dashboard" class="wrap"></div>';
+        echo '<div id="ems-admin-root" class="wrap"></div>';
     }
 
     public function render_employee_page() {

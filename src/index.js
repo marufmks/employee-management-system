@@ -1,15 +1,9 @@
-import { render } from '@wordpress/element';
-import AdminDashboard from './components/AdminDashboard';
-import EmployeeDashboard from './components/EmployeeDashboard';
+import { createRoot } from '@wordpress/element';
+import AdminApp from './components/admin/App';
+import './styles/index.css';
 
-// Initialize Admin Dashboard
-const adminContainer = document.getElementById('ems-admin-dashboard');
-if (adminContainer) {
-    render(<AdminDashboard />, adminContainer);
-}
-
-// Initialize Employee Dashboard
-const employeeContainer = document.getElementById('ems-employee-dashboard');
-if (employeeContainer) {
-    render(<EmployeeDashboard />, employeeContainer);
+const adminRoot = document.getElementById('ems-admin-root');
+if (adminRoot) {
+    const root = createRoot(adminRoot);
+    root.render(<AdminApp />);
 } 

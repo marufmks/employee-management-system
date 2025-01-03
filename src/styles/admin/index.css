@@ -1,0 +1,44 @@
+/* Layout */
+.ems-admin-layout {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+/* Sidebar */
+.ems-admin-sidebar {
+    flex: 0 0 200px;
+}
+
+.ems-admin-content {
+    flex: 1;
+}
+
+/* Navigation */
+.ems-admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-button {
+    width: 100%;
+    justify-content: flex-start !important;
+    text-align: left;
+}
+
+/* Cards */
+.ems-admin-card {
+    margin-bottom: 20px;
+}
+
+/* Tables */
+.ems-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Forms */
+.ems-admin-form {
+    max-width: 600px;
+} 
