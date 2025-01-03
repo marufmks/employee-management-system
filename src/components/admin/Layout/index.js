@@ -1,33 +1,33 @@
 import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 
-const AdminLayout = ({ children, currentPath, onNavigate }) => {
+const AdminLayout = ({ currentPath, onNavigate, children }) => {
     return (
         <div className="ems-admin-layout">
             <div className="ems-admin-sidebar">
-                <div className="ems-admin-nav">
+                <nav className="ems-admin-nav">
                     <Button
                         variant={currentPath === 'dashboard' ? 'primary' : 'secondary'}
-                        onClick={() => onNavigate('dashboard')}
                         className="nav-button"
+                        onClick={() => onNavigate('dashboard')}
                     >
                         {__('Dashboard', 'ems')}
                     </Button>
                     <Button
                         variant={currentPath === 'employees' ? 'primary' : 'secondary'}
-                        onClick={() => onNavigate('employees')}
                         className="nav-button"
+                        onClick={() => onNavigate('employees')}
                     >
                         {__('Employees', 'ems')}
                     </Button>
                     <Button
                         variant={currentPath === 'settings' ? 'primary' : 'secondary'}
-                        onClick={() => onNavigate('settings')}
                         className="nav-button"
+                        onClick={() => onNavigate('settings')}
                     >
                         {__('Settings', 'ems')}
                     </Button>
-                </div>
+                </nav>
             </div>
             <div className="ems-admin-content">
                 {children}

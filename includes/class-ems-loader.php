@@ -8,14 +8,21 @@ if (!function_exists('add_action')) {
 }
 
 class EMS_Loader {
+    private $rest_api;
+
     public function __construct() {
         $this->load_dependencies();
         $this->define_admin_hooks();
+        $this->init_rest_api();
     }
 
     private function load_dependencies() {
         require_once EMS_PLUGIN_DIR . 'includes/class-database.php';
         require_once EMS_PLUGIN_DIR . 'includes/class-restapi.php';
+    }
+
+    private function init_rest_api() {
+        $this->rest_api = EMSRestAPI::instance();
     }
 
     private function define_admin_hooks() {
@@ -72,12 +79,7 @@ class EMS_Loader {
         echo '<div id="ems-admin-root" class="wrap"></div>';
     }
 
-    public function render_employee_page() {
-        echo '<div id="ems-employee-dashboard" class="wrap"></div>';
-    }
-
     public function run() {
         EMSDatabase::instance();
-        EMSRestAPI::instance();
     }
 } 

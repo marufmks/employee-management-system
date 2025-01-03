@@ -27,18 +27,99 @@
     text-align: left;
 }
 
-/* Cards */
-.ems-admin-card {
-    margin-bottom: 20px;
+/* Dashboard */
+.ems-dashboard .summary-cards {
+    margin-bottom: 30px;
 }
 
-/* Tables */
-.ems-admin-table {
-    width: 100%;
-    border-collapse: collapse;
+.ems-dashboard .stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #2271b1;
 }
 
-/* Forms */
-.ems-admin-form {
+.ems-dashboard .department-stats {
+    margin-top: 30px;
+}
+
+.ems-dashboard .department-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ems-dashboard .department-stat:last-child {
+    border-bottom: none;
+}
+
+.ems-dashboard .department-name {
+    font-weight: 500;
+}
+
+.ems-dashboard .department-count {
+    background: #2271b1;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* Settings */
+.ems-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     max-width: 600px;
+}
+
+.ems-settings-actions {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Loading State */
+.ems-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+/* Employees */
+.ems-employees {
+    padding: 20px;
+}
+
+.ems-employee-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ems-table {
+    margin-top: 20px;
+}
+
+.ems-table .wp-list-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.ems-table th,
+.ems-table td {
+    padding: 8px 10px;
+}
+
+.components-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.components-modal__content {
+    margin-top: 20px;
 } 
