@@ -42,4 +42,32 @@ class EMSDatabase {
 
         dbDelta($sql);
     }
+
+    public function update_employee($id, $first_name, $last_name, $email, $department, $position, $hire_date) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'ems_employees';
+
+        // Debugging: Log the SQL query
+        $wpdb->show_errors();
+        $result = $wpdb->update(
+            $table_name,
+            array(
+                'firstName' => $first_name,
+                'lastName' => $last_name,
+                'email' => $email,
+                'department' => $department,
+                'position' => $position,
+                'hireDate' => $hire_date
+            ),
+            array('id' => $id),
+            array('%s', '%s', '%s', '%s', '%s', '%s'),
+            array('%d')
+        );
+
+        if ($result === false) {
+            error_log("Database update failed: " . $wpdb->last_error);
+        }
+
+        return $result !== false;
+    }
 }

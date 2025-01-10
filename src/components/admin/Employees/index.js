@@ -25,6 +25,8 @@ const Employees = () => {
         position: '',
         hireDate: ''
     });
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [employeeToEdit, setEmployeeToEdit] = useState(null);
 
     useEffect(() => {
         fetchEmployees();
@@ -107,6 +109,31 @@ const Employees = () => {
         }
     };
 
+    const handleEditEmployee = async () => {
+        try {
+            const response = await fetch(`${emsData.restUrl}/employees/${employeeToEdit.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-WP-Nonce': emsData.nonce
+                },
+                body: JSON.stringify(employeeToEdit)
+            });
+
+            if (response.ok) {
+                setIsEditModalOpen(false);
+                fetchEmployees();
+                setEmployeeToEdit(null);
+            } else {
+                const error = await response.json();
+                setError(error.message || __('Failed to update employee', 'ems'));
+            }
+        } catch (error) {
+            console.error('Error updating employee:', error);
+            setError(__('Failed to update employee', 'ems'));
+        }
+    };
+
     const formatDate = (date) => {
         if (!date) return '';
         return date;
@@ -153,8 +180,19 @@ const Employees = () => {
                                                     <Button 
                                                         isDestructive
                                                         onClick={() => handleDeleteEmployee(employee.id)}
+                                                        style={{ color: '#d63638' }} 
                                                     >
                                                         {__('Delete', 'ems')}
+                                                    </Button>
+                                                    <Button 
+                                                        
+                                                        onClick={() => {
+                                                            setEmployeeToEdit(employee);
+                                                            setIsEditModalOpen(true);
+                                                        }}
+                                                        style={{ color: '#2271b1' }} 
+                                                    >
+                                                        {__('Edit', 'ems')}
                                                     </Button>
                                                 </td>
                                             </tr>
@@ -220,8 +258,63 @@ const Employees = () => {
                                     onChange={(e) => setNewEmployee({...newEmployee, hireDate: e.target.value})}
                                 />
                             </div>
-                            <Button variant="primary" onClick={handleAddEmployee}>
+                            <Button style={{ marginTop: '10px' }} variant="primary" onClick={handleAddEmployee}>
                                 {__('Add Employee', 'ems')}
+                            </Button>
+                        </div>
+                    </Modal>
+                )}
+
+                {isEditModalOpen && (
+                    <Modal
+                        title={__('Edit Employee', 'ems')}
+                        onRequestClose={() => setIsEditModalOpen(false)}
+                    >
+                        <div className="ems-employee-form">
+                            <TextControl
+                                label={__('First Name', 'ems')}
+                                value={employeeToEdit.firstName}
+                                onChange={(firstName) => setEmployeeToEdit({...employeeToEdit, firstName})}
+                            />
+                            <TextControl
+                                label={__('Last Name', 'ems')}
+                                value={employeeToEdit.lastName}
+                                onChange={(lastName) => setEmployeeToEdit({...employeeToEdit, lastName})}
+                            />
+                            <TextControl
+                                label={__('Email', 'ems')}
+                                type="email"
+                                value={employeeToEdit.email}
+                                onChange={(email) => setEmployeeToEdit({...employeeToEdit, email})}
+                            />
+                            <SelectControl
+                                label={__('Department', 'ems')}
+                                value={employeeToEdit.department}
+                                options={[
+                                    { label: 'Sales', value: 'sales' },
+                                    { label: 'Marketing', value: 'marketing' },
+                                    { label: 'Support', value: 'support' }
+                                ]}
+                                onChange={(department) => setEmployeeToEdit({...employeeToEdit, department})}
+                            />
+                            <TextControl
+                                label={__('Position', 'ems')}
+                                value={employeeToEdit.position}
+                                onChange={(position) => setEmployeeToEdit({...employeeToEdit, position})}
+                            />
+                            <div className="components-base-control">
+                                <label className="components-base-control__label">
+                                    {__('Hire Date', 'ems')}
+                                </label>
+                                <input
+                                    type="date"
+                                    className="components-text-control__input"
+                                    value={employeeToEdit.hireDate}
+                                    onChange={(e) => setEmployeeToEdit({...employeeToEdit, hireDate: e.target.value})}
+                                />
+                            </div>
+                            <Button style={{ marginTop: '10px' }} variant="primary" onClick={handleEditEmployee}>
+                                {__('Update Employee', 'ems')}
                             </Button>
                         </div>
                     </Modal>

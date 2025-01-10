@@ -6,9 +6,10 @@ import {
     SelectControl,
     TextControl,
     Button,
-    Notice
+    Notice,
+    Spinner
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 const Settings = () => {
     const [settings, setSettings] = useState({
@@ -16,13 +17,54 @@ const Settings = () => {
         emailNotifications: 'yes'
     });
     const [isSaving, setIsSaving] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [originalSettings, setOriginalSettings] = useState({
+        dateFormat: 'Y-m-d',
+        emailNotifications: 'yes'
+    });
+
+    useEffect(() => {
+        fetchSettings();
+    }, []);
+
+    const fetchSettings = async () => {
+        try {
+            const response = await fetch(`${emsData.restUrl}/settings`, {
+                headers: {
+                    'X-WP-Nonce': emsData.nonce
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(__('Failed to fetch settings', 'ems'));
+            }
+
+            const data = await response.json();
+            setSettings(data);
+            setOriginalSettings(data);
+            setError('');
+        } catch (error) {
+            console.error('Error fetching settings:', error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleSave = async () => {
         setIsSaving(true);
         setMessage('');
         setError('');
+
+        // Check if settings have changed
+        if (settings.dateFormat === originalSettings.dateFormat &&
+            settings.emailNotifications === originalSettings.emailNotifications) {
+            setMessage(__('No changes detected', 'ems'));
+            setIsSaving(false);
+            return;
+        }
 
         try {
             const response = await fetch(`${emsData.restUrl}/settings`, {
@@ -46,6 +88,14 @@ const Settings = () => {
             setIsSaving(false);
         }
     };
+
+    if (isLoading) {
+        return (
+            <div className="ems-loading">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className="ems-settings">
