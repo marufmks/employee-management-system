@@ -122,4 +122,43 @@
 
 .components-modal__content {
     margin-top: 20px;
+}
+
+/* Sales Table Styles */
+.ems-sales {
+    padding: 20px;
+}
+
+.employee-sales-card {
+    margin-bottom: 20px;
+}
+
+.employee-sales-card .components-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-sales-card .components-card__header h2 {
+    margin: 0;
+}
+
+.wp-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wp-list-table th,
+.wp-list-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.wp-list-table thead th {
+    background-color: #f0f0f0;
+    font-weight: 600;
+}
+
+.wp-list-table tfoot th {
+    font-weight: 600;
 } 

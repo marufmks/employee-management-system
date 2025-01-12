@@ -65,6 +65,40 @@ class EMSRestAPI {
                 'permission_callback' => array($this, 'check_admin_permission'),
             ),
         ));
+
+        register_rest_route('ems/v1', '/sales', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'save_sale'),
+            'permission_callback' => function() {
+                return is_user_logged_in();
+            },
+        ));
+
+        register_rest_route('ems/v1', '/employee/stats', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'get_employee_stats'),
+            'permission_callback' => function() {
+                return is_user_logged_in();
+            },
+        ));
+
+        // Get all sales
+        register_rest_route($this->namespace, '/sales', array(
+            array(
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => array($this, 'get_all_sales'),
+                'permission_callback' => array($this, 'check_admin_permission'),
+            ),
+        ));
+
+        // Download employee sales
+        register_rest_route($this->namespace, '/sales/download/(?P<id>\d+)', array(
+            array(
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => array($this, 'get_employee_sales_for_download'),
+                'permission_callback' => array($this, 'check_admin_permission'),
+            ),
+        ));
     }
 
     public function check_admin_permission() {
@@ -215,5 +249,133 @@ class EMSRestAPI {
         }
 
         return $result !== false;
+    }
+
+    public function save_sale($request) {
+        global $wpdb;
+
+        $params = $request->get_params();
+        $user_id = get_current_user_id();
+
+        $data = array(
+            'user_id' => $user_id,
+            'date' => sanitize_text_field($params['date']),
+            'amount' => floatval($params['amount']),
+            'description' => sanitize_textarea_field($params['description']),
+        );
+
+        $result = $wpdb->insert(
+            $wpdb->prefix . 'ems_employee_sales',
+            $data,
+            array('%d', '%s', '%f', '%s')
+        );
+
+        if ($result === false) {
+            return new WP_Error('db_error', 'Could not save sale record', array('status' => 500));
+        }
+
+        return new WP_REST_Response(array(
+            'success' => true,
+            'message' => 'Sale recorded successfully',
+            'id' => $wpdb->insert_id
+        ), 200);
+    }
+
+    public function get_employee_stats() {
+        global $wpdb;
+        $user_id = get_current_user_id();
+        $current_user = wp_get_current_user();
+
+        // Get total sales with null check
+        $total_sales = $wpdb->get_var($wpdb->prepare(
+            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d",
+            $user_id
+        ));
+
+        // Get monthly reports count with null check
+        $monthly_reports = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d 
+            AND MONTH(date) = MONTH(CURRENT_DATE()) 
+            AND YEAR(date) = YEAR(CURRENT_DATE())",
+            $user_id
+        ));
+
+        // Get highest sale with null check
+        $highest_sale = $wpdb->get_row($wpdb->prepare(
+            "SELECT amount, date FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d 
+            AND amount IS NOT NULL 
+            ORDER BY amount DESC LIMIT 1",
+            $user_id
+        ));
+
+        // Calculate sales trend
+        $current_month_sales = $wpdb->get_var($wpdb->prepare(
+            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d 
+            AND MONTH(date) = MONTH(CURRENT_DATE()) 
+            AND YEAR(date) = YEAR(CURRENT_DATE())",
+            $user_id
+        )) ?: 0;
+
+        $last_month_sales = $wpdb->get_var($wpdb->prepare(
+            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d 
+            AND MONTH(date) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
+            AND YEAR(date) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))",
+            $user_id
+        )) ?: 0;
+
+        // Calculate trend percentage
+        $sales_trend = 0;
+        if ($last_month_sales > 0) {
+            $sales_trend = (($current_month_sales - $last_month_sales) / $last_month_sales) * 100;
+        } elseif ($current_month_sales > 0) {
+            $sales_trend = 100; // If last month was 0 and this month has sales, show 100% increase
+        }
+
+        $response_data = array(
+            'name' => $current_user->display_name,
+            'totalSales' => (float) $total_sales,
+            'monthlyReports' => (int) $monthly_reports,
+            'highestSale' => $highest_sale ? (float) $highest_sale->amount : 0,
+            'highestSaleDate' => $highest_sale ? $this->format_date($highest_sale->date) : '',
+            'salesTrend' => round($sales_trend, 1)
+        );
+
+        return rest_ensure_response($response_data);
+    }
+
+    private function format_date($date) {
+        return date_i18n(get_option('date_format'), strtotime($date));
+    }
+
+    public function get_all_sales() {
+        global $wpdb;
+        
+        $sales = $wpdb->get_results($wpdb->prepare(
+            "SELECT s.*, u.display_name as employee_name 
+            FROM {$wpdb->prefix}ems_employee_sales s 
+            LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
+            ORDER BY s.date DESC"
+        ));
+
+        return rest_ensure_response($sales);
+    }
+
+    public function get_employee_sales_for_download($request) {
+        global $wpdb;
+        $employee_id = $request['id'];
+
+        $sales = $wpdb->get_results($wpdb->prepare(
+            "SELECT date, amount, description 
+            FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d 
+            ORDER BY date DESC",
+            $employee_id
+        ));
+
+        return rest_ensure_response($sales);
     }
 }

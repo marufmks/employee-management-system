@@ -21,6 +21,13 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
                         {__('Employees', 'ems')}
                     </Button>
                     <Button
+                        variant={currentPath === 'sales' ? 'primary' : 'secondary'}
+                        className="nav-button"
+                        onClick={() => onNavigate('sales')}
+                    >
+                        {__('Sales', 'ems')}
+                    </Button>
+                    <Button
                         variant={currentPath === 'settings' ? 'primary' : 'secondary'}
                         className="nav-button"
                         onClick={() => onNavigate('settings')}

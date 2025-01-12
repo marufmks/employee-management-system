@@ -1,12 +1,15 @@
 <?php
 /**
  * Plugin Name: Employee Management System
- * Description: Manage employees and their sales reports with employee dashboard.
+ * Plugin URI: https://yourwebsite.com/ems
+ * Description: A comprehensive employee management system for WordPress
  * Version: 1.0.0
- * Author: Maruf
- * License: GPL v2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Author: Your Name
+ * Author URI: https://yourwebsite.com
  * Text Domain: ems
+ * Domain Path: /languages
+ * License: GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

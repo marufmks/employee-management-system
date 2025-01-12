@@ -12,14 +12,35 @@ class EMS_Loader {
 
     public function __construct() {
         $this->load_dependencies();
+        $this->load_plugin_textdomain();
         $this->define_admin_hooks();
         $this->init_rest_api();
         $this->define_employee_hooks();
     }
 
+    
+
     private function load_dependencies() {
-        require_once EMS_PLUGIN_DIR . 'includes/class-database.php';
-        require_once EMS_PLUGIN_DIR . 'includes/class-restapi.php';
+        require_once EMS_PLUGIN_DIR . 'includes/class-ems-database.php';
+        require_once EMS_PLUGIN_DIR . 'includes/class-ems-restapi.php';
+    }
+
+    /**
+     * Load the plugin text domain for translation.
+     */
+    private function load_plugin_textdomain() {
+        add_action('init', array($this, 'load_textdomain'));
+    }
+
+    /**
+     * Load plugin textdomain.
+     */
+    public function load_textdomain() {
+        load_plugin_textdomain(
+            'ems',
+            false,
+            dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
+        );
     }
 
     private function init_rest_api() {
@@ -38,7 +59,12 @@ class EMS_Loader {
 
     public function render_employee_dashboard() {
         if (!is_user_logged_in()) {
-            return __('Please log in to view the dashboard', 'ems');
+            return sprintf(
+                '%s <a href="%s">%s</a>',
+                __('Please log in to view the dashboard', 'ems'),
+                esc_url(wp_login_url(get_permalink())),
+                __('Log in', 'ems')
+            );
         }
         return '<div id="ems-employee-root"></div>';
     }

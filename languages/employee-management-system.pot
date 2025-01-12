@@ -1,0 +1,448 @@
+# Copyright (C) 2025 Maruf
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Employee Management System 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/employee-management-system\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-01-12T06:28:33+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: ems\n"
+
+#. Plugin Name of the plugin
+#: ems.php
+msgid "Employee Management System"
+msgstr ""
+
+#. Description of the plugin
+#: ems.php
+msgid "Manage employees and their sales reports with employee dashboard."
+msgstr ""
+
+#. Author of the plugin
+#: ems.php
+msgid "Maruf"
+msgstr ""
+
+#: includes/class-ems-loader.php:43
+msgid "Please log in to view the dashboard"
+msgstr ""
+
+#: includes/class-ems-loader.php:45
+msgid "Log in"
+msgstr ""
+
+#: includes/class-ems-loader.php:121
+#: includes/class-ems-loader.php:122
+msgid "Employee Management"
+msgstr ""
+
+#: includes/class-restapi.php:129
+#: build/index.js:686
+#: src/components/admin/Settings/index.js:64
+#: build/index.js:702
+msgid "No changes detected"
+msgstr ""
+
+#: includes/class-restapi.php:140
+msgid "Failed to update settings"
+msgstr ""
+
+#: includes/class-restapi.php:220
+msgid "Employee updated successfully"
+msgstr ""
+
+#: includes/class-restapi.php:222
+#: build/index.js:279
+#: build/index.js:283
+#: src/components/admin/Employees/index.js:129
+#: src/components/admin/Employees/index.js:133
+#: build/index.js:272
+#: build/index.js:276
+msgid "Failed to update employee"
+msgstr ""
+
+#: build/index.js:98
+#: src/components/admin/Dashboard/index.js:35
+#: build/index.js:70
+msgid "Failed to fetch statistics"
+msgstr ""
+
+#: build/index.js:129
+#: src/components/admin/Dashboard/index.js:77
+#: build/index.js:112
+msgid "Dashboard Overview"
+msgstr ""
+
+#: build/index.js:132
+#: src/components/admin/Dashboard/index.js:84
+#: build/index.js:119
+msgid "Total Employees"
+msgstr ""
+
+#: build/index.js:136
+#: src/components/admin/Dashboard/index.js:92
+#: build/index.js:127
+msgid "Employees by Department"
+msgstr ""
+
+#: build/index.js:206
+#: src/components/admin/Employees/index.js:50
+#: build/index.js:193
+msgid "Invalid data received from server"
+msgstr ""
+
+#: build/index.js:211
+#: src/components/admin/Employees/index.js:55
+#: build/index.js:198
+msgid "Failed to fetch employees"
+msgstr ""
+
+#: build/index.js:237
+#: build/index.js:241
+#: src/components/admin/Employees/index.js:83
+#: src/components/admin/Employees/index.js:87
+#: build/index.js:226
+#: build/index.js:230
+msgid "Failed to add employee"
+msgstr ""
+
+#: build/index.js:256
+#: build/index.js:260
+#: src/components/admin/Employees/index.js:104
+#: src/components/admin/Employees/index.js:108
+#: build/index.js:247
+#: build/index.js:251
+msgid "Failed to delete employee"
+msgstr ""
+
+#: build/index.js:295
+#: build/index.js:505
+#: src/components/admin/Employees/index.js:152
+#: src/components/admin/Layout/index.js:21
+#: build/index.js:491
+msgid "Employees"
+msgstr ""
+
+#: build/index.js:298
+#: build/index.js:324
+#: src/components/admin/Employees/index.js:154
+#: src/components/admin/Employees/index.js:215
+#: build/index.js:297
+#: build/index.js:358
+msgid "Add New Employee"
+msgstr ""
+
+#: build/index.js:302
+#: src/components/admin/Employees/index.js:162
+#: build/index.js:305
+msgid "Name"
+msgstr ""
+
+#: build/index.js:302
+#: build/index.js:343
+#: build/index.js:412
+#: src/components/admin/Employees/index.js:163
+#: src/components/admin/Employees/index.js:230
+#: src/components/admin/Employees/index.js:285
+#: build/index.js:306
+#: build/index.js:373
+#: build/index.js:428
+msgid "Email"
+msgstr ""
+
+#: build/index.js:302
+#: build/index.js:351
+#: build/index.js:420
+#: src/components/admin/Employees/index.js:164
+#: src/components/admin/Employees/index.js:236
+#: src/components/admin/Employees/index.js:291
+#: build/index.js:307
+#: build/index.js:379
+#: build/index.js:434
+msgid "Department"
+msgstr ""
+
+#: build/index.js:302
+#: build/index.js:368
+#: build/index.js:437
+#: src/components/admin/Employees/index.js:165
+#: src/components/admin/Employees/index.js:246
+#: src/components/admin/Employees/index.js:301
+#: build/index.js:308
+#: build/index.js:389
+#: build/index.js:444
+msgid "Position"
+msgstr ""
+
+#: build/index.js:302
+#: build/index.js:378
+#: build/index.js:447
+#: src/components/admin/Employees/index.js:166
+#: src/components/admin/Employees/index.js:252
+#: src/components/admin/Employees/index.js:307
+#: build/index.js:309
+#: build/index.js:395
+#: build/index.js:450
+msgid "Hire Date"
+msgstr ""
+
+#: build/index.js:302
+#: src/components/admin/Employees/index.js:167
+#: build/index.js:310
+msgid "Actions"
+msgstr ""
+
+#: build/index.js:310
+#: src/components/admin/Employees/index.js:185
+#: build/index.js:328
+msgid "Delete"
+msgstr ""
+
+#: build/index.js:318
+#: src/components/admin/Employees/index.js:195
+#: build/index.js:338
+msgid "Edit"
+msgstr ""
+
+#: build/index.js:323
+#: src/components/admin/Employees/index.js:203
+#: build/index.js:346
+msgid "No employees found"
+msgstr ""
+
+#: build/index.js:329
+#: build/index.js:398
+#: src/components/admin/Employees/index.js:220
+#: src/components/admin/Employees/index.js:275
+#: build/index.js:363
+#: build/index.js:418
+msgid "First Name"
+msgstr ""
+
+#: build/index.js:336
+#: build/index.js:405
+#: src/components/admin/Employees/index.js:225
+#: src/components/admin/Employees/index.js:280
+#: build/index.js:368
+#: build/index.js:423
+msgid "Last Name"
+msgstr ""
+
+#: build/index.js:392
+#: src/components/admin/Employees/index.js:262
+#: build/index.js:405
+msgid "Add Employee"
+msgstr ""
+
+#: build/index.js:393
+#: src/components/admin/Employees/index.js:270
+#: build/index.js:413
+msgid "Edit Employee"
+msgstr ""
+
+#: build/index.js:461
+#: src/components/admin/Employees/index.js:317
+#: build/index.js:460
+msgid "Update Employee"
+msgstr ""
+
+#: build/index.js:501
+#: src/components/admin/Layout/index.js:14
+#: build/index.js:484
+msgid "Dashboard"
+msgstr ""
+
+#: build/index.js:509
+#: src/components/admin/Layout/index.js:28
+#: build/index.js:498
+msgid "Sales"
+msgstr ""
+
+#: build/index.js:513
+#: build/index.js:724
+#: src/components/admin/Layout/index.js:35
+#: src/components/admin/Settings/index.js:115
+#: build/index.js:505
+#: build/index.js:753
+msgid "Settings"
+msgstr ""
+
+#: build/index.js:588
+#: src/components/admin/Sales/index.js:57
+#: build/index.js:573
+msgid "Loading..."
+msgstr ""
+
+#: build/index.js:589
+#: src/components/admin/Sales/index.js:58
+#: build/index.js:574
+msgid "Error loading sales:"
+msgstr ""
+
+#: build/index.js:604
+#: src/components/admin/Sales/index.js:74
+#: build/index.js:590
+msgid "Sales Reports"
+msgstr ""
+
+#: build/index.js:610
+#: src/components/admin/Sales/index.js:84
+#: build/index.js:600
+msgid "Download CSV"
+msgstr ""
+
+#: build/index.js:612
+#: build/index.js:917
+#: src/components/admin/Sales/index.js:91
+#: src/components/frontend/Dashboard/index.js:142
+#: build/index.js:607
+#: build/index.js:935
+msgid "Date"
+msgstr ""
+
+#: build/index.js:612
+#: build/index.js:926
+#: src/components/admin/Sales/index.js:92
+#: src/components/frontend/Dashboard/index.js:146
+#: build/index.js:608
+#: build/index.js:939
+msgid "Amount"
+msgstr ""
+
+#: build/index.js:612
+#: build/index.js:937
+#: src/components/admin/Sales/index.js:93
+#: src/components/frontend/Dashboard/index.js:158
+#: build/index.js:609
+#: build/index.js:951
+msgid "Description"
+msgstr ""
+
+#: build/index.js:614
+#: src/components/admin/Sales/index.js:107
+#: build/index.js:623
+msgid "Total:"
+msgstr ""
+
+#: build/index.js:666
+#: src/components/admin/Settings/index.js:41
+#: build/index.js:679
+msgid "Failed to fetch settings"
+msgstr ""
+
+#: build/index.js:700
+#: src/components/admin/Settings/index.js:80
+#: build/index.js:718
+msgid "Settings saved successfully"
+msgstr ""
+
+#: build/index.js:702
+#: src/components/admin/Settings/index.js:82
+#: build/index.js:720
+msgid "Failed to save settings"
+msgstr ""
+
+#: build/index.js:727
+#: src/components/admin/Settings/index.js:120
+#: build/index.js:758
+msgid "Date Format"
+msgstr ""
+
+#: build/index.js:744
+#: src/components/admin/Settings/index.js:130
+#: build/index.js:768
+msgid "Email Notifications"
+msgstr ""
+
+#: build/index.js:747
+#: src/components/admin/Settings/index.js:133
+#: build/index.js:771
+msgid "Enabled"
+msgstr ""
+
+#: build/index.js:750
+#: src/components/admin/Settings/index.js:134
+#: build/index.js:772
+msgid "Disabled"
+msgstr ""
+
+#: build/index.js:764
+#: build/index.js:947
+#: src/components/admin/Settings/index.js:145
+#: src/components/frontend/Dashboard/index.js:173
+#: build/index.js:783
+#: build/index.js:966
+msgid "Saving..."
+msgstr ""
+
+#: build/index.js:764
+#: src/components/admin/Settings/index.js:145
+#: build/index.js:783
+msgid "Save Settings"
+msgstr ""
+
+#: build/index.js:836
+#: src/components/frontend/Dashboard/index.js:54
+#: build/index.js:847
+msgid "Sale recorded successfully!"
+msgstr ""
+
+#: build/index.js:845
+#: src/components/frontend/Dashboard/index.js:63
+#: build/index.js:856
+msgid "Failed to save sale record."
+msgstr ""
+
+#: build/index.js:856
+#: src/components/frontend/Dashboard/index.js:76
+#: build/index.js:869
+msgid "Welcome"
+msgstr ""
+
+#: build/index.js:872
+#: src/components/frontend/Dashboard/index.js:88
+#: build/index.js:881
+msgid "Total Sales"
+msgstr ""
+
+#: build/index.js:886
+#: src/components/frontend/Dashboard/index.js:102
+#: build/index.js:895
+msgid "Monthly Reports"
+msgstr ""
+
+#: build/index.js:890
+#: src/components/frontend/Dashboard/index.js:106
+#: build/index.js:899
+msgid "This month"
+msgstr ""
+
+#: build/index.js:900
+#: src/components/frontend/Dashboard/index.js:116
+#: build/index.js:909
+msgid "Highest Sale"
+msgstr ""
+
+#: build/index.js:906
+#: src/components/frontend/Dashboard/index.js:131
+#: build/index.js:924
+msgid "Quick Sales Entry"
+msgstr ""
+
+#: build/index.js:941
+#: src/components/frontend/Dashboard/index.js:163
+#: build/index.js:956
+msgid "Enter sale details..."
+msgstr ""
+
+#: build/index.js:947
+#: src/components/frontend/Dashboard/index.js:174
+#: build/index.js:967
+msgid "Submit Report"
+msgstr ""

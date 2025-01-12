@@ -41,6 +41,21 @@ class EMSDatabase {
         ) $charset_collate;";
 
         dbDelta($sql);
+
+        // Create employee sales table
+        $sql = "CREATE TABLE IF NOT EXISTS {$this->wpdb->prefix}ems_employee_sales (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) NOT NULL,
+            date date NOT NULL,
+            amount decimal(10,2) NOT NULL,
+            description text NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY user_id (user_id)
+        ) $charset_collate;";
+        
+        dbDelta($sql);
     }
 
     
