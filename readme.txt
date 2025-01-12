@@ -9,20 +9,11 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A comprehensive employee management system with sales tracking and employee dashboard functionality.
+A secure and efficient employee management system with sales tracking capabilities.
 
 == Description ==
 
-Employee Management System is a powerful WordPress plugin that helps businesses manage their employees and track sales performance efficiently.
-
-Key Features:
-
-* Employee Dashboard with Sales Entry
-* Sales Performance Tracking
-* Individual Employee Sales Reports
-* CSV Export Functionality
-* Admin Management Interface
-* Real-time Sales Statistics
+[Add more detailed description and security features...]
 
 == Installation ==
 

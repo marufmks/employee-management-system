@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class EMSRestAPI {
+class EMS_RestAPI {
     private static $instance = null;
     private $namespace = 'ems/v1';
     private $settings_key = 'ems_settings';
@@ -11,7 +11,7 @@ class EMSRestAPI {
 
     private function __construct() {
         add_action('rest_api_init', array($this, 'register_routes'));
-        $this->database = EMSDatabase::instance();
+        $this->database = EMS_Database::instance();
     }
 
     public static function instance() {
@@ -251,15 +251,53 @@ class EMSRestAPI {
         return $result !== false;
     }
 
+    /**
+     * Save sale record with proper validation and sanitization.
+     *
+     * @param WP_REST_Request $request The request object.
+     * @return WP_REST_Response|WP_Error
+     */
     public function save_sale($request) {
         global $wpdb;
 
         $params = $request->get_params();
         $user_id = get_current_user_id();
 
+        // Validate required fields
+        $required_fields = ['date', 'amount', 'description'];
+        foreach ($required_fields as $field) {
+            if (empty($params[$field])) {
+                /* translators: %s: Name of the missing field */
+                return new WP_Error(
+                    'missing_field',
+                    sprintf(__('Missing required field: %s', 'ems'), $field),
+                    ['status' => 400]
+                );
+            }
+        }
+
+        // Validate amount
+        if (!is_numeric($params['amount']) || $params['amount'] <= 0) {
+            return new WP_Error(
+                'invalid_amount',
+                __('Amount must be a positive number', 'ems'),
+                ['status' => 400]
+            );
+        }
+
+        // Validate date
+        $date = sanitize_text_field($params['date']);
+        if (!strtotime($date)) {
+            return new WP_Error(
+                'invalid_date',
+                __('Invalid date format', 'ems'),
+                ['status' => 400]
+            );
+        }
+
         $data = array(
-            'user_id' => $user_id,
-            'date' => sanitize_text_field($params['date']),
+            'user_id' => absint($user_id),
+            'date' => $date,
             'amount' => floatval($params['amount']),
             'description' => sanitize_textarea_field($params['description']),
         );
@@ -270,25 +308,35 @@ class EMSRestAPI {
             array('%d', '%s', '%f', '%s')
         );
 
-        if ($result === false) {
-            return new WP_Error('db_error', 'Could not save sale record', array('status' => 500));
+        if (false === $result) {
+            return new WP_Error(
+                'db_error',
+                __('Could not save sale record', 'ems'),
+                ['status' => 500]
+            );
         }
 
-        return new WP_REST_Response(array(
+        return rest_ensure_response([
             'success' => true,
-            'message' => 'Sale recorded successfully',
+            'message' => __('Sale recorded successfully', 'ems'),
             'id' => $wpdb->insert_id
-        ), 200);
+        ]);
     }
 
+    /**
+     * Get employee stats with proper data sanitization.
+     *
+     * @return WP_REST_Response
+     */
     public function get_employee_stats() {
         global $wpdb;
         $user_id = get_current_user_id();
         $current_user = wp_get_current_user();
 
-        // Get total sales with null check
+        // Prepare all queries with proper escaping
         $total_sales = $wpdb->get_var($wpdb->prepare(
-            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d",
+            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
+            WHERE user_id = %d",
             $user_id
         ));
 
@@ -335,16 +383,14 @@ class EMSRestAPI {
             $sales_trend = 100; // If last month was 0 and this month has sales, show 100% increase
         }
 
-        $response_data = array(
-            'name' => $current_user->display_name,
+        return rest_ensure_response([
+            'name' => sanitize_text_field($current_user->display_name),
             'totalSales' => (float) $total_sales,
-            'monthlyReports' => (int) $monthly_reports,
+            'monthlyReports' => absint($monthly_reports),
             'highestSale' => $highest_sale ? (float) $highest_sale->amount : 0,
-            'highestSaleDate' => $highest_sale ? $this->format_date($highest_sale->date) : '',
+            'highestSaleDate' => $highest_sale ? esc_html($this->format_date($highest_sale->date)) : '',
             'salesTrend' => round($sales_trend, 1)
-        );
-
-        return rest_ensure_response($response_data);
+        ]);
     }
 
     private function format_date($date) {

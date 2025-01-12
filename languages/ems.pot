@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-12T06:28:33+01:00\n"
+"POT-Creation-Date: 2025-01-12T06:54:05+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ems\n"
@@ -19,9 +19,14 @@ msgstr ""
 msgid "Employee Management System"
 msgstr ""
 
+#. Plugin URI of the plugin
+#: ems.php
+msgid "https://github.com/marufmks/employee-management-system"
+msgstr ""
+
 #. Description of the plugin
 #: ems.php
-msgid "Manage employees and their sales reports with employee dashboard."
+msgid "A comprehensive employee management system for WordPress"
 msgstr ""
 
 #. Author of the plugin
@@ -29,35 +34,40 @@ msgstr ""
 msgid "Maruf"
 msgstr ""
 
-#: includes/class-ems-loader.php:43
+#. Author URI of the plugin
+#: ems.php
+msgid "https://github.com/marufmks"
+msgstr ""
+
+#: includes/class-ems-loader.php:64
 msgid "Please log in to view the dashboard"
 msgstr ""
 
-#: includes/class-ems-loader.php:45
+#: includes/class-ems-loader.php:66
 msgid "Log in"
 msgstr ""
 
-#: includes/class-ems-loader.php:121
-#: includes/class-ems-loader.php:122
+#: includes/class-ems-loader.php:142
+#: includes/class-ems-loader.php:143
 msgid "Employee Management"
 msgstr ""
 
-#: includes/class-restapi.php:129
+#: includes/class-ems-restapi.php:129
 #: build/index.js:686
 #: src/components/admin/Settings/index.js:64
 #: build/index.js:702
 msgid "No changes detected"
 msgstr ""
 
-#: includes/class-restapi.php:140
+#: includes/class-ems-restapi.php:140
 msgid "Failed to update settings"
 msgstr ""
 
-#: includes/class-restapi.php:220
+#: includes/class-ems-restapi.php:220
 msgid "Employee updated successfully"
 msgstr ""
 
-#: includes/class-restapi.php:222
+#: includes/class-ems-restapi.php:222
 #: build/index.js:279
 #: build/index.js:283
 #: src/components/admin/Employees/index.js:129
@@ -65,6 +75,26 @@ msgstr ""
 #: build/index.js:272
 #: build/index.js:276
 msgid "Failed to update employee"
+msgstr ""
+
+#: includes/class-ems-restapi.php:273
+msgid "Missing required field: %s"
+msgstr ""
+
+#: includes/class-ems-restapi.php:283
+msgid "Amount must be a positive number"
+msgstr ""
+
+#: includes/class-ems-restapi.php:293
+msgid "Invalid date format"
+msgstr ""
+
+#: includes/class-ems-restapi.php:314
+msgid "Could not save sale record"
+msgstr ""
+
+#: includes/class-ems-restapi.php:321
+msgid "Sale recorded successfully"
 msgstr ""
 
 #: build/index.js:98
@@ -298,29 +328,29 @@ msgid "Download CSV"
 msgstr ""
 
 #: build/index.js:612
-#: build/index.js:917
+#: build/index.js:921
 #: src/components/admin/Sales/index.js:91
-#: src/components/frontend/Dashboard/index.js:142
+#: src/components/frontend/Dashboard/index.js:146
 #: build/index.js:607
-#: build/index.js:935
+#: build/index.js:939
 msgid "Date"
 msgstr ""
 
 #: build/index.js:612
-#: build/index.js:926
+#: build/index.js:930
 #: src/components/admin/Sales/index.js:92
-#: src/components/frontend/Dashboard/index.js:146
+#: src/components/frontend/Dashboard/index.js:150
 #: build/index.js:608
-#: build/index.js:939
+#: build/index.js:943
 msgid "Amount"
 msgstr ""
 
 #: build/index.js:612
-#: build/index.js:937
+#: build/index.js:941
 #: src/components/admin/Sales/index.js:93
-#: src/components/frontend/Dashboard/index.js:158
+#: src/components/frontend/Dashboard/index.js:162
 #: build/index.js:609
-#: build/index.js:951
+#: build/index.js:955
 msgid "Description"
 msgstr ""
 
@@ -373,11 +403,11 @@ msgid "Disabled"
 msgstr ""
 
 #: build/index.js:764
-#: build/index.js:947
+#: build/index.js:951
 #: src/components/admin/Settings/index.js:145
-#: src/components/frontend/Dashboard/index.js:173
+#: src/components/frontend/Dashboard/index.js:177
 #: build/index.js:783
-#: build/index.js:966
+#: build/index.js:970
 msgid "Saving..."
 msgstr ""
 
@@ -387,62 +417,62 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: build/index.js:836
-#: src/components/frontend/Dashboard/index.js:54
-#: build/index.js:847
+#: build/index.js:840
+#: src/components/frontend/Dashboard/index.js:58
+#: build/index.js:851
 msgid "Sale recorded successfully!"
 msgstr ""
 
-#: build/index.js:845
-#: src/components/frontend/Dashboard/index.js:63
-#: build/index.js:856
+#: build/index.js:849
+#: src/components/frontend/Dashboard/index.js:67
+#: build/index.js:860
 msgid "Failed to save sale record."
 msgstr ""
 
-#: build/index.js:856
-#: src/components/frontend/Dashboard/index.js:76
-#: build/index.js:869
+#: build/index.js:860
+#: src/components/frontend/Dashboard/index.js:80
+#: build/index.js:873
 msgid "Welcome"
 msgstr ""
 
-#: build/index.js:872
-#: src/components/frontend/Dashboard/index.js:88
-#: build/index.js:881
+#: build/index.js:876
+#: src/components/frontend/Dashboard/index.js:92
+#: build/index.js:885
 msgid "Total Sales"
-msgstr ""
-
-#: build/index.js:886
-#: src/components/frontend/Dashboard/index.js:102
-#: build/index.js:895
-msgid "Monthly Reports"
 msgstr ""
 
 #: build/index.js:890
 #: src/components/frontend/Dashboard/index.js:106
 #: build/index.js:899
+msgid "Monthly Reports"
+msgstr ""
+
+#: build/index.js:894
+#: src/components/frontend/Dashboard/index.js:110
+#: build/index.js:903
 msgid "This month"
 msgstr ""
 
-#: build/index.js:900
-#: src/components/frontend/Dashboard/index.js:116
-#: build/index.js:909
+#: build/index.js:904
+#: src/components/frontend/Dashboard/index.js:120
+#: build/index.js:913
 msgid "Highest Sale"
 msgstr ""
 
-#: build/index.js:906
-#: src/components/frontend/Dashboard/index.js:131
-#: build/index.js:924
+#: build/index.js:910
+#: src/components/frontend/Dashboard/index.js:135
+#: build/index.js:928
 msgid "Quick Sales Entry"
 msgstr ""
 
-#: build/index.js:941
-#: src/components/frontend/Dashboard/index.js:163
-#: build/index.js:956
+#: build/index.js:945
+#: src/components/frontend/Dashboard/index.js:167
+#: build/index.js:960
 msgid "Enter sale details..."
 msgstr ""
 
-#: build/index.js:947
-#: src/components/frontend/Dashboard/index.js:174
-#: build/index.js:967
+#: build/index.js:951
+#: src/components/frontend/Dashboard/index.js:178
+#: build/index.js:971
 msgid "Submit Report"
 msgstr ""

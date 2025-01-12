@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class EMSDatabase {
+class EMS_Database {
     private static $instance = null;
     private $wpdb;
     private $employees_table;
@@ -21,12 +21,20 @@ class EMSDatabase {
         return self::$instance;
     }
 
+    /**
+     * Create plugin tables with proper collation.
+     *
+     * @return void
+     */
     public function create_tables() {
+        global $wpdb;
+        
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        
+        $charset_collate = $wpdb->get_charset_collate();
 
-        $charset_collate = $this->wpdb->get_charset_collate();
-
-        $sql = "CREATE TABLE IF NOT EXISTS {$this->employees_table} (
+        // Employees table
+        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}ems_employees (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             firstName varchar(100) NOT NULL,
             lastName varchar(100) NOT NULL,
@@ -37,22 +45,25 @@ class EMSDatabase {
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY  (id),
-            UNIQUE KEY email (email)
+            UNIQUE KEY email (email),
+            KEY department (department),
+            KEY hireDate (hireDate)
         ) $charset_collate;";
-
+        
         dbDelta($sql);
 
-        // Create employee sales table
-        $sql = "CREATE TABLE IF NOT EXISTS {$this->wpdb->prefix}ems_employee_sales (
+        // Sales table
+        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}ems_employee_sales (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             user_id bigint(20) NOT NULL,
             date date NOT NULL,
             amount decimal(10,2) NOT NULL,
-            description text NULL,
+            description text NOT NULL,
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
-            KEY user_id (user_id)
+            KEY user_id (user_id),
+            KEY date (date)
         ) $charset_collate;";
         
         dbDelta($sql);

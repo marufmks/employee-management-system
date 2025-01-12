@@ -16,6 +16,10 @@ const EmployeeDashboard = () => {
     });
 
     useEffect(() => {
+        // Verify nonce before making requests
+        if (window.emsData && window.emsData.nonce) {
+            apiFetch.use(apiFetch.createNonceMiddleware(window.emsData.nonce));
+        }
         fetchUserData();
     }, []);
 

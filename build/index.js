@@ -803,6 +803,10 @@ const EmployeeDashboard = () => {
     highestSaleDate: ''
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // Verify nonce before making requests
+    if (window.emsData && window.emsData.nonce) {
+      _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default().use(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default().createNonceMiddleware(window.emsData.nonce));
+    }
     fetchUserData();
   }, []);
   const fetchUserData = async () => {

@@ -44,7 +44,7 @@ class EMS_Loader {
     }
 
     private function init_rest_api() {
-        $this->rest_api = EMSRestAPI::instance();
+        $this->rest_api = EMS_RestAPI::instance();
     }
 
     private function define_admin_hooks() {
@@ -154,6 +154,6 @@ class EMS_Loader {
     }
 
     public function run() {
-        EMSDatabase::instance();
+        EMS_Database::instance();
     }
 } 
