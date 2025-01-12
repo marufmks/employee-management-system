@@ -47,12 +47,12 @@ const Employees = () => {
                 setError('');
             } else {
                 setEmployees([]);
-                setError(__('Invalid data received from server', 'ems'));
+                setError(__('Invalid data received from server', 'employee-management-system'));
             }
         } catch (error) {
             console.error('Error fetching employees:', error);
             setEmployees([]);
-            setError(__('Failed to fetch employees', 'ems'));
+            setError(__('Failed to fetch employees', 'employee-management-system'));
         }
     };
 
@@ -80,11 +80,11 @@ const Employees = () => {
                 });
             } else {
                 const error = await response.json();
-                setError(error.message || __('Failed to add employee', 'ems'));
+                setError(error.message || __('Failed to add employee', 'employee-management-system'));
             }
         } catch (error) {
             console.error('Error adding employee:', error);
-            setError(__('Failed to add employee', 'ems'));
+            setError(__('Failed to add employee', 'employee-management-system'));
         }
     };
 
@@ -101,11 +101,11 @@ const Employees = () => {
                 fetchEmployees();
             } else {
                 const error = await response.json();
-                setError(error.message || __('Failed to delete employee', 'ems'));
+                setError(error.message || __('Failed to delete employee', 'employee-management-system'));
             }
         } catch (error) {
             console.error('Error deleting employee:', error);
-            setError(__('Failed to delete employee', 'ems'));
+            setError(__('Failed to delete employee', 'employee-management-system'));
         }
     };
 
@@ -126,11 +126,11 @@ const Employees = () => {
                 setEmployeeToEdit(null);
             } else {
                 const error = await response.json();
-                setError(error.message || __('Failed to update employee', 'ems'));
+                setError(error.message || __('Failed to update employee', 'employee-management-system'));
             }
         } catch (error) {
             console.error('Error updating employee:', error);
-            setError(__('Failed to update employee', 'ems'));
+            setError(__('Failed to update employee', 'employee-management-system'));
         }
     };
 
@@ -149,9 +149,9 @@ const Employees = () => {
                 )}
                 <Card>
                     <CardHeader>
-                        <h2>{__('Employees', 'ems')}</h2>
+                        <h2>{__('Employees', 'employee-management-system')}</h2>
                         <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-                            {__('Add New Employee', 'ems')}
+                            {__('Add New Employee', 'employee-management-system')}
                         </Button>
                     </CardHeader>
                     <CardBody>
@@ -159,12 +159,12 @@ const Employees = () => {
                             <table className="wp-list-table widefat fixed striped">
                                 <thead>
                                     <tr>
-                                        <th>{__('Name', 'ems')}</th>
-                                        <th>{__('Email', 'ems')}</th>
-                                        <th>{__('Department', 'ems')}</th>
-                                        <th>{__('Position', 'ems')}</th>
-                                        <th>{__('Hire Date', 'ems')}</th>
-                                        <th>{__('Actions', 'ems')}</th>
+                                        <th>{__('Name', 'employee-management-system')}</th>
+                                        <th>{__('Email', 'employee-management-system')}</th>
+                                        <th>{__('Department', 'employee-management-system')}</th>
+                                        <th>{__('Position', 'employee-management-system')}</th>
+                                        <th>{__('Hire Date', 'employee-management-system')}</th>
+                                        <th>{__('Actions', 'employee-management-system')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -182,7 +182,7 @@ const Employees = () => {
                                                         onClick={() => handleDeleteEmployee(employee.id)}
                                                         style={{ color: '#d63638' }} 
                                                     >
-                                                        {__('Delete', 'ems')}
+                                                        {__('Delete', 'employee-management-system')}
                                                     </Button>
                                                     <Button 
                                                         
@@ -192,7 +192,7 @@ const Employees = () => {
                                                         }}
                                                         style={{ color: '#2271b1' }} 
                                                     >
-                                                        {__('Edit', 'ems')}
+                                                        {__('Edit', 'employee-management-system')}
                                                     </Button>
                                                 </td>
                                             </tr>
@@ -200,7 +200,7 @@ const Employees = () => {
                                     ) : (
                                         <tr>
                                             <td colSpan="6" style={{ textAlign: 'center' }}>
-                                                {__('No employees found', 'ems')}
+                                                {__('No employees found', 'employee-management-system')}
                                             </td>
                                         </tr>
                                     )}
@@ -212,28 +212,28 @@ const Employees = () => {
 
                 {isModalOpen && (
                     <Modal
-                        title={__('Add New Employee', 'ems')}
+                        title={__('Add New Employee', 'employee-management-system')}
                         onRequestClose={() => setIsModalOpen(false)}
                     >
                         <div className="ems-employee-form">
                             <TextControl
-                                label={__('First Name', 'ems')}
+                                label={__('First Name', 'employee-management-system')}
                                 value={newEmployee.firstName}
                                 onChange={(firstName) => setNewEmployee({...newEmployee, firstName})}
                             />
                             <TextControl
-                                label={__('Last Name', 'ems')}
+                                label={__('Last Name', 'employee-management-system')}
                                 value={newEmployee.lastName}
                                 onChange={(lastName) => setNewEmployee({...newEmployee, lastName})}
                             />
                             <TextControl
-                                label={__('Email', 'ems')}
+                                label={__('Email', 'employee-management-system')}
                                 type="email"
                                 value={newEmployee.email}
                                 onChange={(email) => setNewEmployee({...newEmployee, email})}
                             />
                             <SelectControl
-                                label={__('Department', 'ems')}
+                                label={__('Department', 'employee-management-system')}
                                 value={newEmployee.department}
                                 options={[
                                     { label: 'Sales', value: 'sales' },
@@ -243,13 +243,13 @@ const Employees = () => {
                                 onChange={(department) => setNewEmployee({...newEmployee, department})}
                             />
                             <TextControl
-                                label={__('Position', 'ems')}
+                                label={__('Position', 'employee-management-system')}
                                 value={newEmployee.position}
                                 onChange={(position) => setNewEmployee({...newEmployee, position})}
                             />
                             <div className="components-base-control">
                                 <label className="components-base-control__label">
-                                    {__('Hire Date', 'ems')}
+                                    {__('Hire Date', 'employee-management-system')}
                                 </label>
                                 <input
                                     type="date"
@@ -259,7 +259,7 @@ const Employees = () => {
                                 />
                             </div>
                             <Button style={{ marginTop: '10px' }} variant="primary" onClick={handleAddEmployee}>
-                                {__('Add Employee', 'ems')}
+                                {__('Add Employee', 'employee-management-system')}
                             </Button>
                         </div>
                     </Modal>
@@ -267,28 +267,28 @@ const Employees = () => {
 
                 {isEditModalOpen && (
                     <Modal
-                        title={__('Edit Employee', 'ems')}
+                        title={__('Edit Employee', 'employee-management-system')}
                         onRequestClose={() => setIsEditModalOpen(false)}
                     >
                         <div className="ems-employee-form">
                             <TextControl
-                                label={__('First Name', 'ems')}
+                                label={__('First Name', 'employee-management-system')}
                                 value={employeeToEdit.firstName}
                                 onChange={(firstName) => setEmployeeToEdit({...employeeToEdit, firstName})}
                             />
                             <TextControl
-                                label={__('Last Name', 'ems')}
+                                label={__('Last Name', 'employee-management-system')}
                                 value={employeeToEdit.lastName}
                                 onChange={(lastName) => setEmployeeToEdit({...employeeToEdit, lastName})}
                             />
                             <TextControl
-                                label={__('Email', 'ems')}
+                                label={__('Email', 'employee-management-system')}
                                 type="email"
                                 value={employeeToEdit.email}
                                 onChange={(email) => setEmployeeToEdit({...employeeToEdit, email})}
                             />
                             <SelectControl
-                                label={__('Department', 'ems')}
+                                label={__('Department', 'employee-management-system')}
                                 value={employeeToEdit.department}
                                 options={[
                                     { label: 'Sales', value: 'sales' },
@@ -298,13 +298,13 @@ const Employees = () => {
                                 onChange={(department) => setEmployeeToEdit({...employeeToEdit, department})}
                             />
                             <TextControl
-                                label={__('Position', 'ems')}
+                                label={__('Position', 'employee-management-system')}
                                 value={employeeToEdit.position}
                                 onChange={(position) => setEmployeeToEdit({...employeeToEdit, position})}
                             />
                             <div className="components-base-control">
                                 <label className="components-base-control__label">
-                                    {__('Hire Date', 'ems')}
+                                    {__('Hire Date', 'employee-management-system')}
                                 </label>
                                 <input
                                     type="date"
@@ -314,7 +314,7 @@ const Employees = () => {
                                 />
                             </div>
                             <Button style={{ marginTop: '10px' }} variant="primary" onClick={handleEditEmployee}>
-                                {__('Update Employee', 'ems')}
+                                {__('Update Employee', 'employee-management-system')}
                             </Button>
                         </div>
                     </Modal>

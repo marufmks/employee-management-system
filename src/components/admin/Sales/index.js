@@ -54,8 +54,8 @@ const Sales = () => {
         }
     };
 
-    if (isLoading) return <div>{__('Loading...', 'ems')}</div>;
-    if (error) return <div>{__('Error loading sales:', 'ems')} {error}</div>;
+    if (isLoading) return <div>{__('Loading...', 'employee-management-system')}</div>;
+    if (error) return <div>{__('Error loading sales:', 'employee-management-system')} {error}</div>;
 
     // Group sales by employee
     const salesByEmployee = sales.reduce((acc, sale) => {
@@ -71,7 +71,7 @@ const Sales = () => {
 
     return (
         <div className="ems-sales">
-            <h1>{__('Sales Reports', 'ems')}</h1>
+            <h1>{__('Sales Reports', 'employee-management-system')}</h1>
             
             {Object.entries(salesByEmployee).map(([employeeId, data]) => (
                 <Card key={employeeId} className="employee-sales-card">
@@ -81,16 +81,16 @@ const Sales = () => {
                             isPrimary
                             onClick={() => handleDownloadCSV(employeeId)}
                         >
-                            {__('Download CSV', 'ems')}
+                            {__('Download CSV', 'employee-management-system')}
                         </Button>
                     </CardHeader>
                     <CardBody>
                         <table className="wp-list-table widefat fixed striped">
                             <thead>
                                 <tr>
-                                    <th>{__('Date', 'ems')}</th>
-                                    <th>{__('Amount', 'ems')}</th>
-                                    <th>{__('Description', 'ems')}</th>
+                                    <th>{__('Date', 'employee-management-system')}</th>
+                                    <th>{__('Amount', 'employee-management-system')}</th>
+                                    <th>{__('Description', 'employee-management-system')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,7 +104,7 @@ const Sales = () => {
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>{__('Total:', 'ems')}</th>
+                                    <th>{__('Total:', 'employee-management-system')}</th>
                                     <th>
                                         ${data.sales.reduce((sum, sale) => sum + parseFloat(sale.amount), 0).toLocaleString()}
                                     </th>

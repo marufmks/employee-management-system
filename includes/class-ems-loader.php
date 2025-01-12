@@ -37,7 +37,7 @@ class EMS_Loader {
      */
     public function load_textdomain() {
         load_plugin_textdomain(
-            'ems',
+            'employee-management-system',
             false,
             dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
         );
@@ -61,9 +61,9 @@ class EMS_Loader {
         if (!is_user_logged_in()) {
             return sprintf(
                 '%s <a href="%s">%s</a>',
-                __('Please log in to view the dashboard', 'ems'),
+                __('Please log in to view the dashboard', 'employee-management-system'),
                 esc_url(wp_login_url(get_permalink())),
-                __('Log in', 'ems')
+                __('Log in', 'employee-management-system')
             );
         }
         return '<div id="ems-employee-root"></div>';
@@ -139,8 +139,8 @@ class EMS_Loader {
 
     public function register_admin_menu() {
         add_menu_page(
-            __('Employee Management', 'ems'),
-            __('Employee Management', 'ems'),
+            __('Employee Management', 'employee-management-system'),
+            __('Employee Management', 'employee-management-system'),
             'manage_options',
             'employee-management',
             array($this, 'render_admin_page'),

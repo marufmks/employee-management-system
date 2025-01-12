@@ -8,6 +8,7 @@ Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: employee-management-system
 
 A secure and efficient employee management system with sales tracking capabilities.
 

@@ -55,7 +55,7 @@ const EmployeeDashboard = () => {
 
             setMessage({
                 type: 'success',
-                text: __('Sale recorded successfully!', 'ems')
+                text: __('Sale recorded successfully!', 'employee-management-system')
             });
             e.target.reset();
             
@@ -64,7 +64,7 @@ const EmployeeDashboard = () => {
         } catch (error) {
             setMessage({
                 type: 'error',
-                text: error.message || __('Failed to save sale record.', 'ems')
+                text: error.message || __('Failed to save sale record.', 'employee-management-system')
             });
         } finally {
             setIsSubmitting(false);
@@ -77,7 +77,7 @@ const EmployeeDashboard = () => {
         <div className="employee-dashboard">
             {/* Welcome Section */}
             <div className="welcome-section">
-                <h1>{__('Welcome', 'ems')}, {userData.name}</h1>
+                <h1>{__('Welcome', 'employee-management-system')}, {userData.name}</h1>
                 <p className="current-date">{currentDate}</p>
             </div>
 
@@ -89,7 +89,7 @@ const EmployeeDashboard = () => {
                             <div className="stat-content">
                                 <div className="stat-header">
                                     <span className="stat-icon">💰</span>
-                                    <span className="stat-label">{__('Total Sales', 'ems')}</span>
+                                    <span className="stat-label">{__('Total Sales', 'employee-management-system')}</span>
                                 </div>
                                 <p className="stat-value">${userData.totalSales.toLocaleString()}</p>
                                 <span className="stat-trend positive">
@@ -103,11 +103,11 @@ const EmployeeDashboard = () => {
                             <div className="stat-content">
                                 <div className="stat-header">
                                     <span className="stat-icon">📊</span>
-                                    <span className="stat-label">{__('Monthly Reports', 'ems')}</span>
+                                    <span className="stat-label">{__('Monthly Reports', 'employee-management-system')}</span>
                                 </div>
                                 <p className="stat-value">{userData.monthlyReports}</p>
                                 <span className="stat-trend">
-                                    {__('This month', 'ems')}
+                                    {__('This month', 'employee-management-system')}
                                 </span>
                             </div>
                         </CardBody>
@@ -117,7 +117,7 @@ const EmployeeDashboard = () => {
                             <div className="stat-content">
                                 <div className="stat-header">
                                     <span className="stat-icon">⭐</span>
-                                    <span className="stat-label">{__('Highest Sale', 'ems')}</span>
+                                    <span className="stat-label">{__('Highest Sale', 'employee-management-system')}</span>
                                 </div>
                                 <p className="stat-value">${userData.highestSale.toLocaleString()}</p>
                                 <span className="stat-trend">
@@ -132,7 +132,7 @@ const EmployeeDashboard = () => {
             {/* Add Sales Report Form */}
             <Card className="sales-form">
                 <CardHeader>
-                    <h2>{__('Quick Sales Entry', 'ems')}</h2>
+                    <h2>{__('Quick Sales Entry', 'employee-management-system')}</h2>
                 </CardHeader>
                 <CardBody>
                     {message && (
@@ -143,11 +143,11 @@ const EmployeeDashboard = () => {
                     <form className="sales-report-form" onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="date">{__('Date', 'ems')}</label>
+                                <label htmlFor="date">{__('Date', 'employee-management-system')}</label>
                                 <input type="date" id="date" name="date" required />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="amount">{__('Amount', 'ems')}</label>
+                                <label htmlFor="amount">{__('Amount', 'employee-management-system')}</label>
                                 <input 
                                     type="number" 
                                     id="amount" 
@@ -159,12 +159,12 @@ const EmployeeDashboard = () => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">{__('Description', 'ems')}</label>
+                            <label htmlFor="description">{__('Description', 'employee-management-system')}</label>
                             <textarea 
                                 id="description" 
                                 name="description" 
                                 rows="4"
-                                placeholder={__('Enter sale details...', 'ems')}
+                                placeholder={__('Enter sale details...', 'employee-management-system')}
                                 required
                             ></textarea>
                         </div>
@@ -174,8 +174,8 @@ const EmployeeDashboard = () => {
                             disabled={isSubmitting}
                         >
                             {isSubmitting 
-                                ? __('Saving...', 'ems')
-                                : __('Submit Report', 'ems') + ' →'
+                                ? __('Saving...', 'employee-management-system')
+                                : __('Submit Report', 'employee-management-system') + ' →'
                             }
                         </button>
                     </form>

@@ -95,7 +95,7 @@ const Dashboard = () => {
         }
       });
       if (!response.ok) {
-        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch statistics', 'ems'));
+        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch statistics', 'employee-management-system'));
       }
       const employees = await response.json();
 
@@ -126,14 +126,14 @@ const Dashboard = () => {
   }, error && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
     status: "error",
     isDismissible: false
-  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Dashboard Overview', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Flex, {
+  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Dashboard Overview', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Flex, {
     gap: 4,
     className: "summary-cards"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total Employees', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total Employees', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "stat-number"
   }, stats.totalEmployees))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "department-stats"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees by Department', 'ems')), Object.entries(stats.departments).map(([department, count]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees by Department', 'employee-management-system')), Object.entries(stats.departments).map(([department, count]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: department,
     className: "department-stat"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
@@ -203,12 +203,12 @@ const Employees = () => {
         setError('');
       } else {
         setEmployees([]);
-        setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Invalid data received from server', 'ems'));
+        setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Invalid data received from server', 'employee-management-system'));
       }
     } catch (error) {
       console.error('Error fetching employees:', error);
       setEmployees([]);
-      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch employees', 'ems'));
+      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch employees', 'employee-management-system'));
     }
   };
   const handleAddEmployee = async () => {
@@ -234,11 +234,11 @@ const Employees = () => {
         });
       } else {
         const error = await response.json();
-        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to add employee', 'ems'));
+        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to add employee', 'employee-management-system'));
       }
     } catch (error) {
       console.error('Error adding employee:', error);
-      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to add employee', 'ems'));
+      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to add employee', 'employee-management-system'));
     }
   };
   const handleDeleteEmployee = async id => {
@@ -253,11 +253,11 @@ const Employees = () => {
         fetchEmployees();
       } else {
         const error = await response.json();
-        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to delete employee', 'ems'));
+        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to delete employee', 'employee-management-system'));
       }
     } catch (error) {
       console.error('Error deleting employee:', error);
-      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to delete employee', 'ems'));
+      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to delete employee', 'employee-management-system'));
     }
   };
   const handleEditEmployee = async () => {
@@ -276,11 +276,11 @@ const Employees = () => {
         setEmployeeToEdit(null);
       } else {
         const error = await response.json();
-        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to update employee', 'ems'));
+        setError(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to update employee', 'employee-management-system'));
       }
     } catch (error) {
       console.error('Error updating employee:', error);
-      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to update employee', 'ems'));
+      setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to update employee', 'employee-management-system'));
     }
   };
   const formatDate = date => {
@@ -292,14 +292,14 @@ const Employees = () => {
   }, error && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
     status: "error",
     isDismissible: false
-  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     variant: "primary",
     onClick: () => setIsModalOpen(true)
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add New Employee', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add New Employee', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-table"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
     className: "wp-list-table widefat fixed striped"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Name', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Actions', 'ems')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, Array.isArray(employees) && employees.length > 0 ? employees.map(employee => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Name', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Actions', 'employee-management-system')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, Array.isArray(employees) && employees.length > 0 ? employees.map(employee => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", {
     key: employee.id
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, `${employee.firstName} ${employee.lastName}`), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, employee.email), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, employee.department), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, employee.position), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, formatDate(employee.hireDate)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     isDestructive: true,
@@ -307,7 +307,7 @@ const Employees = () => {
     style: {
       color: '#d63638'
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Delete', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Delete', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     onClick: () => {
       setEmployeeToEdit(employee);
       setIsEditModalOpen(true);
@@ -315,32 +315,32 @@ const Employees = () => {
     style: {
       color: '#2271b1'
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Edit', 'ems'))))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Edit', 'employee-management-system'))))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
     colSpan: "6",
     style: {
       textAlign: 'center'
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No employees found', 'ems')))))))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add New Employee', 'ems'),
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No employees found', 'employee-management-system')))))))), isModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add New Employee', 'employee-management-system'),
     onRequestClose: () => setIsModalOpen(false)
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-employee-form"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('First Name', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('First Name', 'employee-management-system'),
     value: newEmployee.firstName,
     onChange: firstName => setNewEmployee({
       ...newEmployee,
       firstName
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Last Name', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Last Name', 'employee-management-system'),
     value: newEmployee.lastName,
     onChange: lastName => setNewEmployee({
       ...newEmployee,
       lastName
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'employee-management-system'),
     type: "email",
     value: newEmployee.email,
     onChange: email => setNewEmployee({
@@ -348,7 +348,7 @@ const Employees = () => {
       email
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'employee-management-system'),
     value: newEmployee.department,
     options: [{
       label: 'Sales',
@@ -365,7 +365,7 @@ const Employees = () => {
       department
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'employee-management-system'),
     value: newEmployee.position,
     onChange: position => setNewEmployee({
       ...newEmployee,
@@ -375,7 +375,7 @@ const Employees = () => {
     className: "components-base-control"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "components-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "date",
     className: "components-text-control__input",
     value: newEmployee.hireDate,
@@ -389,27 +389,27 @@ const Employees = () => {
     },
     variant: "primary",
     onClick: handleAddEmployee
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add Employee', 'ems')))), isEditModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Edit Employee', 'ems'),
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add Employee', 'employee-management-system')))), isEditModalOpen && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Edit Employee', 'employee-management-system'),
     onRequestClose: () => setIsEditModalOpen(false)
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-employee-form"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('First Name', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('First Name', 'employee-management-system'),
     value: employeeToEdit.firstName,
     onChange: firstName => setEmployeeToEdit({
       ...employeeToEdit,
       firstName
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Last Name', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Last Name', 'employee-management-system'),
     value: employeeToEdit.lastName,
     onChange: lastName => setEmployeeToEdit({
       ...employeeToEdit,
       lastName
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email', 'employee-management-system'),
     type: "email",
     value: employeeToEdit.email,
     onChange: email => setEmployeeToEdit({
@@ -417,7 +417,7 @@ const Employees = () => {
       email
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Department', 'employee-management-system'),
     value: employeeToEdit.department,
     options: [{
       label: 'Sales',
@@ -434,7 +434,7 @@ const Employees = () => {
       department
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Position', 'employee-management-system'),
     value: employeeToEdit.position,
     onChange: position => setEmployeeToEdit({
       ...employeeToEdit,
@@ -444,7 +444,7 @@ const Employees = () => {
     className: "components-base-control"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "components-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hire Date', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "date",
     className: "components-text-control__input",
     value: employeeToEdit.hireDate,
@@ -458,7 +458,7 @@ const Employees = () => {
     },
     variant: "primary",
     onClick: handleEditEmployee
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Update Employee', 'ems'))))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Update Employee', 'employee-management-system'))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Employees);
 
@@ -498,19 +498,19 @@ const AdminLayout = ({
     variant: currentPath === 'dashboard' ? 'primary' : 'secondary',
     className: "nav-button",
     onClick: () => onNavigate('dashboard')
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Dashboard', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Dashboard', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: currentPath === 'employees' ? 'primary' : 'secondary',
     className: "nav-button",
     onClick: () => onNavigate('employees')
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employees', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: currentPath === 'sales' ? 'primary' : 'secondary',
     className: "nav-button",
     onClick: () => onNavigate('sales')
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sales', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sales', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: currentPath === 'settings' ? 'primary' : 'secondary',
     className: "nav-button",
     onClick: () => onNavigate('settings')
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'ems')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'employee-management-system')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-admin-content"
   }, children));
 };
@@ -585,8 +585,8 @@ const Sales = () => {
       console.error('Failed to download CSV:', error);
     }
   };
-  if (isLoading) return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Loading...', 'ems'));
-  if (error) return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Error loading sales:', 'ems'), " ", error);
+  if (isLoading) return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Loading...', 'employee-management-system'));
+  if (error) return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Error loading sales:', 'employee-management-system'), " ", error);
 
   // Group sales by employee
   const salesByEmployee = sales.reduce((acc, sale) => {
@@ -601,17 +601,17 @@ const Sales = () => {
   }, {});
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-sales"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sales Reports', 'ems')), Object.entries(salesByEmployee).map(([employeeId, data]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sales Reports', 'employee-management-system')), Object.entries(salesByEmployee).map(([employeeId, data]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
     key: employeeId,
     className: "employee-sales-card"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, data.employee_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     isPrimary: true,
     onClick: () => handleDownloadCSV(employeeId)
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Download CSV', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Download CSV', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
     className: "wp-list-table widefat fixed striped"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Amount', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Description', 'ems')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, data.sales.map(sale => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Amount', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Description', 'employee-management-system')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, data.sales.map(sale => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", {
     key: sale.id
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(new Date(sale.date), 'yyyy-MM-dd')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, "$", sale.amount.toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, sale.description)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tfoot", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total:', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "$", data.sales.reduce((sum, sale) => sum + parseFloat(sale.amount), 0).toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null))))))));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(new Date(sale.date), 'yyyy-MM-dd')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, "$", sale.amount.toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, sale.description)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tfoot", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total:', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "$", data.sales.reduce((sum, sale) => sum + parseFloat(sale.amount), 0).toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null))))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sales);
 
@@ -663,7 +663,7 @@ const Settings = () => {
         }
       });
       if (!response.ok) {
-        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch settings', 'ems'));
+        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to fetch settings', 'employee-management-system'));
       }
       const data = await response.json();
       setSettings(data);
@@ -683,7 +683,7 @@ const Settings = () => {
 
     // Check if settings have changed
     if (settings.dateFormat === originalSettings.dateFormat && settings.emailNotifications === originalSettings.emailNotifications) {
-      setMessage((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No changes detected', 'ems'));
+      setMessage((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No changes detected', 'employee-management-system'));
       setIsSaving(false);
       return;
     }
@@ -697,9 +697,9 @@ const Settings = () => {
         body: JSON.stringify(settings)
       });
       if (response.ok) {
-        setMessage((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings saved successfully', 'ems'));
+        setMessage((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings saved successfully', 'employee-management-system'));
       } else {
-        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to save settings', 'ems'));
+        throw new Error((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to save settings', 'employee-management-system'));
       }
     } catch (error) {
       console.error('Error saving settings:', error);
@@ -721,10 +721,10 @@ const Settings = () => {
   }, message), error && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
     status: "error",
     isDismissible: false
-  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, error), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-settings-form"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date Format', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date Format', 'employee-management-system'),
     value: settings.dateFormat,
     options: [{
       label: 'YYYY-MM-DD',
@@ -741,13 +741,13 @@ const Settings = () => {
       dateFormat
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email Notifications', 'ems'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email Notifications', 'employee-management-system'),
     value: settings.emailNotifications,
     options: [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enabled', 'ems'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enabled', 'employee-management-system'),
       value: 'yes'
     }, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Disabled', 'ems'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Disabled', 'employee-management-system'),
       value: 'no'
     }],
     onChange: emailNotifications => setSettings({
@@ -761,7 +761,7 @@ const Settings = () => {
     onClick: handleSave,
     isBusy: isSaving,
     disabled: isSaving
-  }, isSaving ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Saving...', 'ems') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save Settings', 'ems')))))));
+  }, isSaving ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Saving...', 'employee-management-system') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save Settings', 'employee-management-system')))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Settings);
 
@@ -837,7 +837,7 @@ const EmployeeDashboard = () => {
       });
       setMessage({
         type: 'success',
-        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale recorded successfully!', 'ems')
+        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale recorded successfully!', 'employee-management-system')
       });
       e.target.reset();
 
@@ -846,7 +846,7 @@ const EmployeeDashboard = () => {
     } catch (error) {
       setMessage({
         type: 'error',
-        text: error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to save sale record.', 'ems')
+        text: error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Failed to save sale record.', 'employee-management-system')
       });
     } finally {
       setIsSubmitting(false);
@@ -857,7 +857,7 @@ const EmployeeDashboard = () => {
     className: "employee-dashboard"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "welcome-section"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Welcome', 'ems'), ", ", userData.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Welcome', 'employee-management-system'), ", ", userData.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "current-date"
   }, currentDate)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "dashboard-stats-wrapper"
@@ -873,7 +873,7 @@ const EmployeeDashboard = () => {
     className: "stat-icon"
   }, "\uD83D\uDCB0"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total Sales', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Total Sales', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "stat-value"
   }, "$", userData.totalSales.toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-trend positive"
@@ -887,11 +887,11 @@ const EmployeeDashboard = () => {
     className: "stat-icon"
   }, "\uD83D\uDCCA"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Monthly Reports', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Monthly Reports', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "stat-value"
   }, userData.monthlyReports), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-trend"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This month', 'ems'))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This month', 'employee-management-system'))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
     className: "stat-card"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "stat-content"
@@ -901,13 +901,13 @@ const EmployeeDashboard = () => {
     className: "stat-icon"
   }, "\u2B50"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Highest Sale', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Highest Sale', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "stat-value"
   }, "$", userData.highestSale.toLocaleString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "stat-trend"
   }, userData.highestSaleDate)))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
     className: "sales-form"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Quick Sales Entry', 'ems'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, message && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardHeader, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Quick Sales Entry', 'employee-management-system'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, null, message && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: `notice notice-${message.type}`
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, message.text)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     className: "sales-report-form",
@@ -918,7 +918,7 @@ const EmployeeDashboard = () => {
     className: "form-group"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "date"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "date",
     id: "date",
     name: "date",
@@ -927,7 +927,7 @@ const EmployeeDashboard = () => {
     className: "form-group"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "amount"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Amount', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Amount', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "number",
     id: "amount",
     name: "amount",
@@ -938,17 +938,17 @@ const EmployeeDashboard = () => {
     className: "form-group"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "description"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Description', 'ems')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("textarea", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Description', 'employee-management-system')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("textarea", {
     id: "description",
     name: "description",
     rows: "4",
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter sale details...', 'ems'),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter sale details...', 'employee-management-system'),
     required: true
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "submit",
     className: "button button-primary",
     disabled: isSubmitting
-  }, isSubmitting ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Saving...', 'ems') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Submit Report', 'ems') + ' →')))));
+  }, isSubmitting ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Saving...', 'employee-management-system') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Submit Report', 'employee-management-system') + ' →')))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmployeeDashboard);
 

@@ -16,7 +16,7 @@
  * Requires PHP: 7.4
  * Author: Maruf
  * Author URI: https://github.com/marufmks
- * Text Domain: ems
+ * Text Domain: employee-management-system
  * Domain Path: /languages
  * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt

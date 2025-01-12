@@ -38,7 +38,7 @@ const Settings = () => {
             });
 
             if (!response.ok) {
-                throw new Error(__('Failed to fetch settings', 'ems'));
+                throw new Error(__('Failed to fetch settings', 'employee-management-system'));
             }
 
             const data = await response.json();
@@ -61,7 +61,7 @@ const Settings = () => {
         // Check if settings have changed
         if (settings.dateFormat === originalSettings.dateFormat &&
             settings.emailNotifications === originalSettings.emailNotifications) {
-            setMessage(__('No changes detected', 'ems'));
+            setMessage(__('No changes detected', 'employee-management-system'));
             setIsSaving(false);
             return;
         }
@@ -77,9 +77,9 @@ const Settings = () => {
             });
 
             if (response.ok) {
-                setMessage(__('Settings saved successfully', 'ems'));
+                setMessage(__('Settings saved successfully', 'employee-management-system'));
             } else {
-                throw new Error(__('Failed to save settings', 'ems'));
+                throw new Error(__('Failed to save settings', 'employee-management-system'));
             }
         } catch (error) {
             console.error('Error saving settings:', error);
@@ -112,12 +112,12 @@ const Settings = () => {
             
             <Card>
                 <CardHeader>
-                    <h2>{__('Settings', 'ems')}</h2>
+                    <h2>{__('Settings', 'employee-management-system')}</h2>
                 </CardHeader>
                 <CardBody>
                     <div className="ems-settings-form">
                         <SelectControl
-                            label={__('Date Format', 'ems')}
+                            label={__('Date Format', 'employee-management-system')}
                             value={settings.dateFormat}
                             options={[
                                 { label: 'YYYY-MM-DD', value: 'Y-m-d' },
@@ -127,11 +127,11 @@ const Settings = () => {
                             onChange={(dateFormat) => setSettings({...settings, dateFormat})}
                         />
                         <SelectControl
-                            label={__('Email Notifications', 'ems')}
+                            label={__('Email Notifications', 'employee-management-system')}
                             value={settings.emailNotifications}
                             options={[
-                                { label: __('Enabled', 'ems'), value: 'yes' },
-                                { label: __('Disabled', 'ems'), value: 'no' }
+                                { label: __('Enabled', 'employee-management-system'), value: 'yes' },
+                                { label: __('Disabled', 'employee-management-system'), value: 'no' }
                             ]}
                             onChange={(emailNotifications) => setSettings({...settings, emailNotifications})}
                         />
@@ -142,7 +142,7 @@ const Settings = () => {
                                 isBusy={isSaving}
                                 disabled={isSaving}
                             >
-                                {isSaving ? __('Saving...', 'ems') : __('Save Settings', 'ems')}
+                                {isSaving ? __('Saving...', 'employee-management-system') : __('Save Settings', 'employee-management-system')}
                             </Button>
                         </div>
                     </div>

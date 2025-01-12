@@ -32,7 +32,7 @@ const Dashboard = () => {
             });
             
             if (!response.ok) {
-                throw new Error(__('Failed to fetch statistics', 'ems'));
+                throw new Error(__('Failed to fetch statistics', 'employee-management-system'));
             }
             
             const employees = await response.json();
@@ -74,14 +74,14 @@ const Dashboard = () => {
             
             <Card>
                 <CardHeader>
-                    <h2>{__('Dashboard Overview', 'ems')}</h2>
+                    <h2>{__('Dashboard Overview', 'employee-management-system')}</h2>
                 </CardHeader>
                 <CardBody>
                     <Flex gap={4} className="summary-cards">
                         <FlexItem>
                             <Card>
                                 <CardBody>
-                                    <h3>{__('Total Employees', 'ems')}</h3>
+                                    <h3>{__('Total Employees', 'employee-management-system')}</h3>
                                     <p className="stat-number">{stats.totalEmployees}</p>
                                 </CardBody>
                             </Card>
@@ -89,7 +89,7 @@ const Dashboard = () => {
                     </Flex>
 
                     <div className="department-stats">
-                        <h3>{__('Employees by Department', 'ems')}</h3>
+                        <h3>{__('Employees by Department', 'employee-management-system')}</h3>
                         {Object.entries(stats.departments).map(([department, count]) => (
                             <div key={department} className="department-stat">
                                 <span className="department-name">

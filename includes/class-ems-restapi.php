@@ -3,25 +3,29 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class EMS_RestAPI {
+class EMS_RestAPI
+{
     private static $instance = null;
     private $namespace = 'ems/v1';
     private $settings_key = 'ems_settings';
     private $database;
 
-    private function __construct() {
+    private function __construct()
+    {
         add_action('rest_api_init', array($this, 'register_routes'));
         $this->database = EMS_Database::instance();
     }
 
-    public static function instance() {
+    public static function instance()
+    {
         if (is_null(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function register_routes() {
+    public function register_routes()
+    {
         // Register employees endpoints
         register_rest_route($this->namespace, '/employees', array(
             array(
@@ -69,7 +73,7 @@ class EMS_RestAPI {
         register_rest_route('ems/v1', '/sales', array(
             'methods' => 'POST',
             'callback' => array($this, 'save_sale'),
-            'permission_callback' => function() {
+            'permission_callback' => function () {
                 return is_user_logged_in();
             },
         ));
@@ -77,7 +81,7 @@ class EMS_RestAPI {
         register_rest_route('ems/v1', '/employee/stats', array(
             'methods' => 'GET',
             'callback' => array($this, 'get_employee_stats'),
-            'permission_callback' => function() {
+            'permission_callback' => function () {
                 return is_user_logged_in();
             },
         ));
@@ -101,22 +105,25 @@ class EMS_RestAPI {
         ));
     }
 
-    public function check_admin_permission() {
+    public function check_admin_permission()
+    {
         return current_user_can('manage_options');
     }
 
-    public function get_settings($request) {
+    public function get_settings($request)
+    {
         $settings = get_option($this->settings_key, array(
             'dateFormat' => 'Y-m-d',
             'emailNotifications' => 'yes'
         ));
-        
+
         return new WP_REST_Response($settings, 200);
     }
 
-    public function update_settings($request) {
+    public function update_settings($request)
+    {
         $params = $request->get_params();
-        
+
         // Fetch current settings
         $current_settings = get_option($this->settings_key, array(
             'dateFormat' => 'Y-m-d',
@@ -124,43 +131,61 @@ class EMS_RestAPI {
         ));
 
         // Check if the new settings are different from the current settings
-        if ($current_settings['dateFormat'] === $params['dateFormat'] &&
-            $current_settings['emailNotifications'] === $params['emailNotifications']) {
-            return new WP_REST_Response(__('No changes detected', 'ems'), 200);
+        if (
+            $current_settings['dateFormat'] === $params['dateFormat'] &&
+            $current_settings['emailNotifications'] === $params['emailNotifications']
+        ) {
+            return new WP_REST_Response(__('No changes detected', 'employee-management-system'), 200);
         }
 
         $settings = array(
             'dateFormat' => sanitize_text_field($params['dateFormat']),
             'emailNotifications' => sanitize_text_field($params['emailNotifications'])
         );
-        
+
         $result = update_option($this->settings_key, $settings);
-        
+
         if ($result === false) {
-            return new WP_Error('update_failed', __('Failed to update settings', 'ems'), array('status' => 500));
+            return new WP_Error('update_failed', __('Failed to update settings', 'employee-management-system'), array('status' => 500));
         }
-        
+
         return new WP_REST_Response($settings, 200);
     }
 
-    public function get_employees($request) {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
-        
-        $employees = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC");
-        
-        // Always return an array, even if empty
+    /**
+     * Get employees with caching.
+     *
+     * @param WP_REST_Request $request The request object.
+     * @return WP_REST_Response
+     */
+    public function get_employees($request)
+    {
+        // Try to get from cache first
+        $employees = wp_cache_get('ems_all_employees');
+
+        if (false === $employees) {
+            global $wpdb;
+
+            $employees = $wpdb->get_results(
+                $wpdb->prepare("SELECT * FROM {$wpdb->prefix}ems_employees ORDER BY id DESC")
+            );
+
+            // Cache for 5 minutes
+            wp_cache_set('ems_all_employees', $employees, '', 300);
+        }
+
         $employees = is_array($employees) ? $employees : array();
-        
         return new WP_REST_Response($employees, 200);
     }
 
-    public function create_employee($request) {
+    /**
+     * Create employee with cache invalidation.
+     */
+    public function create_employee($request)
+    {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
-        
         $params = $request->get_params();
-        
+
         $employee_data = array(
             'firstName' => sanitize_text_field($params['firstName']),
             'lastName' => sanitize_text_field($params['lastName']),
@@ -171,33 +196,38 @@ class EMS_RestAPI {
             'created_at' => current_time('mysql'),
             'updated_at' => current_time('mysql')
         );
-        
-        $result = $wpdb->insert($table_name, $employee_data);
-        
+
+        $result = $wpdb->insert($wpdb->prefix . 'ems_employees', $employee_data);
+
         if ($result === false) {
             return new WP_Error('insert_failed', 'Failed to create employee', array('status' => 500));
         }
-        
+
+        // Invalidate cache
+        wp_cache_delete('ems_all_employees');
+
         $employee_data['id'] = $wpdb->insert_id;
         return new WP_REST_Response($employee_data, 201);
     }
 
-    public function delete_employee($request) {
+    public function delete_employee($request)
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'ems_employees';
-        
+
         $id = (int) $request['id'];
-        
+
         $result = $wpdb->delete($table_name, array('id' => $id));
-        
+
         if ($result === false) {
             return new WP_Error('delete_failed', 'Failed to delete employee', array('status' => 500));
         }
-        
+
         return new WP_REST_Response(null, 204);
     }
 
-    public function update_employee($request) {
+    public function update_employee($request)
+    {
         $id = $request['id'];
         $employee_data = $request->get_json_params();
 
@@ -209,26 +239,28 @@ class EMS_RestAPI {
         $position = sanitize_text_field($employee_data['position']);
         $hire_date = sanitize_text_field($employee_data['hireDate']);
 
-        // Debugging: Log the data being processed
-        error_log("Updating employee ID: $id");
-        error_log(print_r($employee_data, true));
-
-        // Update employee in the database
+        // Remove debug logging
         $updated = $this->update_employee_data($id, $first_name, $last_name, $email, $department, $position, $hire_date);
 
         if ($updated) {
-            return new WP_REST_Response(__('Employee updated successfully', 'ems'), 200);
+            return new WP_REST_Response(
+                __('Employee updated successfully', 'employee-management-system'),
+                200
+            );
         } else {
-            return new WP_REST_Response(__('Failed to update employee', 'ems'), 500);
+            return new WP_REST_Response(
+                __('Failed to update employee', 'employee-management-system'),
+                500
+            );
         }
     }
 
-    public function update_employee_data($id, $first_name, $last_name, $email, $department, $position, $hire_date) {
+    public function update_employee_data($id, $first_name, $last_name, $email, $department, $position, $hire_date)
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'ems_employees';
 
-        // Debugging: Log the SQL query
-        $wpdb->show_errors();
+        // Remove debug logging and show_errors
         $result = $wpdb->update(
             $table_name,
             array(
@@ -244,20 +276,14 @@ class EMS_RestAPI {
             array('%d')
         );
 
-        if ($result === false) {
-            error_log("Database update failed: " . $wpdb->last_error);
-        }
-
         return $result !== false;
     }
 
     /**
-     * Save sale record with proper validation and sanitization.
-     *
-     * @param WP_REST_Request $request The request object.
-     * @return WP_REST_Response|WP_Error
+     * Save sale with cache invalidation.
      */
-    public function save_sale($request) {
+    public function save_sale($request)
+    {
         global $wpdb;
 
         $params = $request->get_params();
@@ -267,20 +293,25 @@ class EMS_RestAPI {
         $required_fields = ['date', 'amount', 'description'];
         foreach ($required_fields as $field) {
             if (empty($params[$field])) {
-                /* translators: %s: Name of the missing field */
+                // translators: %s is the name of the required field that is missing (e.g., 'date', 'amount', or 'description').
                 return new WP_Error(
                     'missing_field',
-                    sprintf(__('Missing required field: %s', 'ems'), $field),
+                    sprintf(
+                        __('Missing required field: %s', 'employee-management-system'),
+                        $field
+                    ),
                     ['status' => 400]
                 );
             }
         }
 
+
+
         // Validate amount
         if (!is_numeric($params['amount']) || $params['amount'] <= 0) {
             return new WP_Error(
                 'invalid_amount',
-                __('Amount must be a positive number', 'ems'),
+                __('Amount must be a positive number', 'employee-management-system'),
                 ['status' => 400]
             );
         }
@@ -290,7 +321,7 @@ class EMS_RestAPI {
         if (!strtotime($date)) {
             return new WP_Error(
                 'invalid_date',
-                __('Invalid date format', 'ems'),
+                __('Invalid date format', 'employee-management-system'),
                 ['status' => 400]
             );
         }
@@ -311,106 +342,135 @@ class EMS_RestAPI {
         if (false === $result) {
             return new WP_Error(
                 'db_error',
-                __('Could not save sale record', 'ems'),
+                __('Could not save sale record', 'employee-management-system'),
                 ['status' => 500]
             );
         }
 
+        // Invalidate relevant caches
+        wp_cache_delete('ems_employee_stats_' . $user_id);
+        wp_cache_delete('ems_all_sales');
+
         return rest_ensure_response([
             'success' => true,
-            'message' => __('Sale recorded successfully', 'ems'),
+            'message' => __('Sale recorded successfully', 'employee-management-system'),
             'id' => $wpdb->insert_id
         ]);
     }
 
     /**
-     * Get employee stats with proper data sanitization.
-     *
-     * @return WP_REST_Response
+     * Get employee stats with caching.
      */
-    public function get_employee_stats() {
-        global $wpdb;
+    public function get_employee_stats()
+    {
         $user_id = get_current_user_id();
-        $current_user = wp_get_current_user();
+        $cache_key = 'ems_employee_stats_' . $user_id;
 
-        // Prepare all queries with proper escaping
-        $total_sales = $wpdb->get_var($wpdb->prepare(
-            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
-            WHERE user_id = %d",
-            $user_id
-        ));
+        // Try to get from cache first
+        $stats = wp_cache_get($cache_key);
 
-        // Get monthly reports count with null check
-        $monthly_reports = $wpdb->get_var($wpdb->prepare(
-            "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employee_sales 
-            WHERE user_id = %d 
-            AND MONTH(date) = MONTH(CURRENT_DATE()) 
-            AND YEAR(date) = YEAR(CURRENT_DATE())",
-            $user_id
-        ));
+        if (false === $stats) {
+            global $wpdb;
+            $current_user = wp_get_current_user();
 
-        // Get highest sale with null check
-        $highest_sale = $wpdb->get_row($wpdb->prepare(
-            "SELECT amount, date FROM {$wpdb->prefix}ems_employee_sales 
-            WHERE user_id = %d 
-            AND amount IS NOT NULL 
-            ORDER BY amount DESC LIMIT 1",
-            $user_id
-        ));
+            // Get total sales
+            $total_sales = $wpdb->get_var($wpdb->prepare(
+                "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d",
+                $user_id
+            ));
 
-        // Calculate sales trend
-        $current_month_sales = $wpdb->get_var($wpdb->prepare(
-            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
-            WHERE user_id = %d 
-            AND MONTH(date) = MONTH(CURRENT_DATE()) 
-            AND YEAR(date) = YEAR(CURRENT_DATE())",
-            $user_id
-        )) ?: 0;
+            // Get monthly reports
+            $monthly_reports = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employee_sales 
+                WHERE user_id = %d 
+                AND MONTH(date) = MONTH(CURRENT_DATE()) 
+                AND YEAR(date) = YEAR(CURRENT_DATE())",
+                $user_id
+            ));
 
-        $last_month_sales = $wpdb->get_var($wpdb->prepare(
-            "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
-            WHERE user_id = %d 
-            AND MONTH(date) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
-            AND YEAR(date) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))",
-            $user_id
-        )) ?: 0;
+            // Get highest sale
+            $highest_sale = $wpdb->get_row($wpdb->prepare(
+                "SELECT amount, date FROM {$wpdb->prefix}ems_employee_sales 
+                WHERE user_id = %d AND amount IS NOT NULL 
+                ORDER BY amount DESC LIMIT 1",
+                $user_id
+            ));
 
-        // Calculate trend percentage
-        $sales_trend = 0;
-        if ($last_month_sales > 0) {
-            $sales_trend = (($current_month_sales - $last_month_sales) / $last_month_sales) * 100;
-        } elseif ($current_month_sales > 0) {
-            $sales_trend = 100; // If last month was 0 and this month has sales, show 100% increase
+            // Calculate sales trend
+            $current_month_sales = $wpdb->get_var($wpdb->prepare(
+                "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
+                WHERE user_id = %d 
+                AND MONTH(date) = MONTH(CURRENT_DATE()) 
+                AND YEAR(date) = YEAR(CURRENT_DATE())",
+                $user_id
+            )) ?: 0;
+
+            $last_month_sales = $wpdb->get_var($wpdb->prepare(
+                "SELECT COALESCE(SUM(amount), 0) FROM {$wpdb->prefix}ems_employee_sales 
+                WHERE user_id = %d 
+                AND MONTH(date) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
+                AND YEAR(date) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))",
+                $user_id
+            )) ?: 0;
+
+            // Calculate trend
+            $sales_trend = 0;
+            if ($last_month_sales > 0) {
+                $sales_trend = (($current_month_sales - $last_month_sales) / $last_month_sales) * 100;
+            } elseif ($current_month_sales > 0) {
+                $sales_trend = 100;
+            }
+
+            $stats = [
+                'name' => sanitize_text_field($current_user->display_name),
+                'totalSales' => (float) $total_sales,
+                'monthlyReports' => absint($monthly_reports),
+                'highestSale' => $highest_sale ? (float) $highest_sale->amount : 0,
+                'highestSaleDate' => $highest_sale ? esc_html($this->format_date($highest_sale->date)) : '',
+                'salesTrend' => round($sales_trend, 1)
+            ];
+
+            // Cache for 5 minutes
+            wp_cache_set($cache_key, $stats, '', 300);
         }
 
-        return rest_ensure_response([
-            'name' => sanitize_text_field($current_user->display_name),
-            'totalSales' => (float) $total_sales,
-            'monthlyReports' => absint($monthly_reports),
-            'highestSale' => $highest_sale ? (float) $highest_sale->amount : 0,
-            'highestSaleDate' => $highest_sale ? esc_html($this->format_date($highest_sale->date)) : '',
-            'salesTrend' => round($sales_trend, 1)
-        ]);
+        return rest_ensure_response($stats);
     }
 
-    private function format_date($date) {
+    private function format_date($date)
+    {
         return date_i18n(get_option('date_format'), strtotime($date));
     }
 
-    public function get_all_sales() {
-        global $wpdb;
-        
-        $sales = $wpdb->get_results($wpdb->prepare(
-            "SELECT s.*, u.display_name as employee_name 
-            FROM {$wpdb->prefix}ems_employee_sales s 
-            LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
-            ORDER BY s.date DESC"
-        ));
+    /**
+     * Get all sales with caching.
+     */
+    public function get_all_sales()
+    {
+        // Try to get from cache first
+        $sales = wp_cache_get('ems_all_sales');
+
+        if (false === $sales) {
+            global $wpdb;
+
+            $sales = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT s.*, u.display_name as employee_name 
+                    FROM {$wpdb->prefix}ems_employee_sales s 
+                    LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
+                    ORDER BY s.date DESC"
+                )
+            );
+
+            // Cache for 5 minutes
+            wp_cache_set('ems_all_sales', $sales, '', 300);
+        }
 
         return rest_ensure_response($sales);
     }
 
-    public function get_employee_sales_for_download($request) {
+    public function get_employee_sales_for_download($request)
+    {
         global $wpdb;
         $employee_id = $request['id'];
 

@@ -11,28 +11,28 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
                         className="nav-button"
                         onClick={() => onNavigate('dashboard')}
                     >
-                        {__('Dashboard', 'ems')}
+                        {__('Dashboard', 'employee-management-system')}
                     </Button>
                     <Button
                         variant={currentPath === 'employees' ? 'primary' : 'secondary'}
                         className="nav-button"
                         onClick={() => onNavigate('employees')}
                     >
-                        {__('Employees', 'ems')}
+                        {__('Employees', 'employee-management-system')}
                     </Button>
                     <Button
                         variant={currentPath === 'sales' ? 'primary' : 'secondary'}
                         className="nav-button"
                         onClick={() => onNavigate('sales')}
                     >
-                        {__('Sales', 'ems')}
+                        {__('Sales', 'employee-management-system')}
                     </Button>
                     <Button
                         variant={currentPath === 'settings' ? 'primary' : 'secondary'}
                         className="nav-button"
                         onClick={() => onNavigate('settings')}
                     >
-                        {__('Settings', 'ems')}
+                        {__('Settings', 'employee-management-system')}
                     </Button>
                 </nav>
             </div>
