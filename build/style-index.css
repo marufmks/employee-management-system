@@ -1,0 +1,106 @@
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/components/admin/Sales/style.css ***!
+  \******************************************************************************************************************************************************************************************/
+.ems-sales {
+    padding: 20px;
+}
+
+.ems-sales-header {
+    margin-bottom: 30px;
+}
+
+.ems-sales-header h1 {
+    margin-bottom: 20px;
+    color: #1e1e1e;
+}
+
+.shortcode-info-card {
+    background: #fff;
+    border: 1px solid #e2e4e7;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.shortcode-info-content {
+    padding: 10px;
+}
+
+.shortcode-info-content h2 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    color: #1e1e1e;
+}
+
+.shortcode-container {
+    display: inline-flex;
+    align-items: center;
+    background: #f0f0f1;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 10px 0;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    outline: none;
+    border: 1px solid #ddd;
+}
+
+.shortcode-container:hover,
+.shortcode-container:focus {
+    background: #e0e0e1;
+    border-color: #999;
+    box-shadow: 0 0 0 1px #999;
+}
+
+.shortcode-container:active {
+    transform: scale(0.98);
+}
+
+.shortcode-container code {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.copy-hint {
+    font-size: 12px;
+    color: #757575;
+    border-left: 1px solid #ddd;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+.copy-notice {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.employee-sales-card {
+    margin-bottom: 20px;
+}
+
+.employee-sales-card .components-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-sales-card h2 {
+    margin: 0;
+} 
+
+/*# sourceMappingURL=style-index.css.map*/

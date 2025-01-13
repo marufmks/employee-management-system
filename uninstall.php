@@ -7,56 +7,38 @@
 
 // If uninstall not called from WordPress, exit.
 if (!defined('WP_UNINSTALL_PLUGIN')) {
-    exit;
+    die;
 }
 
-/**
- * Clean up plugin data
- */
-function ems_cleanup() {
-    global $wpdb;
+// Check if we should delete data
+$delete_data = get_option('ems_delete_data_uninstall', false);
 
-    // Delete plugin options
-    delete_option('ems_settings');
-    delete_option('ems_activation_time');
-
-    // Define tables to remove
-    $tables = array(
-        $wpdb->prefix . 'ems_employees',
-        $wpdb->prefix . 'ems_employee_sales'
+if ($delete_data) {
+    // Delete all plugin options
+    $options = array(
+        'ems_date_format',
+        'ems_currency_symbol',
+        'ems_currency_position',
+        'ems_email_notifications',
+        'ems_admin_email',
+        'ems_notify_new_sale',
+        'ems_notify_employee_join',
+        'ems_notify_employee_leave',
+        'ems_allow_employee_export',
+        'ems_sales_report_period',
+        'ems_max_sale_amount',
+        'ems_require_sale_description',
+        'ems_delete_data_uninstall',
+        'ems_debug_mode',
+        'ems_cache_timeout'
     );
 
-    // Remove tables
-    foreach ($tables as $table) {
-        // Check if table exists before attempting to drop it
-        $table_exists = $wpdb->get_var(
-            $wpdb->prepare(
-                "SHOW TABLES LIKE %s",
-                $table
-            )
-        );
-
-        if ($table_exists) {
-            // Drop table
-            $wpdb->query("DROP TABLE IF EXISTS " . esc_sql($table)); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        }
+    foreach ($options as $option) {
+        delete_option($option);
     }
 
-    // Clear any cached data
-    wp_cache_flush();
-
-    // Clear any transients
-    delete_transient('ems_all_employees');
-    delete_transient('ems_all_sales');
-
-    // Clean up user meta if any
-    $wpdb->query(
-        $wpdb->prepare(
-            "DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s",
-            'ems_%'
-        )
-    );
+    // Delete tables if they exist
+    global $wpdb;
+    $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}ems_employees");
+    $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}ems_employee_sales");
 }
-
-// Run cleanup
-ems_cleanup();

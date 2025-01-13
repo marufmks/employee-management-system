@@ -12,26 +12,78 @@ const EmployeeDashboard = () => {
         totalSales: 0,
         monthlyReports: 0,
         highestSale: 0,
-        highestSaleDate: ''
+        highestSaleDate: '',
+        salesTrend: 0,
+        employeeData: null
     });
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [hasAccess, setHasAccess] = useState(false);
 
     useEffect(() => {
-        // Verify nonce before making requests
         if (window.emsData && window.emsData.nonce) {
             apiFetch.use(apiFetch.createNonceMiddleware(window.emsData.nonce));
         }
-        fetchUserData();
+        checkAccess();
     }, []);
+
+    const checkAccess = async () => {
+        try {
+            setIsLoading(true);
+            const response = await apiFetch({
+                path: 'ems/v1/employee/access',
+                method: 'GET'
+            });
+
+            if (response.status === 'success') {
+                setHasAccess(true);
+                fetchUserData();
+            }
+        } catch (error) {
+            setError(error.message || __('Access denied.', 'employee-management-system'));
+            setHasAccess(false);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const fetchUserData = async () => {
         try {
+            setIsLoading(true);
+            setError(null);
+            
             const response = await apiFetch({
                 path: 'ems/v1/employee/stats',
                 method: 'GET'
             });
-            setUserData(response);
+
+            if (!response) {
+                throw new Error(__('No data received from server', 'employee-management-system'));
+            }
+
+            const {
+                name = __('Employee', 'employee-management-system'),
+                totalSales = 0,
+                monthlyReports = 0,
+                highestSale = 0,
+                highestSaleDate = '',
+                salesTrend = 0,
+                employeeData = null
+            } = response;
+
+            setUserData({
+                name,
+                totalSales,
+                monthlyReports,
+                highestSale,
+                highestSaleDate,
+                salesTrend,
+                employeeData
+            });
         } catch (error) {
-            console.error('Failed to fetch user data:', error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -73,8 +125,33 @@ const EmployeeDashboard = () => {
 
     const currentDate = format(new Date(), 'MMMM dd, yyyy');
 
+    if (isLoading) {
+        return (
+            <div className="ems-frontend ems-dashboard-wrapper">
+                <div className="ems-loading">
+                    {__('Loading...', 'employee-management-system')}
+                </div>
+            </div>
+        );
+    }
+
+    if (!hasAccess || error) {
+        return (
+            <div className="ems-frontend ems-dashboard-wrapper">
+                <div className="access-denied">
+                    <div className="notice notice-error">
+                        <p>{error || __('Access denied.', 'employee-management-system')}</p>
+                    </div>
+                    <p className="access-denied-help">
+                        {__('If you believe this is an error, please contact your administrator.', 'employee-management-system')}
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="employee-dashboard">
+        <div className="ems-frontend ems-dashboard-wrapper">
             {/* Welcome Section */}
             <div className="welcome-section">
                 <h1>{__('Welcome', 'employee-management-system')}, {userData.name}</h1>
@@ -91,9 +168,11 @@ const EmployeeDashboard = () => {
                                     <span className="stat-icon">💰</span>
                                     <span className="stat-label">{__('Total Sales', 'employee-management-system')}</span>
                                 </div>
-                                <p className="stat-value">${userData.totalSales.toLocaleString()}</p>
+                                <p className="stat-value">
+                                    ${(userData.totalSales || 0).toLocaleString()}
+                                </p>
                                 <span className="stat-trend positive">
-                                    {userData.salesTrend > 0 ? '↑' : '↓'} {Math.abs(userData.salesTrend)}%
+                                    {(userData.salesTrend || 0) > 0 ? '↑' : '↓'} {Math.abs(userData.salesTrend || 0)}%
                                 </span>
                             </div>
                         </CardBody>
@@ -105,7 +184,7 @@ const EmployeeDashboard = () => {
                                     <span className="stat-icon">📊</span>
                                     <span className="stat-label">{__('Monthly Reports', 'employee-management-system')}</span>
                                 </div>
-                                <p className="stat-value">{userData.monthlyReports}</p>
+                                <p className="stat-value">{userData.monthlyReports || 0}</p>
                                 <span className="stat-trend">
                                     {__('This month', 'employee-management-system')}
                                 </span>
@@ -119,9 +198,11 @@ const EmployeeDashboard = () => {
                                     <span className="stat-icon">⭐</span>
                                     <span className="stat-label">{__('Highest Sale', 'employee-management-system')}</span>
                                 </div>
-                                <p className="stat-value">${userData.highestSale.toLocaleString()}</p>
+                                <p className="stat-value">
+                                    ${(userData.highestSale || 0).toLocaleString()}
+                                </p>
                                 <span className="stat-trend">
-                                    {userData.highestSaleDate}
+                                    {userData.highestSaleDate || ''}
                                 </span>
                             </div>
                         </CardBody>
@@ -163,7 +244,7 @@ const EmployeeDashboard = () => {
                             <textarea 
                                 id="description" 
                                 name="description" 
-                                rows="4"
+                                rows={4}
                                 placeholder={__('Enter sale details...', 'employee-management-system')}
                                 required
                             ></textarea>

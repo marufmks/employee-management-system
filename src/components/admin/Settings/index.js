@@ -1,28 +1,38 @@
+import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import { 
     Card, 
     CardHeader, 
-    CardBody,
-    SelectControl,
+    CardBody, 
+    SelectControl, 
+    ToggleControl,
     TextControl,
     Button,
     Notice,
-    Spinner
+    Panel,
+    PanelBody
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
 const Settings = () => {
-    const [settings, setSettings] = useState({
-        dateFormat: 'Y-m-d',
-        emailNotifications: 'yes'
-    });
-    const [isSaving, setIsSaving] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-    const [originalSettings, setOriginalSettings] = useState({
+    const [isSaving, setIsSaving] = useState(false);
+    const [showNotice, setShowNotice] = useState(false);
+    const [noticeType, setNoticeType] = useState('success');
+    const [noticeMessage, setNoticeMessage] = useState('');
+    
+    const [settings, setSettings] = useState({
+        // General Settings
         dateFormat: 'Y-m-d',
-        emailNotifications: 'yes'
+        currencySymbol: '$',
+        currencyPosition: 'before',
+        
+        // Employee Dashboard Settings
+        maxSaleAmount: '999999',
+        requireSaleDescription: true,
+        
+        // System Settings
+        deleteDataOnUninstall: false
     });
 
     useEffect(() => {
@@ -31,123 +41,169 @@ const Settings = () => {
 
     const fetchSettings = async () => {
         try {
-            const response = await fetch(`${emsData.restUrl}/settings`, {
-                headers: {
-                    'X-WP-Nonce': emsData.nonce
-                }
+            const response = await apiFetch({
+                path: 'ems/v1/settings',
+                method: 'GET'
             });
-
-            if (!response.ok) {
-                throw new Error(__('Failed to fetch settings', 'employee-management-system'));
-            }
-
-            const data = await response.json();
-            setSettings(data);
-            setOriginalSettings(data);
-            setError('');
+            setSettings(response);
+            setIsLoading(false);
         } catch (error) {
-            console.error('Error fetching settings:', error);
-            setError(error.message);
-        } finally {
+            showNotification(error.message, 'error');
             setIsLoading(false);
         }
     };
 
-    const handleSave = async () => {
-        setIsSaving(true);
-        setMessage('');
-        setError('');
+    const validateSettings = () => {
+        const errors = [];
+        
+        if (!settings.adminEmail && settings.emailNotifications) {
+            errors.push(__('Admin email is required when notifications are enabled', 'employee-management-system'));
+        }
 
-        // Check if settings have changed
-        if (settings.dateFormat === originalSettings.dateFormat &&
-            settings.emailNotifications === originalSettings.emailNotifications) {
-            setMessage(__('No changes detected', 'employee-management-system'));
-            setIsSaving(false);
+        if (parseFloat(settings.maxSaleAmount) <= 0) {
+            errors.push(__('Maximum sale amount must be greater than 0', 'employee-management-system'));
+        }
+
+        return errors;
+    };
+
+    const saveSettings = async () => {
+        const errors = validateSettings();
+        if (errors.length > 0) {
+            errors.forEach(error => showNotification(error, 'error'));
             return;
         }
 
+        setIsSaving(true);
         try {
-            const response = await fetch(`${emsData.restUrl}/settings`, {
+            const response = await apiFetch({
+                path: 'ems/v1/settings',
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-WP-Nonce': emsData.nonce
-                },
-                body: JSON.stringify(settings)
+                data: settings
             });
 
-            if (response.ok) {
-                setMessage(__('Settings saved successfully', 'employee-management-system'));
+            if (response.success) {
+                showNotification(response.message, 'success');
             } else {
-                throw new Error(__('Failed to save settings', 'employee-management-system'));
+                throw new Error(response.message || __('Failed to save settings', 'employee-management-system'));
             }
         } catch (error) {
-            console.error('Error saving settings:', error);
-            setError(error.message);
-        } finally {
-            setIsSaving(false);
+            showNotification(error.message, 'error');
         }
+        setIsSaving(false);
+    };
+
+    const showNotification = (message, type = 'success') => {
+        setNoticeType(type);
+        setNoticeMessage(message);
+        setShowNotice(true);
+        setTimeout(() => setShowNotice(false), 3000);
     };
 
     if (isLoading) {
-        return (
-            <div className="ems-loading">
-                <Spinner />
-            </div>
-        );
+        return <div>{__('Loading...', 'employee-management-system')}</div>;
     }
 
     return (
-        <div className="ems-settings">
-            {message && (
-                <Notice status="success" isDismissible={false}>
-                    {message}
-                </Notice>
-            )}
-            {error && (
-                <Notice status="error" isDismissible={false}>
-                    {error}
-                </Notice>
-            )}
+        <div className="ems-admin-page ems-settings-page">
             
-            <Card>
-                <CardHeader>
-                    <h2>{__('Settings', 'employee-management-system')}</h2>
-                </CardHeader>
-                <CardBody>
-                    <div className="ems-settings-form">
-                        <SelectControl
-                            label={__('Date Format', 'employee-management-system')}
-                            value={settings.dateFormat}
-                            options={[
-                                { label: 'YYYY-MM-DD', value: 'Y-m-d' },
-                                { label: 'MM/DD/YYYY', value: 'm/d/Y' },
-                                { label: 'DD/MM/YYYY', value: 'd/m/Y' }
-                            ]}
-                            onChange={(dateFormat) => setSettings({...settings, dateFormat})}
-                        />
-                        <SelectControl
-                            label={__('Email Notifications', 'employee-management-system')}
-                            value={settings.emailNotifications}
-                            options={[
-                                { label: __('Enabled', 'employee-management-system'), value: 'yes' },
-                                { label: __('Disabled', 'employee-management-system'), value: 'no' }
-                            ]}
-                            onChange={(emailNotifications) => setSettings({...settings, emailNotifications})}
-                        />
-                        <div className="ems-settings-actions">
-                            <Button 
-                                variant="primary" 
-                                onClick={handleSave}
-                                isBusy={isSaving}
-                                disabled={isSaving}
-                            >
-                                {isSaving ? __('Saving...', 'employee-management-system') : __('Save Settings', 'employee-management-system')}
-                            </Button>
-                        </div>
-                    </div>
-                </CardBody>
-            </Card>
+
+            {showNotice && (
+                <Notice 
+                    status={noticeType}
+                    isDismissible={false}
+                    className="ems-notice"
+                >
+                    {noticeMessage}
+                </Notice>
+            )}
+
+            <div className="ems-settings-grid">
+                {/* General Settings */}
+                <Card className="ems-card">
+                    <Panel>
+                        <PanelBody title={__('General Settings', 'employee-management-system')} initialOpen={true}>
+                            <SelectControl
+                                label={__('Date Format', 'employee-management-system')}
+                                value={settings.dateFormat}
+                                options={[
+                                    { label: 'YYYY-MM-DD', value: 'Y-m-d' },
+                                    { label: 'MM/DD/YYYY', value: 'm/d/Y' },
+                                    { label: 'DD/MM/YYYY', value: 'd/m/Y' },
+                                    { label: 'YYYY.MM.DD', value: 'Y.m.d' }
+                                ]}
+                                onChange={(value) => setSettings({...settings, dateFormat: value})}
+                            />
+
+                            <TextControl
+                                label={__('Currency Symbol', 'employee-management-system')}
+                                value={settings.currencySymbol}
+                                onChange={(value) => setSettings({...settings, currencySymbol: value})}
+                            />
+
+                            <SelectControl
+                                label={__('Currency Position', 'employee-management-system')}
+                                value={settings.currencyPosition}
+                                options={[
+                                    { label: __('Before amount ($100)', 'employee-management-system'), value: 'before' },
+                                    { label: __('After amount (100$)', 'employee-management-system'), value: 'after' }
+                                ]}
+                                onChange={(value) => setSettings({...settings, currencyPosition: value})}
+                            />
+                        </PanelBody>
+                    </Panel>
+                </Card>
+
+                {/* Sales Settings */}
+                <Card className="ems-card">
+                    <Panel>
+                        <PanelBody title={__('Sales Settings', 'employee-management-system')} initialOpen={true}>
+                            <TextControl
+                                label={__('Maximum Sale Amount', 'employee-management-system')}
+                                type="number"
+                                value={settings.maxSaleAmount}
+                                onChange={(value) => setSettings({...settings, maxSaleAmount: value})}
+                                help={__('Set the maximum amount allowed for a single sale', 'employee-management-system')}
+                            />
+
+                            <ToggleControl
+                                label={__('Require Sale Description', 'employee-management-system')}
+                                checked={settings.requireSaleDescription}
+                                onChange={(value) => setSettings({...settings, requireSaleDescription: value})}
+                                help={__('If enabled, employees must provide a description for each sale', 'employee-management-system')}
+                            />
+                        </PanelBody>
+                    </Panel>
+                </Card>
+
+                {/* System Settings */}
+                <Card className="ems-card">
+                    <Panel>
+                        <PanelBody title={__('System Settings', 'employee-management-system')} initialOpen={true}>
+                            <ToggleControl
+                                label={__('Delete Data on Uninstall', 'employee-management-system')}
+                                checked={settings.deleteDataOnUninstall}
+                                onChange={(value) => setSettings({...settings, deleteDataOnUninstall: value})}
+                                help={__('If enabled, all plugin data will be deleted when the plugin is uninstalled', 'employee-management-system')}
+                            />
+                        </PanelBody>
+                    </Panel>
+                </Card>
+            </div>
+
+            <div className="ems-settings-actions">
+                <Button
+                    isPrimary
+                    isBusy={isSaving}
+                    onClick={saveSettings}
+                    disabled={isSaving}
+                >
+                    {isSaving 
+                        ? __('Saving...', 'employee-management-system')
+                        : __('Save Settings', 'employee-management-system')
+                    }
+                </Button>
+            </div>
         </div>
     );
 };

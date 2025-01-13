@@ -4,14 +4,14 @@
  *
  * @package     EmployeeManagementSystem
  * @author      Maruf
- * @copyright   2024 Maruf
+ * @copyright   2025 Maruf
  * @license     GPL-2.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name: Employee Management System
  * Plugin URI: https://github.com/marufmks/employee-management-system
- * Description: A comprehensive employee management system for WordPress
- * Version: 1.0.0
+ * Description: A comprehensive employee and sales management solution for WordPress. Features include employee profiles, sales tracking, performance metrics, customizable dashboards, and detailed reporting.
+ * Version: 1.0.1
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Maruf
@@ -22,57 +22,113 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-// If this file is called directly, abort.
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'WPINC' ) ) {
+    die;
 }
-
-// Define plugin constants
-define('EMS_VERSION', '1.0.0');
-define('EMS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('EMS_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('EMS_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 /**
- * Plugin activation hook.
- *
- * @since 1.0.0
- * @return void
+ * Main plugin class
  */
-function ems_activate() {
-    require_once EMS_PLUGIN_DIR . 'includes/class-ems-database.php';
-    $database = EMS_Database::instance();
-    $database->create_tables();
-    
-    // Add activation timestamp
-    add_option('ems_activation_time', time());
-    
-    // Clear the permalinks
-    flush_rewrite_rules();
-}
-register_activation_hook(__FILE__, 'ems_activate');
+final class Employee_Management_System {
 
-/**
- * Plugin deactivation hook.
- *
- * @since 1.0.0
- * @return void
- */
-function ems_deactivate() {
-    // Clear the permalinks
-    flush_rewrite_rules();
-}
-register_deactivation_hook(__FILE__, 'ems_deactivate');
+    /**
+     * Plugin version
+     */
+    const VERSION = '1.0.1';
 
-/**
- * Initialize the plugin.
- *
- * @since 1.0.0
- * @return void
- */
-function run_ems() {
-    require_once EMS_PLUGIN_DIR . 'includes/class-ems-loader.php';
-    $loader = new EMS_Loader();
-    $loader->run();
+    /**
+     * Plugin instance
+     *
+     * @var self
+     */
+    private static $instance = null;
+
+    /**
+     * Get plugin instance
+     *
+     * @return self
+     */
+    public static function instance() {
+        if ( is_null( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * Constructor
+     */
+    private function __construct() {
+        $this->define_constants();
+        $this->includes();
+        $this->init_hooks();
+    }
+
+    /**
+     * Define constants
+     */
+    private function define_constants() {
+        define( 'EMS_VERSION', self::VERSION );
+        define( 'EMS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+        define( 'EMS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+        define( 'EMS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+    }
+
+    /**
+     * Include files
+     */
+    private function includes() {
+        require_once EMS_PLUGIN_DIR . 'includes/class-ems-loader.php';
+        require_once EMS_PLUGIN_DIR . 'includes/class-ems-database.php';
+        require_once EMS_PLUGIN_DIR . 'includes/class-ems-settings.php';
+    }
+
+    /**
+     * Initialize hooks
+     */
+    private function init_hooks() {
+        register_activation_hook( __FILE__, [ $this, 'activate' ] );
+        register_deactivation_hook( __FILE__, [ $this, 'deactivate' ] );
+        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+    }
+
+    /**
+     * Activate plugin
+     */
+    public function activate() {
+        $database = EMS_Database::instance();
+        $database->create_tables();
+        $database->upgrade_schema();
+        
+        add_option( 'ems_activation_time', time() );
+        flush_rewrite_rules();
+    }
+
+    /**
+     * Deactivate plugin
+     */
+    public function deactivate() {
+        flush_rewrite_rules();
+    }
+
+    /**
+     * Initialize plugin
+     */
+    public function init_plugin() {
+        EMS_Loader::instance()->init();
+        do_action( 'ems_loaded' );
+    }
+
+    /**
+     * Prevent cloning
+     */
+    private function __clone() {}
+
+    /**
+     * Prevent unserializing
+     */
+    public function __wakeup() {}
 }
-run_ems();
+
+// Initialize plugin
+Employee_Management_System::instance();
