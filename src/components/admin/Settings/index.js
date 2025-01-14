@@ -27,10 +27,6 @@ const Settings = () => {
         currencySymbol: '$',
         currencyPosition: 'before',
         
-        // Employee Dashboard Settings
-        maxSaleAmount: '999999',
-        requireSaleDescription: true,
-        
         // System Settings
         deleteDataOnUninstall: false
     });
@@ -149,28 +145,6 @@ const Settings = () => {
                                     { label: __('After amount (100$)', 'employee-management-system'), value: 'after' }
                                 ]}
                                 onChange={(value) => setSettings({...settings, currencyPosition: value})}
-                            />
-                        </PanelBody>
-                    </Panel>
-                </Card>
-
-                {/* Sales Settings */}
-                <Card className="ems-card">
-                    <Panel>
-                        <PanelBody title={__('Sales Settings', 'employee-management-system')} initialOpen={true}>
-                            <TextControl
-                                label={__('Maximum Sale Amount', 'employee-management-system')}
-                                type="number"
-                                value={settings.maxSaleAmount}
-                                onChange={(value) => setSettings({...settings, maxSaleAmount: value})}
-                                help={__('Set the maximum amount allowed for a single sale', 'employee-management-system')}
-                            />
-
-                            <ToggleControl
-                                label={__('Require Sale Description', 'employee-management-system')}
-                                checked={settings.requireSaleDescription}
-                                onChange={(value) => setSettings({...settings, requireSaleDescription: value})}
-                                help={__('If enabled, employees must provide a description for each sale', 'employee-management-system')}
                             />
                         </PanelBody>
                     </Panel>

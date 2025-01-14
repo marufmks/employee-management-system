@@ -10466,9 +10466,6 @@ const Settings = () => {
     dateFormat: 'Y-m-d',
     currencySymbol: '$',
     currencyPosition: 'before',
-    // Employee Dashboard Settings
-    maxSaleAmount: '999999',
-    requireSaleDescription: true,
     // System Settings
     deleteDataOnUninstall: false
   });
@@ -10584,28 +10581,6 @@ const Settings = () => {
       ...settings,
       currencyPosition: value
     })
-  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
-    className: "ems-card"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Panel, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sales Settings', 'employee-management-system'),
-    initialOpen: true
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Maximum Sale Amount', 'employee-management-system'),
-    type: "number",
-    value: settings.maxSaleAmount,
-    onChange: value => setSettings({
-      ...settings,
-      maxSaleAmount: value
-    }),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set the maximum amount allowed for a single sale', 'employee-management-system')
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Require Sale Description', 'employee-management-system'),
-    checked: settings.requireSaleDescription,
-    onChange: value => setSettings({
-      ...settings,
-      requireSaleDescription: value
-    }),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('If enabled, employees must provide a description for each sale', 'employee-management-system')
   })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
     className: "ems-card"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Panel, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {

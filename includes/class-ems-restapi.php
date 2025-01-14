@@ -147,10 +147,6 @@ class EMS_RestAPI
             'currencySymbol' => get_option('ems_currency_symbol', '$'),
             'currencyPosition' => get_option('ems_currency_position', 'before'),
             
-            // Sales Settings
-            'maxSaleAmount' => get_option('ems_max_sale_amount', '999999'),
-            'requireSaleDescription' => get_option('ems_require_sale_description', true),
-            
             // System Settings
             'deleteDataOnUninstall' => get_option('ems_delete_data_uninstall', false)
         );
@@ -169,8 +165,6 @@ class EMS_RestAPI
             'dateFormat' => sanitize_text_field($params['dateFormat']),
             'currencySymbol' => sanitize_text_field($params['currencySymbol']),
             'currencyPosition' => sanitize_text_field($params['currencyPosition']),
-            'maxSaleAmount' => sanitize_text_field($params['maxSaleAmount']),
-            'requireSaleDescription' => (bool) $params['requireSaleDescription'],
             'deleteDataOnUninstall' => (bool) $params['deleteDataOnUninstall']
         );
 

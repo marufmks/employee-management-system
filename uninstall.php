@@ -19,18 +19,7 @@ if ($delete_data) {
         'ems_date_format',
         'ems_currency_symbol',
         'ems_currency_position',
-        'ems_email_notifications',
-        'ems_admin_email',
-        'ems_notify_new_sale',
-        'ems_notify_employee_join',
-        'ems_notify_employee_leave',
-        'ems_allow_employee_export',
-        'ems_sales_report_period',
-        'ems_max_sale_amount',
-        'ems_require_sale_description',
-        'ems_delete_data_uninstall',
-        'ems_debug_mode',
-        'ems_cache_timeout'
+        'ems_delete_data_uninstall'
     );
 
     foreach ($options as $option) {
