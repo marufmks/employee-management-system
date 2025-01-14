@@ -190,17 +190,13 @@ class EMS_RestAPI
      */
     public function get_employees($request)
     {
-        // Try to get from cache first
         $employees = wp_cache_get('ems_all_employees');
 
         if (false === $employees) {
             global $wpdb;
-
             $employees = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM {$wpdb->prefix}ems_employees ORDER BY id DESC")
+                "SELECT * FROM {$wpdb->prefix}ems_employees ORDER BY id DESC"
             );
-
-            // Cache for 5 minutes
             wp_cache_set('ems_all_employees', $employees, '', 300);
         }
 
@@ -338,19 +334,17 @@ class EMS_RestAPI
         $required_fields = ['date', 'amount', 'description'];
         foreach ($required_fields as $field) {
             if (empty($params[$field])) {
-                // translators: %s is the name of the required field that is missing (e.g., 'date', 'amount', or 'description').
                 return new WP_Error(
                     'missing_field',
                     sprintf(
-                        __('Missing required field: %s', 'employee-management-system'),
+                        /* translators: %s: field name that is missing (e.g., 'date', 'amount', or 'description') */
+                        __('Missing required field: %s', 'employee-management-system'), 
                         $field
                     ),
                     ['status' => 400]
                 );
             }
         }
-
-
 
         // Validate amount
         if (!is_numeric($params['amount']) || $params['amount'] <= 0) {
@@ -409,100 +403,57 @@ class EMS_RestAPI
     public function get_employee_stats($request)
     {
         global $wpdb;
-        
-        // Check if this is an admin request
-        if (current_user_can('manage_options')) {
-            // Admin stats code remains the same...
-            $table_name = $wpdb->prefix . 'ems_employees';
-            $stats = array(
-                'totalEmployees' => $wpdb->get_var("SELECT COUNT(*) FROM $table_name"),
-                'activeEmployees' => $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'active'"),
-                'inactiveEmployees' => $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'inactive'"),
-                'blockedEmployees' => $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'blocked'"),
-            );
-            return rest_ensure_response($stats);
-        } 
+        $table_name = $wpdb->prefix . 'ems_employees';
 
-        // Employee stats
-        $user_id = get_current_user_id();
-        
-        // Get user data
-        $user = get_userdata($user_id);
-        
-        // Get employee data
-        $employee = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}ems_employees WHERE user_id = %d",
-            $user_id
-        ));
+        // Remove unnecessary prepare and fix interpolated variables
+        $stats = array(
+            'totalEmployees' => $wpdb->get_var(
+                "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees"
+            ),
+            'activeEmployees' => $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    'active'
+                )
+            ),
+            'inactiveEmployees' => $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    'inactive'
+                )
+            ),
+            'blockedEmployees' => $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    'blocked'
+                )
+            )
+        );
 
-        // Get sales data for current employee
+        // Get sales data
         $sales_table = $wpdb->prefix . 'ems_employee_sales';
-        $sales_data = $wpdb->get_results($wpdb->prepare(
-            "SELECT * FROM $sales_table WHERE user_id = %d ORDER BY date DESC",
-            $user_id
-        ));
+        $sales_data = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d ORDER BY date DESC",
+                get_current_user_id()
+            )
+        );
 
-        // Calculate stats
-        $total_sales = 0;
-        $monthly_sales = 0;
-        $highest_sale = 0;
-        $highest_sale_date = '';
-        $current_month = date('Y-m');
+        // Calculate monthly stats using proper date handling
+        $current_month = gmdate('Y-m');
+        $monthly_stats = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT COUNT(*) as count, SUM(amount) as total 
+                FROM {$wpdb->prefix}ems_employee_sales 
+                WHERE user_id = %d 
+                AND DATE_FORMAT(date, '%%Y-%%m') = %s",
+                get_current_user_id(),
+                $current_month
+            )
+        );
 
-        if ($sales_data) {
-            foreach ($sales_data as $sale) {
-                $sale_amount = floatval($sale->amount);
-                $total_sales += $sale_amount;
-
-                if (date('Y-m', strtotime($sale->date)) === $current_month) {
-                    $monthly_sales += $sale_amount;
-                }
-
-                if ($sale_amount > $highest_sale) {
-                    $highest_sale = $sale_amount;
-                    $highest_sale_date = $sale->date;
-                }
-            }
-        }
-
-        // Get monthly reports count
-        $monthly_reports = $wpdb->get_var($wpdb->prepare(
-            "SELECT COUNT(*) FROM $sales_table 
-            WHERE user_id = %d 
-            AND DATE_FORMAT(date, '%%Y-%%m') = %s",
-            $user_id,
-            $current_month
-        ));
-
-        // Calculate sales trend
-        $last_month = date('Y-m', strtotime('-1 month'));
-        $last_month_sales = 0;
-
-        if ($sales_data) {
-            foreach ($sales_data as $sale) {
-                if (date('Y-m', strtotime($sale->date)) === $last_month) {
-                    $last_month_sales += floatval($sale->amount);
-                }
-            }
-        }
-
-        $sales_trend = $last_month_sales > 0 
-            ? round((($monthly_sales - $last_month_sales) / $last_month_sales) * 100, 2)
-            : 0;
-
-        return rest_ensure_response([
-            'name' => $user->display_name,
-            'totalSales' => $total_sales,
-            'monthlyReports' => (int) $monthly_reports,
-            'highestSale' => $highest_sale,
-            'highestSaleDate' => $highest_sale_date ? date('M j, Y', strtotime($highest_sale_date)) : '',
-            'salesTrend' => $sales_trend,
-            'employeeData' => $employee ? [
-                'department' => $employee->department,
-                'designation' => $employee->designation,
-                'joinDate' => $employee->join_date,
-            ] : null
-        ]);
+        // Format response
+        return rest_ensure_response($stats);
     }
 
     public function get_monthly_sales() {
@@ -648,65 +599,45 @@ class EMS_RestAPI
     public function get_frontend_employee_stats($request) {
         global $wpdb;
         $current_user_id = get_current_user_id();
-        
-        // Get employee data with user information
-        $employee_data = $wpdb->get_row(
+        $sales_table = $wpdb->prefix . 'ems_employee_sales';
+
+        // Fix interpolated variables in queries
+        $sales = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT e.*, u.display_name as name, u.user_email as email 
-                FROM {$wpdb->prefix}ems_employees e 
-                JOIN {$wpdb->users} u ON e.user_id = u.ID 
-                WHERE e.user_id = %d",
+                "SELECT * FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d ORDER BY date DESC",
                 $current_user_id
             )
         );
 
-        if (!$employee_data) {
-            return new WP_Error(
-                'no_employee_found',
-                'No employee data found for this user',
-                array('status' => 404)
-            );
+        // Fix date() usage
+        $highest_sale_date = '';
+        if (!empty($sales)) {
+            $highest_sale_date = gmdate('Y-m-d', strtotime($sales[0]->date));
         }
 
-        // Get total sales from employee_sales table
-        $total_sales = $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT SUM(amount) FROM {$wpdb->prefix}ems_employee_sales 
-                WHERE user_id = %d",
-                $current_user_id
-            )
-        );
-
-        // Get monthly reports count (sales for current month)
-        $monthly_reports = $wpdb->get_var(
+        // Fix monthly sales query
+        $monthly_sales = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employee_sales 
                 WHERE user_id = %d 
-                AND MONTH(date) = MONTH(CURRENT_DATE()) 
-                AND YEAR(date) = YEAR(CURRENT_DATE())",
-                $current_user_id
+                AND YEAR(date) = %s 
+                AND MONTH(date) = %s",
+                $current_user_id,
+                gmdate('Y'),
+                gmdate('m')
             )
         );
 
-        // Get highest sale
-        $highest_sale = $wpdb->get_row(
-            $wpdb->prepare(
-                "SELECT amount, date as sale_date FROM {$wpdb->prefix}ems_employee_sales 
-                WHERE user_id = %d 
-                ORDER BY amount DESC 
-                LIMIT 1",
-                $current_user_id
-            )
-        );
-
-        // Calculate sales trend (compare current month with previous month)
+        // Fix current and previous month sales queries
         $current_month_sales = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT SUM(amount) FROM {$wpdb->prefix}ems_employee_sales 
                 WHERE user_id = %d 
-                AND MONTH(date) = MONTH(CURRENT_DATE()) 
-                AND YEAR(date) = YEAR(CURRENT_DATE())",
-                $current_user_id
+                AND YEAR(date) = %s 
+                AND MONTH(date) = %s",
+                $current_user_id,
+                gmdate('Y'),
+                gmdate('m')
             )
         );
 
@@ -714,35 +645,32 @@ class EMS_RestAPI
             $wpdb->prepare(
                 "SELECT SUM(amount) FROM {$wpdb->prefix}ems_employee_sales 
                 WHERE user_id = %d 
-                AND MONTH(date) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
-                AND YEAR(date) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))",
-                $current_user_id
+                AND YEAR(date) = %s 
+                AND MONTH(date) = %s",
+                $current_user_id,
+                gmdate('Y', strtotime('-1 month')),
+                gmdate('m', strtotime('-1 month'))
             )
         );
 
-        $sales_trend = 0;
-        if ($previous_month_sales && $previous_month_sales > 0) {
-            $sales_trend = (($current_month_sales - $previous_month_sales) / $previous_month_sales) * 100;
-        }
-
-        // Format the response
+        // Format response data
         $response = array(
-            'name' => $employee_data->name,
-            'totalSales' => (float) ($total_sales ?: 0),
-            'monthlyReports' => (int) ($monthly_reports ?: 0),
-            'highestSale' => $highest_sale ? (float) $highest_sale->amount : 0,
-            'highestSaleDate' => $highest_sale ? date('Y-m-d', strtotime($highest_sale->sale_date)) : '',
-            'salesTrend' => round($sales_trend, 2),
-            'employeeData' => array(
-                'id' => $employee_data->id,
-                'email' => $employee_data->email,
-                'department' => $employee_data->department,
-                'designation' => $employee_data->designation,
-                'join_date' => $employee_data->join_date
-            )
+            'name' => get_userdata($current_user_id)->display_name,
+            'totalSales' => (float) array_sum(array_column($sales, 'amount')),
+            'monthlyReports' => (int) $monthly_sales,
+            'highestSale' => !empty($sales) ? (float) max(array_column($sales, 'amount')) : 0,
+            'highestSaleDate' => $highest_sale_date,
+            'salesTrend' => $this->calculate_sales_trend($current_month_sales, $previous_month_sales)
         );
 
-        return $response;
+        return rest_ensure_response($response);
+    }
+
+    private function calculate_sales_trend($current, $previous) {
+        if (!$previous || $previous <= 0) {
+            return 0;
+        }
+        return round((($current - $previous) / $previous) * 100, 2);
     }
 
     /**
@@ -750,8 +678,7 @@ class EMS_RestAPI
      */
     public function get_available_users() {
         global $wpdb;
-
-        // Get all users who are not in the employees table
+        // Remove unnecessary prepare
         $users = $wpdb->get_results(
             "SELECT u.ID, u.display_name 
             FROM {$wpdb->users} u 

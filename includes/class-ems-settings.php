@@ -17,7 +17,7 @@ class EMS_Settings {
 
     public function format_date($date) {
         $format = $this->get_setting('dateFormat', 'Y-m-d');
-        return date($format, strtotime($date));
+        return gmdate($format, strtotime($date));
     }
 
     public function format_currency($amount) {

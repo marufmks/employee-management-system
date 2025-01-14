@@ -77,9 +77,9 @@ class EMS_Loader {
      */
     public function load_textdomain() {
         load_plugin_textdomain(
-            'employee-management-system',
-            false,
-            dirname( EMS_PLUGIN_BASENAME ) . '/languages/'
+            'employee-management-system', 
+            false, 
+            dirname( __FILE__ ) . '/languages/' 
         );
     }
 
