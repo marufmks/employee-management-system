@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-13T18:34:44+01:00\n"
+"POT-Creation-Date: 2025-01-14T04:42:17+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: employee-management-system\n"
@@ -42,82 +42,85 @@ msgstr ""
 #: includes/class-ems-loader.php:91
 #: includes/class-ems-loader.php:92
 #: build/index.js:10262
+#: build/index.js:10274
 #: src/components/admin/Layout/index.js:39
+#: src/components/admin/Layout/index.js:57
 #: build/index.js:4895
+#: build/index.js:4913
 msgid "Employee Management"
 msgstr ""
 
-#: includes/class-ems-loader.php:168
+#: includes/class-ems-loader.php:169
 msgid "Please log in to view the dashboard"
 msgstr ""
 
-#: includes/class-ems-loader.php:170
+#: includes/class-ems-loader.php:171
 msgid "Log in"
 msgstr ""
 
-#: includes/class-ems-restapi.php:186
+#: includes/class-ems-restapi.php:180
 msgid "Settings updated successfully"
 msgstr ""
 
-#: includes/class-ems-restapi.php:252
+#: includes/class-ems-restapi.php:246
 msgid "Failed to create employee"
 msgstr ""
 
-#: includes/class-ems-restapi.php:316
+#: includes/class-ems-restapi.php:310
 msgid "Failed to update employee"
 msgstr ""
 
-#: includes/class-ems-restapi.php:326
+#: includes/class-ems-restapi.php:320
 msgid "Employee updated successfully"
 msgstr ""
 
-#: includes/class-ems-restapi.php:351
+#: includes/class-ems-restapi.php:345
 msgid "Missing required field: %s"
 msgstr ""
 
-#: includes/class-ems-restapi.php:365
+#: includes/class-ems-restapi.php:359
 msgid "Amount must be a positive number"
 msgstr ""
 
-#: includes/class-ems-restapi.php:375
+#: includes/class-ems-restapi.php:369
 msgid "Invalid date format"
 msgstr ""
 
-#: includes/class-ems-restapi.php:396
+#: includes/class-ems-restapi.php:390
 msgid "Could not save sale record"
 msgstr ""
 
-#: includes/class-ems-restapi.php:407
+#: includes/class-ems-restapi.php:401
 msgid "Sale recorded successfully"
 msgstr ""
 
-#: includes/class-ems-restapi.php:619
+#: includes/class-ems-restapi.php:613
 msgid "Please log in to access the dashboard."
 msgstr ""
 
-#: includes/class-ems-restapi.php:632
+#: includes/class-ems-restapi.php:626
 msgid "You are not registered as an employee."
 msgstr ""
 
-#: includes/class-ems-restapi.php:640
+#: includes/class-ems-restapi.php:634
 msgid "Your employee account is not active. Please contact your administrator."
 msgstr ""
 
 #: build/index.js:9693
 #: build/index.js:10192
-#: build/index.js:10363
-#: build/index.js:10531
-#: build/index.js:10772
+#: build/index.js:10368
+#: build/index.js:10533
+#: build/index.js:10752
 #: src/components/admin/Dashboard/index.js:64
 #: src/components/admin/Employees/index.js:467
 #: src/components/admin/Sales/index.js:79
-#: src/components/admin/Settings/index.js:104
+#: src/components/admin/Settings/index.js:100
 #: src/components/frontend/index.js:132
 #: build/index.js:4269
 #: build/index.js:4836
-#: build/index.js:4997
-#: build/index.js:5218
-#: build/index.js:5457
+#: build/index.js:5003
+#: build/index.js:5220
+#: build/index.js:5437
 msgid "Loading..."
 msgstr ""
 
@@ -484,275 +487,245 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: build/index.js:10371
+#: build/index.js:10376
 #: src/components/admin/Sales/index.js:89
-#: build/index.js:5007
+#: build/index.js:5013
 msgid "Error loading sales:"
 msgstr ""
 
-#: build/index.js:10395
+#: build/index.js:10400
 #: src/components/admin/Sales/index.js:113
-#: build/index.js:5031
+#: build/index.js:5037
 msgid "Shortcode:"
 msgstr ""
 
-#: build/index.js:10403
+#: build/index.js:10408
 #: src/components/admin/Sales/index.js:124
-#: build/index.js:5042
+#: build/index.js:5048
 msgid "Click to copy"
 msgstr ""
 
-#: build/index.js:10403
+#: build/index.js:10408
 #: src/components/admin/Sales/index.js:127
-#: build/index.js:5045
+#: build/index.js:5051
 msgid "Add this shortcode to any page to display the employee dashboard and allow employees to export their sales data."
 msgstr ""
 
-#: build/index.js:10407
+#: build/index.js:10412
 #: src/components/admin/Sales/index.js:138
-#: build/index.js:5056
+#: build/index.js:5062
 msgid "Shortcode copied to clipboard!"
 msgstr ""
 
-#: build/index.js:10419
+#: build/index.js:10424
 #: src/components/admin/Sales/index.js:153
-#: build/index.js:5071
+#: build/index.js:5077
 msgid "Download CSV"
 msgstr ""
 
-#: build/index.js:10423
-#: build/index.js:10850
+#: build/index.js:10428
+#: build/index.js:10830
 #: src/components/admin/Sales/index.js:161
 #: src/components/frontend/index.js:227
-#: build/index.js:5079
-#: build/index.js:5552
+#: build/index.js:5085
+#: build/index.js:5532
 msgid "Date"
 msgstr ""
 
-#: build/index.js:10423
-#: build/index.js:10859
+#: build/index.js:10428
+#: build/index.js:10839
 #: src/components/admin/Sales/index.js:162
 #: src/components/frontend/index.js:231
-#: build/index.js:5080
-#: build/index.js:5556
+#: build/index.js:5086
+#: build/index.js:5536
 msgid "Amount"
 msgstr ""
 
-#: build/index.js:10423
-#: build/index.js:10870
+#: build/index.js:10428
+#: build/index.js:10850
 #: src/components/admin/Sales/index.js:163
 #: src/components/frontend/index.js:243
-#: build/index.js:5081
-#: build/index.js:5568
+#: build/index.js:5087
+#: build/index.js:5548
 msgid "Description"
 msgstr ""
 
-#: build/index.js:10427
+#: build/index.js:10432
 #: src/components/admin/Sales/index.js:179
-#: build/index.js:5097
+#: build/index.js:5103
 msgid "Total:"
 msgstr ""
 
-#: build/index.js:10494
-#: src/components/admin/Settings/index.js:60
-#: build/index.js:5174
+#: build/index.js:10496
+#: src/components/admin/Settings/index.js:56
+#: build/index.js:5176
 msgid "Admin email is required when notifications are enabled"
 msgstr ""
 
-#: build/index.js:10497
-#: src/components/admin/Settings/index.js:64
-#: build/index.js:5178
+#: build/index.js:10499
+#: src/components/admin/Settings/index.js:60
+#: build/index.js:5180
 msgid "Maximum sale amount must be greater than 0"
 msgstr ""
 
-#: build/index.js:10517
-#: src/components/admin/Settings/index.js:88
-#: build/index.js:5202
+#: build/index.js:10519
+#: src/components/admin/Settings/index.js:84
+#: build/index.js:5204
 msgid "Failed to save settings"
 msgstr ""
 
-#: build/index.js:10544
-#: src/components/admin/Settings/index.js:125
-#: build/index.js:5239
+#: build/index.js:10546
+#: src/components/admin/Settings/index.js:121
+#: build/index.js:5241
 msgid "General Settings"
 msgstr ""
 
-#: build/index.js:10547
-#: src/components/admin/Settings/index.js:127
-#: build/index.js:5241
+#: build/index.js:10549
+#: src/components/admin/Settings/index.js:123
+#: build/index.js:5243
 msgid "Date Format"
 msgstr ""
 
-#: build/index.js:10567
-#: src/components/admin/Settings/index.js:139
-#: build/index.js:5253
+#: build/index.js:10569
+#: src/components/admin/Settings/index.js:135
+#: build/index.js:5255
 msgid "Currency Symbol"
 msgstr ""
 
-#: build/index.js:10574
-#: src/components/admin/Settings/index.js:145
-#: build/index.js:5259
+#: build/index.js:10576
+#: src/components/admin/Settings/index.js:141
+#: build/index.js:5261
 msgid "Currency Position"
 msgstr ""
 
-#: build/index.js:10577
-#: src/components/admin/Settings/index.js:148
-#: build/index.js:5262
+#: build/index.js:10579
+#: src/components/admin/Settings/index.js:144
+#: build/index.js:5264
 msgid "Before amount ($100)"
 msgstr ""
 
-#: build/index.js:10580
-#: src/components/admin/Settings/index.js:149
-#: build/index.js:5263
+#: build/index.js:10582
+#: src/components/admin/Settings/index.js:145
+#: build/index.js:5265
 msgid "After amount (100$)"
 msgstr ""
 
-#: build/index.js:10590
-#: src/components/admin/Settings/index.js:160
-#: build/index.js:5274
-msgid "Sales Settings"
-msgstr ""
-
-#: build/index.js:10593
-#: src/components/admin/Settings/index.js:162
+#: build/index.js:10592
+#: src/components/admin/Settings/index.js:156
 #: build/index.js:5276
-msgid "Maximum Sale Amount"
-msgstr ""
-
-#: build/index.js:10600
-#: src/components/admin/Settings/index.js:166
-#: build/index.js:5280
-msgid "Set the maximum amount allowed for a single sale"
-msgstr ""
-
-#: build/index.js:10602
-#: src/components/admin/Settings/index.js:170
-#: build/index.js:5284
-msgid "Require Sale Description"
-msgstr ""
-
-#: build/index.js:10608
-#: src/components/admin/Settings/index.js:173
-#: build/index.js:5287
-msgid "If enabled, employees must provide a description for each sale"
-msgstr ""
-
-#: build/index.js:10612
-#: src/components/admin/Settings/index.js:182
-#: build/index.js:5296
 msgid "System Settings"
 msgstr ""
 
-#: build/index.js:10615
-#: src/components/admin/Settings/index.js:184
-#: build/index.js:5298
+#: build/index.js:10595
+#: src/components/admin/Settings/index.js:158
+#: build/index.js:5278
 msgid "Delete Data on Uninstall"
 msgstr ""
 
-#: build/index.js:10621
-#: src/components/admin/Settings/index.js:187
-#: build/index.js:5301
+#: build/index.js:10601
+#: src/components/admin/Settings/index.js:161
+#: build/index.js:5281
 msgid "If enabled, all plugin data will be deleted when the plugin is uninstalled"
 msgstr ""
 
-#: build/index.js:10629
-#: build/index.js:10880
-#: src/components/admin/Settings/index.js:202
+#: build/index.js:10609
+#: build/index.js:10860
+#: src/components/admin/Settings/index.js:176
 #: src/components/frontend/index.js:258
-#: build/index.js:5316
-#: build/index.js:5583
+#: build/index.js:5296
+#: build/index.js:5563
 msgid "Saving..."
 msgstr ""
 
-#: build/index.js:10629
-#: src/components/admin/Settings/index.js:203
-#: build/index.js:5317
+#: build/index.js:10609
+#: src/components/admin/Settings/index.js:177
+#: build/index.js:5297
 msgid "Save Settings"
 msgstr ""
 
-#: build/index.js:10693
-#: build/index.js:10781
+#: build/index.js:10673
+#: build/index.js:10761
 #: src/components/frontend/index.js:43
 #: src/components/frontend/index.js:143
-#: build/index.js:5368
-#: build/index.js:5468
+#: build/index.js:5348
+#: build/index.js:5448
 msgid "Access denied."
 msgstr ""
 
-#: build/index.js:10708
+#: build/index.js:10688
 #: src/components/frontend/index.js:61
-#: build/index.js:5386
+#: build/index.js:5366
 msgid "No data received from server"
 msgstr ""
 
-#: build/index.js:10711
+#: build/index.js:10691
 #: src/components/frontend/index.js:65
-#: build/index.js:5390
+#: build/index.js:5370
 msgid "Employee"
 msgstr ""
 
-#: build/index.js:10751
+#: build/index.js:10731
 #: src/components/frontend/index.js:110
-#: build/index.js:5435
+#: build/index.js:5415
 msgid "Sale recorded successfully!"
 msgstr ""
 
-#: build/index.js:10760
+#: build/index.js:10740
 #: src/components/frontend/index.js:119
-#: build/index.js:5444
+#: build/index.js:5424
 msgid "Failed to save sale record."
 msgstr ""
 
-#: build/index.js:10783
+#: build/index.js:10763
 #: src/components/frontend/index.js:146
-#: build/index.js:5471
+#: build/index.js:5451
 msgid "If you believe this is an error, please contact your administrator."
 msgstr ""
 
-#: build/index.js:10789
+#: build/index.js:10769
 #: src/components/frontend/index.js:157
-#: build/index.js:5482
+#: build/index.js:5462
 msgid "Welcome"
 msgstr ""
 
-#: build/index.js:10805
+#: build/index.js:10785
 #: src/components/frontend/index.js:169
-#: build/index.js:5494
+#: build/index.js:5474
 msgid "Total Sales"
 msgstr ""
 
-#: build/index.js:10819
+#: build/index.js:10799
 #: src/components/frontend/index.js:185
-#: build/index.js:5510
+#: build/index.js:5490
 msgid "Monthly Reports"
 msgstr ""
 
-#: build/index.js:10823
+#: build/index.js:10803
 #: src/components/frontend/index.js:189
-#: build/index.js:5514
+#: build/index.js:5494
 msgid "This month"
 msgstr ""
 
-#: build/index.js:10833
+#: build/index.js:10813
 #: src/components/frontend/index.js:199
-#: build/index.js:5524
+#: build/index.js:5504
 msgid "Highest Sale"
 msgstr ""
 
-#: build/index.js:10839
+#: build/index.js:10819
 #: src/components/frontend/index.js:216
-#: build/index.js:5541
+#: build/index.js:5521
 msgid "Quick Sales Entry"
 msgstr ""
 
-#: build/index.js:10874
+#: build/index.js:10854
 #: src/components/frontend/index.js:248
-#: build/index.js:5573
+#: build/index.js:5553
 msgid "Enter sale details..."
 msgstr ""
 
-#: build/index.js:10880
+#: build/index.js:10860
 #: src/components/frontend/index.js:259
-#: build/index.js:5584
+#: build/index.js:5564
 msgid "Submit Report"
 msgstr ""
