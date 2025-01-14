@@ -435,6 +435,9 @@
     color: #fff;
     flex-shrink: 0;
     border-right: 1px solid #2d2d2d;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 32px);
 }
 
 .ems-plugin-brand {
@@ -535,6 +538,27 @@
 @media (prefers-color-scheme: dark) {
     .ems-admin-content {
         background: #1e1e1e;
+    }
+}
+
+/* Add this to your existing admin sidebar styles */
+.ems-sidebar-image {
+    padding: 20px;
+    margin-top: auto;
+    text-align: center;
+}
+
+.ems-sidebar-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .ems-sidebar-image {
+        display: none; /* Hide image on mobile */
     }
 } 
 

@@ -10267,7 +10267,12 @@ const AdminLayout = ({
     variant: currentPath === item.id ? 'primary' : 'secondary',
     className: `nav-button ${currentPath === item.id ? 'active' : ''}`,
     onClick: () => onNavigate(item.id)
-  }, item.label)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, item.label))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "ems-sidebar-image"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: emsData.pluginUrl + '/public/employee_management.jpg',
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Employee Management', 'employee-management-system')
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ems-admin-content"
   }, children));
 };

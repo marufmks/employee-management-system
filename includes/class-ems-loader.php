@@ -154,7 +154,8 @@ class EMS_Loader {
             'nonce' => wp_create_nonce( 'wp_rest' ),
             'userId' => get_current_user_id(),
             'isAdmin' => $context === 'admin',
-            'userName' => $context === 'frontend' ? wp_get_current_user()->display_name : ''
+            'userName' => $context === 'frontend' ? wp_get_current_user()->display_name : '',
+            'pluginUrl' => EMS_PLUGIN_URL
         ]);
     }
 

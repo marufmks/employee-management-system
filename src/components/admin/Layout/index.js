@@ -51,6 +51,12 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
                         </Button>
                     ))}
                 </nav>
+                <div className="ems-sidebar-image">
+                    <img 
+                        src={emsData.pluginUrl + '/public/employee_management.jpg'} 
+                        alt={__('Employee Management', 'employee-management-system')}
+                    />
+                </div>
             </div>
             <div className="ems-admin-content">
                 {children}
