@@ -8,7 +8,6 @@ Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: employee-management-system
 
 A comprehensive employee management system with sales tracking, reporting, and dashboard features for WordPress.
 
@@ -19,105 +18,89 @@ Employee Management System is a powerful WordPress plugin designed to help busin
 = Key Features =
 
 * **Employee Management**
-* Add and manage employees with detailed information
-* Track employee status (active, inactive)
-* Manage employee personal and professional details
-* Only add employees from existing WordPress users
+* Add and manage employee profiles
+* Track employee status (active, inactive, blocked)`
+* Store comprehensive employee information
+* Manage employment details and history
 
-* **Sales Tracking**
-* Record and monitor employee sales
-* Generate detailed sales reports
-* Export sales data to CSV
-* Set maximum sale amount limits
-* Require sale descriptions for better tracking
+* **Dashboard & Analytics**
+* Real-time employee statistics
+* Interactive sales charts
+* Performance metrics
+* Monthly sales trends
+* Employee status distribution
 
-* **Employee Dashboard**
+* **Employee Portal**
 * Secure employee login
 * Personal sales statistics
-* Monthly performance metrics
-* Sales trend analysis
-* Download personal sales reports
+* Monthly performance tracking
+* Sales submission form
+* Individual performance metrics
 
 * **Administrative Features**
 * Comprehensive admin dashboard
-* Real-time sales monitoring
-* Employee performance tracking
-* Customizable settings
+* Employee status management
+* Sales performance tracking
 * Data export capabilities
+* User-friendly interface
 
-* **Customization Options**
-* Configure date formats
-* Set currency symbol and position
-* Customize maximum sale amounts
-* Toggle required fields
+* **Security & Access Control**
+* Role-based access control
+* Secure data handling
+* WordPress user integration
+* Protected employee data
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/employee-management-system` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Go to Employee Management System in your WordPress admin menu
-4. Configure the plugin settings under the Settings tab
+1. Upload `employee-management-system` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Navigate to Employee Management in your admin menu
+4. Configure the plugin settings
 5. Add employees from existing WordPress users
-6. Add the shortcode [employee_dashboard] to any page where you want to display the employee dashboard
-
-== Usage ==
-
-= Adding Employees =
-1. Go to Employees tab in the admin panel
-2. Click "Add New Employee"
-3. Select an available WordPress user
-4. Fill in employee details
-5. Save the employee record
-
-= Managing Sales =
-1. Employees can log in and submit sales through their dashboard
-2. Admins can view all sales in the Sales Reports section
-3. Download individual employee sales reports in CSV format
-4. Monitor sales trends and performance metrics
-
-= Configuring Settings =
-1. Navigate to the Settings tab
-2. Configure date format preferences
-3. Set up currency display options
-4. Adjust maximum sale amount limits
-5. Toggle required sale descriptions
-6. Configure data deletion preferences
+6. Use shortcode [employee_dashboard] to display the employee portal
 
 == Frequently Asked Questions ==
 
-= How do I display the employee dashboard? =
-
-Add the shortcode [employee_dashboard] to any page or post where you want the dashboard to appear.
-
-= Can I limit the maximum sale amount? =
-
-Yes, you can set a maximum sale amount limit in the plugin settings to prevent data entry errors.
-
 = How do I add new employees? =
 
-First create a WordPress user account for the employee, then add them as an employee through the Employees section. The plugin will only show users who haven't been added as employees yet.
+Create a WordPress user account first, then add them as an employee through the Employees section in the admin panel.
 
-= Can employees export their sales data? =
+= Can employees view their own sales data? =
 
-Yes, both employees and administrators can download sales data in CSV format from their respective dashboards.
+Yes, employees can access their personal dashboard to view sales statistics and submit new sales records.
+
+= Is the plugin mobile responsive? =
+
+Yes, both the admin interface and employee dashboard are fully responsive and work well on all devices.
+
+= Can I customize the date and currency formats? =
+
+Yes, you can customize date formats and currency display options in the plugin settings.
+
+= How do I display the employee dashboard? =
+
+Use the shortcode [employee_dashboard] on any page where you want to display the employee portal.
 
 == Screenshots ==
 
-1. Employee Dashboard - View personal sales statistics and performance metrics
-2. Admin Interface - Manage employees and view overall performance
-3. Sales Reports - Detailed sales tracking and reporting interface
-4. Settings Page - Configure plugin options and preferences
+1. Admin Dashboard - Overview of employee statistics and sales trends
+2. Employee Management - Add and manage employee records
+3. Employee Portal - Personal dashboard for employees
+4. Settings Panel - Configure plugin options
 
 == Changelog ==
 
 = 1.0.1 =
-* Added maximum sale amount limitation
-* Added required sale description toggle
-* Improved user selection for new employees
-* Added currency position customization
-* Enhanced form validation and error handling
-* Added success notifications for actions
+* Added employee status tracking (active, inactive, blocked)
+* Enhanced dashboard with interactive charts
 * Improved mobile responsiveness
+* Added employee portal features
+* Enhanced security measures
+* Improved data validation
+* Better error handling
+* Updated UI/UX design
+* Added shortcode functionality
+* Improved performance
 
 = 1.0.0 =
 * Initial release
@@ -125,13 +108,26 @@ Yes, both employees and administrators can download sales data in CSV format fro
 == Upgrade Notice ==
 
 = 1.0.1 =
-This update adds new features for sales management and improves the user interface. Upgrade for better control over sales data and enhanced user experience.
+This update adds employee status tracking, enhanced dashboard features, and improved security. Upgrade recommended for all users.
 
 == Privacy Policy ==
 
-Employee Management System stores employee data and sales information in your WordPress database. This data includes:
-* Employee personal information (name, contact details)
-* Employment details (department, designation, salary)
-* Sales records (date, amount, description)
+This plugin stores the following data:
+* Employee information (name, contact details, employment details)
+* Sales records and performance metrics
+* User access logs and activity data
 
-All data is stored locally in your WordPress database and can be exported or deleted through the plugin interface. 
+All data is stored securely in your WordPress database and can be exported or deleted through the plugin interface.
+
+The plugin does not:
+* Share data with third parties
+* Track users across websites
+* Store sensitive payment information
+
+== Support ==
+
+For support queries, please visit our GitHub repository at https://github.com/marufmks/employee-management-system
+
+== Credits ==
+
+Developed by Maruf (https://github.com/marufmks) 
