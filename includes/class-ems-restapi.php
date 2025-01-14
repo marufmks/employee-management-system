@@ -460,13 +460,13 @@ class EMS_RestAPI
         global $wpdb;
         $table_name = $wpdb->prefix . 'ems_employee_sales';
 
-        $results = $wpdb->get_results($wpdb->prepare(
+        $results = $wpdb->get_results(
             "SELECT DATE_FORMAT(date, '%Y-%m') as month, SUM(amount) as total
-             FROM $table_name
+             FROM {$wpdb->prefix}ems_employee_sales
              WHERE date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
              GROUP BY month
              ORDER BY month ASC"
-        ));
+        );
 
         $data = array(
             'labels' => array(),
@@ -474,7 +474,7 @@ class EMS_RestAPI
         );
 
         foreach ($results as $row) {
-            $data['labels'][] = date('M Y', strtotime($row->month));
+            $data['labels'][] = gmdate('M Y', strtotime($row->month));
             $data['data'][] = floatval($row->total);
         }
 
@@ -497,13 +497,12 @@ class EMS_RestAPI
         if (false === $sales) {
             global $wpdb;
 
+            // Remove unnecessary prepare since there are no variables to escape
             $sales = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT s.*, u.display_name as employee_name 
-                    FROM {$wpdb->prefix}ems_employee_sales s 
-                    LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
-                    ORDER BY s.date DESC"
-                )
+                "SELECT s.*, u.display_name as employee_name 
+                FROM {$wpdb->prefix}ems_employee_sales s 
+                LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
+                ORDER BY s.date DESC"
             );
 
             // Cache for 5 minutes
@@ -678,7 +677,7 @@ class EMS_RestAPI
      */
     public function get_available_users() {
         global $wpdb;
-        // Remove unnecessary prepare
+        // Fix: Remove unnecessary prepare and use direct query
         $users = $wpdb->get_results(
             "SELECT u.ID, u.display_name 
             FROM {$wpdb->users} u 

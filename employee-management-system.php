@@ -98,7 +98,6 @@ final class Employee_Management_System {
     public function activate() {
         $database = EMS_Database::instance();
         $database->create_tables();
-        $database->upgrade_schema();
         
         add_option( 'ems_activation_time', time() );
         flush_rewrite_rules();
