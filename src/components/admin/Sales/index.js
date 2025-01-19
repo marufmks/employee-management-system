@@ -1,31 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
-import { Card, CardHeader, CardBody, Button, Notice } from '@wordpress/components';
+import { Card, CardHeader, CardBody, Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { format } from 'date-fns';
-import { store as noticesStore } from '@wordpress/notices';
-import { dispatch } from '@wordpress/data';
+import { toast } from 'react-toastify';
 
 const Sales = () => {
     const [sales, setSales] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showCopiedNotice, setShowCopiedNotice] = useState(false);
 
     useEffect(() => {
         fetchSales();
     }, []);
-
-    const showNotification = (type, message) => {
-        dispatch(noticesStore).createNotice(
-            type,
-            message,
-            {
-                type: 'snackbar',
-                isDismissible: true,
-            }
-        );
-    };
 
     const fetchSales = async () => {
         try {
@@ -36,7 +23,7 @@ const Sales = () => {
             setSales(response);
         } catch (error) {
             setError(error.message);
-            showNotification('error', error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
@@ -75,31 +62,26 @@ const Sales = () => {
             // For modern browsers
             const downloadUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
-            
-            // Set link properties
             link.href = downloadUrl;
             link.download = `employee_sales_${employeeId}.csv`;
             link.style.display = 'none';
-            
-            // Append, click, and cleanup
             document.body.appendChild(link);
             link.click();
             
-            // Cleanup after small delay to ensure download starts
             setTimeout(() => {
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(downloadUrl);
             }, 100);
 
         } catch (error) {
-            showNotification('error', error.message || __('Failed to download sales data.', 'employee-management-system'));
+            toast.error(error.message || __('Failed to download sales data.', 'employee-management-system'));
         }
     };
 
     const handleCopyShortcode = async () => {
         try {
             await navigator.clipboard.writeText('[employee_dashboard]');
-            showNotification('success', __('Shortcode copied to clipboard!', 'employee-management-system'));
+            toast.success(__('Shortcode copied to clipboard!', 'employee-management-system'));
         } catch (err) {
             const textArea = document.createElement('textarea');
             textArea.value = '[employee_dashboard]';
@@ -107,9 +89,9 @@ const Sales = () => {
             textArea.select();
             try {
                 document.execCommand('copy');
-                showNotification('success', __('Shortcode copied to clipboard!', 'employee-management-system'));
+                toast.success(__('Shortcode copied to clipboard!', 'employee-management-system'));
             } catch (err) {
-                showNotification('error', __('Failed to copy shortcode.', 'employee-management-system'));
+                toast.error(__('Failed to copy shortcode.', 'employee-management-system'));
             }
             document.body.removeChild(textArea);
         }
@@ -171,16 +153,6 @@ const Sales = () => {
                     </div>
                 </div>
             </div>
-
-            {showCopiedNotice && (
-                <Notice 
-                    status="success"
-                    isDismissible={false}
-                    className="ems-notice"
-                >
-                    {__('Shortcode copied to clipboard!', 'employee-management-system')}
-                </Notice>
-            )}
             
             <div className="ems-sales-grid">
                 {Object.entries(salesByEmployee).map(([employeeId, data]) => (

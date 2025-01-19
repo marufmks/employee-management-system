@@ -15,6 +15,7 @@ import {
 } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { dispatch } from '@wordpress/data';
+import { toast } from 'react-toastify';
 
 const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
     const initialFormState = {
@@ -317,7 +318,6 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
                         <th>{__('Department', 'employee-management-system')}</th>
                         <th>{__('Designation', 'employee-management-system')}</th>
                         <th>{__('Join Date', 'employee-management-system')}</th>
-                        <th>{__('Current Salary', 'employee-management-system')}</th>
                         <th>{__('Phone', 'employee-management-system')}</th>
                         <th>{__('Status', 'employee-management-system')}</th>
                         <th>{__('Actions', 'employee-management-system')}</th>
@@ -330,7 +330,6 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
                             <td>{employee.department}</td>
                             <td>{employee.designation}</td>
                             <td>{employee.join_date}</td>
-                            <td>${parseFloat(employee.current_salary).toLocaleString()}</td>
                             <td>{employee.phone}</td>
                             <td>
                                 {(() => {
@@ -416,19 +415,19 @@ const Employees = () => {
                 });
                 setIsEditing(false);
                 setCurrentEmployee(null);
-                showNotification('success', __('Employee updated successfully!', 'employee-management-system'));
+                toast.success(__('Employee updated successfully!', 'employee-management-system'));
             } else {
                 await apiFetch({
                     path: 'ems/v1/employees',
                     method: 'POST',
                     data: formData
                 });
-                showNotification('success', __('Employee added successfully!', 'employee-management-system'));
+                toast.success(__('Employee added successfully!', 'employee-management-system'));
             }
             await fetchEmployees();
             return true;
         } catch (err) {
-            showNotification('error', err.message || __('Failed to save employee.', 'employee-management-system'));
+            toast.error(err.message || __('Failed to save employee.', 'employee-management-system'));
             return false;
         }
     };

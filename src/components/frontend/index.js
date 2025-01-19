@@ -8,6 +8,11 @@ import { TextControl, TextareaControl } from '@wordpress/components';
 const EmployeeDashboard = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState(null);
+    const [settings, setSettings] = useState({
+        dateFormat: 'Y-m-d',
+        currencySymbol: '$',
+        currencyPosition: 'before'
+    });
     const [userData, setUserData] = useState({
         name: '',
         totalSales: 0,
@@ -32,7 +37,17 @@ const EmployeeDashboard = () => {
             apiFetch.use(apiFetch.createNonceMiddleware(window.emsData.nonce));
         }
         checkAccess();
+        fetchSettings();
     }, []);
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage(null);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
     const checkAccess = async () => {
         try {
@@ -94,6 +109,35 @@ const EmployeeDashboard = () => {
         }
     };
 
+    const fetchSettings = async () => {
+        try {
+            const response = await apiFetch({
+                path: 'ems/v1/settings',
+                method: 'GET'
+            });
+
+            if (response) {
+                setSettings(response);
+            }
+        } catch (error) {
+            console.error('Failed to fetch settings:', error);
+        }
+    };
+
+    // Format currency based on settings
+    const formatCurrency = (amount) => {
+        const formattedAmount = Number(amount).toLocaleString();
+        return settings.currencyPosition === 'before' 
+            ? `${settings.currencySymbol}${formattedAmount}`
+            : `${formattedAmount}${settings.currencySymbol}`;
+    };
+
+    // Format date based on settings
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        return format(new Date(dateString), 'MMMM dd, yyyy');
+    };
+
     const handleInputChange = (field, value) => {
         setFormData(prev => ({
             ...prev,
@@ -138,6 +182,8 @@ const EmployeeDashboard = () => {
     };
 
     const currentDate = format(new Date(), 'MMMM dd, yyyy');
+    // Add max date for date input
+    const today = new Date().toISOString().split('T')[0];
 
     if (isLoading) {
         return (
@@ -169,7 +215,7 @@ const EmployeeDashboard = () => {
             {/* Welcome Section */}
             <div className="welcome-section">
                 <h1>{__('Welcome', 'employee-management-system')}, {userData.name}</h1>
-                <p className="current-date">{currentDate}</p>
+                <p className="current-date">{formatDate(new Date())}</p>
             </div>
 
             {/* Dashboard Stats */}
@@ -183,7 +229,7 @@ const EmployeeDashboard = () => {
                                     <span className="stat-label">{__('Total Sales', 'employee-management-system')}</span>
                                 </div>
                                 <p className="stat-value">
-                                    ${(userData.totalSales || 0).toLocaleString()}
+                                    {formatCurrency(userData.totalSales || 0)}
                                 </p>
                                 <span className="stat-trend positive">
                                     {(userData.salesTrend || 0) > 0 ? '↑' : '↓'} {Math.abs(userData.salesTrend || 0)}%
@@ -213,7 +259,7 @@ const EmployeeDashboard = () => {
                                     <span className="stat-label">{__('Highest Sale', 'employee-management-system')}</span>
                                 </div>
                                 <p className="stat-value">
-                                    ${(userData.highestSale || 0).toLocaleString()}
+                                    {formatCurrency(userData.highestSale || 0)}
                                 </p>
                                 <span className="stat-trend">
                                     {userData.highestSaleDate || ''}
@@ -243,21 +289,30 @@ const EmployeeDashboard = () => {
                                     type="date"
                                     value={formData.date}
                                     onChange={value => handleInputChange('date', value)}
+                                    max={today}
                                     required
                                     __nextHasNoMarginBottom={true}
                                 />
                             </div>
                             <div className="form-group">
-                                <TextControl
-                                    label={__('Amount', 'employee-management-system')}
-                                    type="number"
-                                    value={formData.amount}
-                                    onChange={value => handleInputChange('amount', value)}
-                                    min="0"
-                                    step="0.01"
-                                    required
-                                    __nextHasNoMarginBottom={true}
-                                />
+                                <div className="amount-input-wrapper">
+                                    {settings.currencyPosition === 'before' && (
+                                        <span className="currency-symbol">{settings.currencySymbol}</span>
+                                    )}
+                                    <TextControl
+                                        label={__('Amount', 'employee-management-system')}
+                                        type="number"
+                                        value={formData.amount}
+                                        onChange={value => handleInputChange('amount', value)}
+                                        min="0"
+                                        step="0.01"
+                                        required
+                                        __nextHasNoMarginBottom={true}
+                                    />
+                                    {settings.currencyPosition === 'after' && (
+                                        <span className="currency-symbol">{settings.currencySymbol}</span>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className="form-group">

@@ -7,6 +7,8 @@ import {
     money, 
     settings 
 } from '@wordpress/icons';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLayout = ({ currentPath, onNavigate, children }) => {
     const navItems = [
@@ -61,6 +63,18 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
             <div className="ems-admin-content">
                 {children}
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 };

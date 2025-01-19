@@ -13,6 +13,7 @@ import {
     PanelBody
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
+import { toast } from 'react-toastify';
 
 const Settings = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +45,7 @@ const Settings = () => {
             setSettings(response);
             setIsLoading(false);
         } catch (error) {
-            showNotification(error.message, 'error');
+            toast.error(error.message);
             setIsLoading(false);
         }
     };
@@ -66,7 +67,7 @@ const Settings = () => {
     const saveSettings = async () => {
         const errors = validateSettings();
         if (errors.length > 0) {
-            errors.forEach(error => showNotification(error, 'error'));
+            errors.forEach(error => toast.error(error));
             return;
         }
 
@@ -79,21 +80,14 @@ const Settings = () => {
             });
 
             if (response.success) {
-                showNotification(response.message, 'success');
+                toast.success(response.message);
             } else {
                 throw new Error(response.message || __('Failed to save settings', 'employee-management-system'));
             }
         } catch (error) {
-            showNotification(error.message, 'error');
+            toast.error(error.message);
         }
         setIsSaving(false);
-    };
-
-    const showNotification = (message, type = 'success') => {
-        setNoticeType(type);
-        setNoticeMessage(message);
-        setShowNotice(true);
-        setTimeout(() => setShowNotice(false), 3000);
     };
 
     if (isLoading) {
@@ -143,8 +137,8 @@ const Settings = () => {
                                 label={__('Currency Position', 'employee-management-system')}
                                 value={settings.currencyPosition}
                                 options={[
-                                    { label: __('Before amount ($100)', 'employee-management-system'), value: 'before' },
-                                    { label: __('After amount (100$)', 'employee-management-system'), value: 'after' }
+                                    { label: `${__('Before amount', 'employee-management-system')} (${settings.currencySymbol}100)`, value: 'before' },
+                                    { label: `${__('After amount', 'employee-management-system')} (100${settings.currencySymbol})`, value: 'after' }
                                 ]}
                                 onChange={(value) => setSettings({...settings, currencyPosition: value})}
                                 __nextHasNoMarginBottom={true}
