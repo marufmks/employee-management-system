@@ -13,8 +13,10 @@ import {
     Panel,
     PanelBody,
 } from '@wordpress/components';
+import { store as noticesStore } from '@wordpress/notices';
+import { dispatch } from '@wordpress/data';
 
-const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
+const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
     const initialFormState = {
         user_id: '',
         department: '',
@@ -68,6 +70,13 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
         }
     };
 
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -80,9 +89,6 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                         if (!isEditing) {
                             resetForm();
                         }
-                        if (onSuccess) {
-                            onSuccess();
-                        }
                     });
                 }}>
                     <Panel>
@@ -91,34 +97,28 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                 label={__('Select User', 'employee-management-system')}
                                 value={formData.user_id}
                                 options={[
-                                    { 
-                                        value: '', 
-                                        label: isLoadingUsers 
-                                            ? __('Loading users...', 'employee-management-system')
-                                            : __('Select a user...', 'employee-management-system') 
-                                    },
+                                    { value: '', label: isLoadingUsers ? __('Loading users...', 'employee-management-system') : __('Select a user...', 'employee-management-system') },
                                     ...users
                                 ]}
-                                onChange={(value) => setFormData({...formData, user_id: value})}
+                                onChange={value => handleInputChange('user_id', value)}
                                 disabled={isEditing || isLoadingUsers}
-                                help={
-                                    users.length === 0 && !isLoadingUsers 
-                                        ? __('No available users found. All users are already employees.', 'employee-management-system')
-                                        : ''
-                                }
+                                help={users.length === 0 && !isLoadingUsers ? __('No available users found.', 'employee-management-system') : ''}
+                                __nextHasNoMarginBottom={true}
                             />
                             
                             <div className="form-row">
                                 <TextControl
                                     label={__('Department', 'employee-management-system')}
                                     value={formData.department}
-                                    onChange={(value) => setFormData({...formData, department: value})}
+                                    onChange={value => handleInputChange('department', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <TextControl
                                     label={__('Designation', 'employee-management-system')}
                                     value={formData.designation}
-                                    onChange={(value) => setFormData({...formData, designation: value})}
+                                    onChange={value => handleInputChange('designation', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </div>
 
@@ -127,16 +127,18 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                     label={__('Starting Salary', 'employee-management-system')}
                                     type="number"
                                     value={formData.starting_salary}
-                                    onChange={(value) => setFormData({...formData, starting_salary: value})}
+                                    onChange={value => handleInputChange('starting_salary', value)}
                                     className="salary-field"
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <TextControl
                                     label={__('Current Salary', 'employee-management-system')}
                                     type="number"
                                     value={formData.current_salary}
-                                    onChange={(value) => setFormData({...formData, current_salary: value})}
+                                    onChange={value => handleInputChange('current_salary', value)}
                                     className="salary-field"
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </div>
 
@@ -145,14 +147,16 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                     label={__('Join Date', 'employee-management-system')}
                                     type="date"
                                     value={formData.join_date}
-                                    onChange={(value) => setFormData({...formData, join_date: value})}
+                                    onChange={value => handleInputChange('join_date', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <TextControl
                                     label={__('Leave Date', 'employee-management-system')}
                                     type="date"
                                     value={formData.leave_date}
-                                    onChange={(value) => setFormData({...formData, leave_date: value})}
+                                    onChange={value => handleInputChange('leave_date', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </div>
 
@@ -161,8 +165,9 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                     label={__('Phone', 'employee-management-system')}
                                     type="tel"
                                     value={formData.phone}
-                                    onChange={(value) => setFormData({...formData, phone: value})}
+                                    onChange={value => handleInputChange('phone', value)}
                                     className="phone-field"
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <SelectControl
@@ -172,22 +177,22 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                         { label: __('Single', 'employee-management-system'), value: 'single' },
                                         { label: __('Married', 'employee-management-system'), value: 'married' },
                                     ]}
-                                    onChange={(value) => setFormData({...formData, marital_status: value})}
+                                    onChange={value => handleInputChange('marital_status', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </div>
 
-                            <div className="form-row">
-                                <SelectControl
-                                    label={__('Employee Status', 'employee-management-system')}
-                                    value={formData.status}
-                                    options={[
-                                        { label: __('Active', 'employee-management-system'), value: 'active' },
-                                        { label: __('Inactive', 'employee-management-system'), value: 'inactive' },
-                                        { label: __('Blocked', 'employee-management-system'), value: 'blocked' },
-                                    ]}
-                                    onChange={(value) => setFormData({...formData, status: value})}
-                                />
-                            </div>
+                            <SelectControl
+                                label={__('Employee Status', 'employee-management-system')}
+                                value={formData.status}
+                                options={[
+                                    { label: __('Active', 'employee-management-system'), value: 'active' },
+                                    { label: __('Inactive', 'employee-management-system'), value: 'inactive' },
+                                    { label: __('Blocked', 'employee-management-system'), value: 'blocked' },
+                                ]}
+                                onChange={value => handleInputChange('status', value)}
+                                __nextHasNoMarginBottom={true}
+                            />
                         </PanelBody>
                     </Panel>
 
@@ -199,33 +204,38 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                 <TextareaControl
                                     label={__('Street Address', 'employee-management-system')}
                                     value={formData.street_address} rows={1}
-                                    onChange={(value) => setFormData({...formData, street_address: value})}
+                                    onChange={value => handleInputChange('street_address', value)}
                                     className="address-field"
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <div className="address-grid">
                                     <TextControl
                                         label={__('City', 'employee-management-system')}
                                         value={formData.city}
-                                        onChange={(value) => setFormData({...formData, city: value})}
+                                        onChange={value => handleInputChange('city', value)}
+                                        __nextHasNoMarginBottom={true}
                                     />
                                     
                                     <TextControl
                                         label={__('State', 'employee-management-system')}
                                         value={formData.state}
-                                        onChange={(value) => setFormData({...formData, state: value})}
+                                        onChange={value => handleInputChange('state', value)}
+                                        __nextHasNoMarginBottom={true}
                                     />
                                     
                                     <TextControl
                                         label={__('Postal Code', 'employee-management-system')}
                                         value={formData.postal_code}
-                                        onChange={(value) => setFormData({...formData, postal_code: value})}
+                                        onChange={value => handleInputChange('postal_code', value)}
+                                        __nextHasNoMarginBottom={true}
                                     />
                                     
                                     <TextControl
                                         label={__('Country', 'employee-management-system')}
                                         value={formData.country}
-                                        onChange={(value) => setFormData({...formData, country: value})}
+                                        onChange={value => handleInputChange('country', value)}
+                                        __nextHasNoMarginBottom={true}
                                     />
                                 </div>
                             </PanelBody>
@@ -237,20 +247,23 @@ const EmployeeForm = ({ employee, onSubmit, isEditing, onSuccess }) => {
                                 <TextControl
                                     label={__('Contact Name', 'employee-management-system')}
                                     value={formData.emergency_contact_name}
-                                    onChange={(value) => setFormData({...formData, emergency_contact_name: value})}
+                                    onChange={value => handleInputChange('emergency_contact_name', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <TextControl
                                     label={__('Contact Phone', 'employee-management-system')}
                                     type="tel"
                                     value={formData.emergency_contact_phone}
-                                    onChange={(value) => setFormData({...formData, emergency_contact_phone: value})}
+                                    onChange={value => handleInputChange('emergency_contact_phone', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 
                                 <TextControl
                                     label={__('Relationship', 'employee-management-system')}
                                     value={formData.emergency_contact_relation}
-                                    onChange={(value) => setFormData({...formData, emergency_contact_relation: value})}
+                                    onChange={value => handleInputChange('emergency_contact_relation', value)}
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </PanelBody>
                         </Panel>
@@ -382,6 +395,17 @@ const Employees = () => {
         }
     };
 
+    const showNotification = (type, message) => {
+        dispatch(noticesStore).createNotice(
+            type,
+            message,
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
+    };
+
     const handleSubmit = async (formData) => {
         try {
             if (isEditing) {
@@ -392,43 +416,20 @@ const Employees = () => {
                 });
                 setIsEditing(false);
                 setCurrentEmployee(null);
+                showNotification('success', __('Employee updated successfully!', 'employee-management-system'));
             } else {
                 await apiFetch({
                     path: 'ems/v1/employees',
                     method: 'POST',
                     data: formData
                 });
+                showNotification('success', __('Employee added successfully!', 'employee-management-system'));
             }
             await fetchEmployees();
             return true;
         } catch (err) {
-            setError(err.message);
+            showNotification('error', err.message || __('Failed to save employee.', 'employee-management-system'));
             return false;
-        }
-    };
-
-    const handleSuccess = () => {
-        // Additional actions after successful submission
-        if (!isEditing) {
-            // Show success message for new employee
-            wp.data.dispatch('core/notices').createNotice(
-                'success',
-                __('Employee added successfully!', 'employee-management-system'),
-                {
-                    type: 'snackbar',
-                    isDismissible: true,
-                }
-            );
-        } else {
-            // Show success message for updated employee
-            wp.data.dispatch('core/notices').createNotice(
-                'success',
-                __('Employee updated successfully!', 'employee-management-system'),
-                {
-                    type: 'snackbar',
-                    isDismissible: true,
-                }
-            );
         }
     };
 
@@ -473,7 +474,6 @@ const Employees = () => {
                 employee={currentEmployee}
                 onSubmit={handleSubmit}
                 isEditing={isEditing}
-                onSuccess={handleSuccess}
             />
             <EmployeeList 
                 employees={employees}

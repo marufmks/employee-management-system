@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Card, CardHeader, CardBody } from '@wordpress/components';
 import { format } from 'date-fns';
 import apiFetch from '@wordpress/api-fetch';
+import { TextControl, TextareaControl } from '@wordpress/components';
 
 const EmployeeDashboard = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,6 +20,12 @@ const EmployeeDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [hasAccess, setHasAccess] = useState(false);
+
+    const [formData, setFormData] = useState({
+        date: '',
+        amount: '',
+        description: ''
+    });
 
     useEffect(() => {
         if (window.emsData && window.emsData.nonce) {
@@ -87,31 +94,38 @@ const EmployeeDashboard = () => {
         }
     };
 
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setMessage(null);
-
-        const formData = new FormData(e.target);
         
         try {
             const response = await apiFetch({
                 path: 'ems/v1/sales',
                 method: 'POST',
-                data: {
-                    date: formData.get('date'),
-                    amount: formData.get('amount'),
-                    description: formData.get('description'),
-                }
+                data: formData
             });
 
             setMessage({
                 type: 'success',
                 text: __('Sale recorded successfully!', 'employee-management-system')
             });
-            e.target.reset();
             
-            // Refresh the stats after successful submission
+            // Reset form
+            setFormData({
+                date: '',
+                amount: '',
+                description: ''
+            });
+            
+            // Refresh the stats
             fetchUserData();
         } catch (error) {
             setMessage({
@@ -224,30 +238,38 @@ const EmployeeDashboard = () => {
                     <form className="sales-report-form" onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="date">{__('Date', 'employee-management-system')}</label>
-                                <input type="date" id="date" name="date" required />
+                                <TextControl
+                                    label={__('Date', 'employee-management-system')}
+                                    type="date"
+                                    value={formData.date}
+                                    onChange={value => handleInputChange('date', value)}
+                                    required
+                                    __nextHasNoMarginBottom={true}
+                                />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="amount">{__('Amount', 'employee-management-system')}</label>
-                                <input 
-                                    type="number" 
-                                    id="amount" 
-                                    name="amount" 
-                                    min="0" 
-                                    step="0.01" 
-                                    required 
+                                <TextControl
+                                    label={__('Amount', 'employee-management-system')}
+                                    type="number"
+                                    value={formData.amount}
+                                    onChange={value => handleInputChange('amount', value)}
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                    __nextHasNoMarginBottom={true}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">{__('Description', 'employee-management-system')}</label>
-                            <textarea 
-                                id="description" 
-                                name="description" 
+                            <TextareaControl
+                                label={__('Description', 'employee-management-system')}
+                                value={formData.description}
+                                onChange={value => handleInputChange('description', value)}
                                 rows={4}
                                 placeholder={__('Enter sale details...', 'employee-management-system')}
                                 required
-                            ></textarea>
+                                __nextHasNoMarginBottom={true}
+                            />
                         </div>
                         <button 
                             type="submit" 

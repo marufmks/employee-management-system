@@ -11,8 +11,8 @@
  * Plugin Name: Employee Management System
  * Plugin URI: https://github.com/marufmks/employee-management-system
  * Description: A comprehensive employee and sales management solution for WordPress. Features include employee profiles, sales tracking, performance metrics, customizable dashboards, and detailed reporting.
- * Version: 1.0.1
- * Requires at least: 5.8
+ * Version: 1.0.2
+ * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Maruf
  * Author URI: https://github.com/marufmks
@@ -34,7 +34,7 @@ final class Employee_Management_System {
     /**
      * Plugin version
      */
-    const VERSION = '1.0.1';
+    const VERSION = '1.0.2';
 
     /**
      * Plugin instance

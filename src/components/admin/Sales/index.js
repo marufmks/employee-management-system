@@ -3,6 +3,8 @@ import { __ } from '@wordpress/i18n';
 import { Card, CardHeader, CardBody, Button, Notice } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { format } from 'date-fns';
+import { store as noticesStore } from '@wordpress/notices';
+import { dispatch } from '@wordpress/data';
 
 const Sales = () => {
     const [sales, setSales] = useState([]);
@@ -14,6 +16,17 @@ const Sales = () => {
         fetchSales();
     }, []);
 
+    const showNotification = (type, message) => {
+        dispatch(noticesStore).createNotice(
+            type,
+            message,
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
+    };
+
     const fetchSales = async () => {
         try {
             const response = await apiFetch({
@@ -23,6 +36,7 @@ const Sales = () => {
             setSales(response);
         } catch (error) {
             setError(error.message);
+            showNotification('error', error.message);
         } finally {
             setIsLoading(false);
         }
@@ -35,28 +49,57 @@ const Sales = () => {
                 method: 'GET'
             });
             
-            const csvContent = 'data:text/csv;charset=utf-8,' 
-                + 'Date,Amount,Description\n'
-                + response.map(row => 
-                    `${row.date},${row.amount},"${row.description}"`
-                ).join('\n');
-
-            const encodedUri = encodeURI(csvContent);
+            // Create CSV content with BOM for Excel compatibility
+            const BOM = '\uFEFF';
+            const csvRows = [
+                ['Date', 'Amount', 'Description'], // Headers
+                ...response.map(row => [
+                    row.date,
+                    row.amount,
+                    `"${row.description.replace(/"/g, '""')}"` // Escape quotes in description
+                ])
+            ];
+            
+            // Create Blob with proper encoding
+            const csvContent = BOM + csvRows.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], { 
+                type: 'application/csv;charset=utf-8'
+            });
+            
+            // Use native browser download if available
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(blob, `employee_sales_${employeeId}.csv`);
+                return;
+            }
+            
+            // For modern browsers
+            const downloadUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', `employee_sales_${employeeId}.csv`);
+            
+            // Set link properties
+            link.href = downloadUrl;
+            link.download = `employee_sales_${employeeId}.csv`;
+            link.style.display = 'none';
+            
+            // Append, click, and cleanup
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
+            
+            // Cleanup after small delay to ensure download starts
+            setTimeout(() => {
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(downloadUrl);
+            }, 100);
+
         } catch (error) {
+            showNotification('error', error.message || __('Failed to download sales data.', 'employee-management-system'));
         }
     };
 
     const handleCopyShortcode = async () => {
         try {
             await navigator.clipboard.writeText('[employee_dashboard]');
-            setShowCopiedNotice(true);
-            setTimeout(() => setShowCopiedNotice(false), 2000);
+            showNotification('success', __('Shortcode copied to clipboard!', 'employee-management-system'));
         } catch (err) {
             const textArea = document.createElement('textarea');
             textArea.value = '[employee_dashboard]';
@@ -64,9 +107,9 @@ const Sales = () => {
             textArea.select();
             try {
                 document.execCommand('copy');
-                setShowCopiedNotice(true);
-                setTimeout(() => setShowCopiedNotice(false), 2000);
+                showNotification('success', __('Shortcode copied to clipboard!', 'employee-management-system'));
             } catch (err) {
+                showNotification('error', __('Failed to copy shortcode.', 'employee-management-system'));
             }
             document.body.removeChild(textArea);
         }

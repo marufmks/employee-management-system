@@ -2,9 +2,9 @@
 Contributors: marufmks
 Donate link: https://github.com/marufmks
 Tags: employee management, sales tracking, employee dashboard, staff management, HR management
-Requires at least: 5.8
+Requires at least: 6.0
 Tested up to: 6.7.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -90,6 +90,18 @@ Use the shortcode [employee_dashboard] on any page where you want to display the
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed CSV export security issues
+* Improved file download handling
+* Added Excel compatibility for CSV exports
+* Fixed WordPress notices implementation
+* Optimized JavaScript files for production
+* Fixed console errors and warnings
+* Improved error handling
+* Enhanced notification system
+* Better browser compatibility
+* Performance improvements
+
 = 1.0.1 =
 * Added employee status tracking (active, inactive, blocked)
 * Enhanced dashboard with interactive charts
@@ -107,8 +119,8 @@ Use the shortcode [employee_dashboard] on any page where you want to display the
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-This update adds employee status tracking, enhanced dashboard features, and improved security. Upgrade recommended for all users.
+= 1.0.2 =
+This update includes important security fixes for CSV exports, improved file handling, and various performance optimizations. Upgrade recommended for all users.
 
 == Privacy Policy ==
 

@@ -129,12 +129,14 @@ const Settings = () => {
                                     { label: 'YYYY.MM.DD', value: 'Y.m.d' }
                                 ]}
                                 onChange={(value) => setSettings({...settings, dateFormat: value})}
+                                __nextHasNoMarginBottom={true}
                             />
 
                             <TextControl
                                 label={__('Currency Symbol', 'employee-management-system')}
                                 value={settings.currencySymbol}
                                 onChange={(value) => setSettings({...settings, currencySymbol: value})}
+                                __nextHasNoMarginBottom={true}
                             />
 
                             <SelectControl
@@ -145,6 +147,7 @@ const Settings = () => {
                                     { label: __('After amount (100$)', 'employee-management-system'), value: 'after' }
                                 ]}
                                 onChange={(value) => setSettings({...settings, currencyPosition: value})}
+                                __nextHasNoMarginBottom={true}
                             />
                         </PanelBody>
                     </Panel>
@@ -159,6 +162,7 @@ const Settings = () => {
                                 checked={settings.deleteDataOnUninstall}
                                 onChange={(value) => setSettings({...settings, deleteDataOnUninstall: value})}
                                 help={__('If enabled, all plugin data will be deleted when the plugin is uninstalled', 'employee-management-system')}
+                                __nextHasNoMarginBottom={true}
                             />
                         </PanelBody>
                     </Panel>
