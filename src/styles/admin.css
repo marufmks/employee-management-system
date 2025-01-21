@@ -63,6 +63,9 @@
 }
 
 /* Employee Management Styles */
+.employee-list {
+    margin-top: 20px;
+}
 
 .employee-form form {
     display: grid;
@@ -291,37 +294,87 @@
 }
 
 .ems-table-responsive {
-    margin: 0;
-    padding: 0 24px;
+    margin: 0 auto;
+    padding: 20px;
+    overflow-x: auto;
 }
 
 .ems-table {
     width: 100%;
     border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.ems-table th,
-.ems-table td {
-    padding: 12px 8px;
-    text-align: left;
-    border-bottom: 1px solid #e2e4e7;
+.widefat th,
+.widefat td {
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.widefat th:nth-child(1), /* Name column */
+.widefat td:nth-child(1) {
+    width: 20%;
+}
+
+.widefat th:nth-child(2), /* Designation column */
+.widefat td:nth-child(2) {
+    width: 15%;
+}
+
+.widefat th:nth-child(3), /* Phone column */
+.widefat td:nth-child(3) {
+    width: 15%;
+}
+
+.widefat th:nth-child(4), /* Status column */
+.widefat td:nth-child(4) {
+    width: 15%;
+}
+
+.widefat th:nth-child(5), /* Actions column */
+.widefat td:nth-child(5) {
+    width: 35%;
+    min-width: 200px; /* Ensure minimum width for action buttons */
 }
 
 .ems-table thead th {
     background-color: #f0f0f1;
-    font-weight: 600;
-    font-size: 13px;
     color: #1e1e1e;
+    font-weight: 600;
+    padding: 16px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.ems-table tbody td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f1;
+    color: #50575e;
 }
 
 .ems-table tbody tr:hover {
     background-color: #f8f9fa;
 }
 
+.ems-table tfoot tr {
+    background-color: #f8f9fa;
+}
+
+.ems-table tfoot th {
+    padding: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+
 .amount-cell {
-    text-align: right;
     font-family: monospace;
-    font-size: 14px;
+    font-weight: 600;
+    color: #2271b1;
 }
 
 .ems-notice {
@@ -577,4 +630,82 @@
     .folded .ems-sidebar-image {
         display: none;
     }
+}
+
+.ems-action-buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.ems-action-buttons button {
+    padding: 2px 8px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    white-space: nowrap;
+    font-size: 12px !important;
+}
+
+.ems-action-buttons .download-button {
+    background-color: #2271b1 !important;
+    color: #fff !important;
+    border-color: #2271b1 !important;
+}
+
+.ems-action-buttons .download-button:hover {
+    background-color: #135e96 !important;
+    border-color: #135e96 !important;
+}
+
+.ems-action-buttons .edit-button {
+    background-color: #fff !important;
+    color: #2271b1 !important;
+    border-color: #2271b1 !important;
+}
+
+.ems-action-buttons .edit-button:hover {
+    background-color: #f0f0f1 !important;
+}
+
+.ems-action-buttons .delete-button {
+    background-color: #fff !important;
+    color: #d63638 !important;
+    border-color: #d63638 !important;
+}
+
+.ems-action-buttons .delete-button:hover {
+    background-color: #f0f0f1 !important;
+}
+
+.ems-table-actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ems-table-actions .download-csv-button {
+    background-color: #2271b1 !important;
+    color: #fff !important;
+    border-color: #2271b1 !important;
+    padding: 4px 12px !important;
+    height: auto !important;
+    min-height: 32px;
+}
+
+.ems-table-actions .download-csv-button:hover {
+    background-color: #135e96 !important;
+    border-color: #135e96 !important;
+}
+
+/* Card Styles */
+.employee-sales-card {
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.employee-sales-card-header {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f1;
 } 

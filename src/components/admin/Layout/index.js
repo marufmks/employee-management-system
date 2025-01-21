@@ -2,9 +2,9 @@ import React from 'react';
 import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 import { 
-    chart, 
-    groups, 
-    money, 
+    chartBar, 
+    group, 
+    currencyDollar, 
     settings 
 } from '@wordpress/icons';
 import { ToastContainer } from 'react-toastify';
@@ -15,17 +15,17 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
         {
             id: 'dashboard',
             label: __('Dashboard', 'employee-management-system'),
-            icon: chart,
+            icon: chartBar,
         },
         {
             id: 'employees',
             label: __('Employee Records', 'employee-management-system'),
-            icon: groups,
+            icon: group,
         },
         {
             id: 'sales',
             label: __('Sales Reports', 'employee-management-system'),
-            icon: money,
+            icon: currencyDollar,
         },
         {
             id: 'settings',

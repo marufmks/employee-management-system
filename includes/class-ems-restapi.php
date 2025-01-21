@@ -130,6 +130,19 @@ class EMS_RestAPI
             'callback' => array($this, 'get_available_users'),
             'permission_callback' => array($this, 'check_admin_permission'),
         ));
+
+        register_rest_route($this->namespace, '/employees/(?P<id>\d+)/export-csv', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'export_single_employee_csv'),
+            'permission_callback' => array($this, 'check_admin_permission'),
+            'args' => array(
+                'id' => array(
+                    'validate_callback' => function ($param) {
+                        return is_numeric($param);
+                    }
+                )
+            )
+        ));
     }
 
     public function check_admin_permission()
@@ -140,13 +153,14 @@ class EMS_RestAPI
     /**
      * Get plugin settings
      */
-    public function get_settings($request) {
+    public function get_settings($request)
+    {
         $default_settings = array(
             // General Settings
             'dateFormat' => get_option('ems_date_format', 'Y-m-d'),
             'currencySymbol' => get_option('ems_currency_symbol', '$'),
             'currencyPosition' => get_option('ems_currency_position', 'before'),
-            
+
             // System Settings
             'deleteDataOnUninstall' => get_option('ems_delete_data_uninstall', false)
         );
@@ -157,9 +171,10 @@ class EMS_RestAPI
     /**
      * Update plugin settings
      */
-    public function update_settings($request) {
+    public function update_settings($request)
+    {
         $params = $request->get_params();
-        
+
         // Validate and sanitize inputs
         $settings = array(
             'dateFormat' => sanitize_text_field($params['dateFormat']),
@@ -338,7 +353,7 @@ class EMS_RestAPI
                     'missing_field',
                     sprintf(
                         /* translators: %s: field name that is missing (e.g., 'date', 'amount', or 'description') */
-                        __('Missing required field: %s', 'employee-management-system'), 
+                        __('Missing required field: %s', 'employee-management-system'),
                         $field
                     ),
                     ['status' => 400]
@@ -456,7 +471,8 @@ class EMS_RestAPI
         return rest_ensure_response($stats);
     }
 
-    public function get_monthly_sales() {
+    public function get_monthly_sales()
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'ems_employee_sales';
 
@@ -528,7 +544,8 @@ class EMS_RestAPI
         return rest_ensure_response($sales);
     }
 
-    public function prepare_employee_for_response($employee) {
+    public function prepare_employee_for_response($employee)
+    {
         return array(
             'user_id' => $employee->user_id,
             'department' => $employee->department,
@@ -553,10 +570,11 @@ class EMS_RestAPI
         );
     }
 
-    public function check_employee_access() {
+    public function check_employee_access()
+    {
         global $wpdb;
         $user_id = get_current_user_id();
-        
+
         if (!$user_id) {
             return new WP_Error(
                 'not_logged_in',
@@ -595,7 +613,8 @@ class EMS_RestAPI
     /**
      * Get frontend employee stats for logged-in user
      */
-    public function get_frontend_employee_stats($request) {
+    public function get_frontend_employee_stats($request)
+    {
         global $wpdb;
         $current_user_id = get_current_user_id();
         $sales_table = $wpdb->prefix . 'ems_employee_sales';
@@ -665,7 +684,8 @@ class EMS_RestAPI
         return rest_ensure_response($response);
     }
 
-    private function calculate_sales_trend($current, $previous) {
+    private function calculate_sales_trend($current, $previous)
+    {
         if (!$previous || $previous <= 0) {
             return 0;
         }
@@ -675,7 +695,8 @@ class EMS_RestAPI
     /**
      * Get users who are not already employees
      */
-    public function get_available_users() {
+    public function get_available_users()
+    {
         global $wpdb;
         // Fix: Remove unnecessary prepare and use direct query
         $users = $wpdb->get_results(
@@ -689,7 +710,7 @@ class EMS_RestAPI
             return rest_ensure_response(array());
         }
 
-        $formatted_users = array_map(function($user) {
+        $formatted_users = array_map(function ($user) {
             return array(
                 'value' => $user->ID,
                 'label' => $user->display_name
@@ -698,4 +719,65 @@ class EMS_RestAPI
 
         return rest_ensure_response($formatted_users);
     }
+
+    public function export_single_employee_csv($request)
+    {
+        global $wpdb;
+        $employee_id = $request['id'];
+
+        // Fetch employee details along with associated user data
+        $employee = $wpdb->get_row($wpdb->prepare(
+            "SELECT e.*, u.display_name AS name, u.user_email AS email
+            FROM {$wpdb->prefix}ems_employees e
+            LEFT JOIN {$wpdb->users} u ON e.user_id = u.ID
+            WHERE e.id = %d",
+            $employee_id
+        ), ARRAY_A);
+
+        if (empty($employee)) {
+            return new WP_Error(
+                'no_employee',
+                __('Employee not found', 'employee-management-system'),
+                array('status' => 404)
+            );
+        }
+
+        // Format address
+        $address = array_filter([
+            $employee['street_address'],
+            $employee['city'],
+            $employee['state'],
+            $employee['postal_code'],
+            $employee['country']
+        ]);
+        $full_address = implode(', ', $address);
+
+        // Format the data for CSV
+        $employee_data = array(
+            array(
+                'name' => $employee['name'] ?: 'N/A',
+                'email' => $employee['email'] ?: 'N/A',
+                'department' => $employee['department'] ?: 'N/A',
+                'designation' => $employee['designation'] ?: 'N/A',
+                'join_date' => $employee['join_date'] ?: 'N/A',
+                'leave_date' => $employee['leave_date'] ?: 'N/A',
+                'starting_salary' => $employee['starting_salary'] ? number_format((float) $employee['starting_salary'], 2) : 'N/A',
+                'current_salary' => $employee['current_salary'] ? number_format((float) $employee['current_salary'], 2) : 'N/A',
+                'phone' => $employee['phone'] ?: 'N/A',
+                'street_address' => $employee['street_address'] ?: 'N/A',
+                'city' => $employee['city'] ?: 'N/A',
+                'state' => $employee['state'] ?: 'N/A',
+                'postal_code' => $employee['postal_code'] ?: 'N/A',
+                'country' => $employee['country'] ?: 'N/A',
+                'emergency_contact_name' => $employee['emergency_contact_name'] ?: 'N/A',
+                'emergency_contact_phone' => $employee['emergency_contact_phone'] ?: 'N/A',
+                'emergency_contact_relation' => $employee['emergency_contact_relation'] ?: 'N/A',
+                'marital_status' => $employee['marital_status'] ?: 'N/A',
+                'status' => $employee['status'] ?: 'N/A'
+            )
+        );
+
+        return rest_ensure_response($employee_data);
+    }
+
 }
