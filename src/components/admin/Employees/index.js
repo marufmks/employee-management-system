@@ -335,6 +335,19 @@ const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
                 ? __("Update Employee", "employee-management-system")
                 : __("Add Employee", "employee-management-system")}
             </Button>
+            {isEditing && (
+              <Button 
+                isDestructive
+                onClick={() => {
+                  setFormData(initialFormState);
+                  onSubmit({ isCancel: true });
+                }}
+                className="cancel-button"
+                icon="no-alt"
+              >
+                {__("Cancel", "employee-management-system")}
+              </Button>
+            )}
           </div>
         </form>
       </CardBody>
@@ -553,6 +566,12 @@ const Employees = () => {
 
   const handleSubmit = async (formData) => {
     try {
+      if (formData.isCancel) {
+        setIsEditing(false);
+        setCurrentEmployee(null);
+        return true;
+      }
+
       if (isEditing) {
         await apiFetch({
           path: `ems/v1/employees/${currentEmployee.id}`,

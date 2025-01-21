@@ -142,10 +142,41 @@
 .form-actions {
     margin-top: 30px;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .form-actions .components-button {
-    min-width: 150px;
+    min-width: 120px;
+    height: 35px !important;
+    min-height: 35px !important;
+}
+
+.form-actions .cancel-button {
+    background-color: #fff !important;
+    color: #d63638 !important;
+    border: 1px solid #d63638 !important;
+    padding: 6px 12px !important;
+    border-radius: 2px !important;
+    transition: all 0.2s ease !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.form-actions .cancel-button:hover {
+    background-color: #d63638 !important;
+    color: #fff !important;
+    border-color: #d63638 !important;
+}
+
+.form-actions .cancel-button .dashicon {
+    width: 16px !important;
+    height: 16px !important;
+    font-size: 16px !important;
 }
 
 /* Panel Body Styles */
@@ -670,11 +701,18 @@
 .ems-action-buttons .delete-button {
     background-color: #fff !important;
     color: #d63638 !important;
-    border-color: #d63638 !important;
+    border: 1px solid #d63638 !important;
+    padding: 2px 8px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    border-radius: 2px !important;
+    transition: all 0.2s ease !important;
 }
 
 .ems-action-buttons .delete-button:hover {
-    background-color: #f0f0f1 !important;
+    background-color: #d63638 !important;
+    color: #fff !important;
+    border-color: #d63638 !important;
 }
 
 .ems-table-actions {
@@ -708,4 +746,51 @@
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #f0f0f1;
+}
+
+/* Form Styles */
+.employee-form .components-select-control {
+    margin-bottom: 10px !important;
 } 
+
+.ems-employees .components-input-control__container {
+    margin-bottom: 10px !important;
+}
+
+/* Status Badge Styles */
+.status-active,
+.status-inactive,
+.status-blocked,
+.status-unknown {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.status-active {
+    background-color: #e6f6ed;
+    color: #00844c;
+    border: 1px solid #a6e9c7;
+}
+
+.status-inactive {
+    background-color: #fff4e5;
+    color: #995700;
+    border: 1px solid #ffd599;
+}
+
+.status-blocked {
+    background-color: #ffebeb;
+    color: #cc1818;
+    border: 1px solid #ffb4b4;
+}
+
+.status-unknown {
+    background-color: #f0f0f1;
+    color: #50575e;
+    border: 1px solid #dcdcde;
+}
