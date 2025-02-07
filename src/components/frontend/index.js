@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Card, CardHeader, CardBody } from '@wordpress/components';
 import { format } from 'date-fns';
 import apiFetch from '@wordpress/api-fetch';
-import { TextControl, TextareaControl } from '@wordpress/components';
+import { TextareaControl } from '@wordpress/components';
 
 const EmployeeDashboard = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -284,35 +284,30 @@ const EmployeeDashboard = () => {
                     <form className="sales-report-form" onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <TextControl
-                                    label={__('Date', 'employee-management-system')}
+                                <label htmlFor="sale-date">{__('Date', 'employee-management-system')}</label>
+                                <input
+                                    id="sale-date"
                                     type="date"
                                     value={formData.date}
-                                    onChange={value => handleInputChange('date', value)}
+                                    onChange={(e) => handleInputChange('date', e.target.value)}
                                     max={today}
                                     required
-                                    __nextHasNoMarginBottom={true}
+                                    
                                 />
                             </div>
                             <div className="form-group">
-                                <div className="amount-input-wrapper">
-                                    {settings.currencyPosition === 'before' && (
-                                        <span className="currency-symbol">{settings.currencySymbol}</span>
-                                    )}
-                                    <TextControl
-                                        label={__('Amount', 'employee-management-system')}
+                                <label>{__('Amount', 'employee-management-system')}</label>
+                                    
+                                    <input
                                         type="number"
                                         value={formData.amount}
-                                        onChange={value => handleInputChange('amount', value)}
+                                        onChange={(e) => handleInputChange('amount', e.target.value)}
                                         min="0"
                                         step="0.01"
                                         required
-                                        __nextHasNoMarginBottom={true}
+                                        
                                     />
-                                    {settings.currencyPosition === 'after' && (
-                                        <span className="currency-symbol">{settings.currencySymbol}</span>
-                                    )}
-                                </div>
+                                    
                             </div>
                         </div>
                         <div className="form-group">
