@@ -1,7 +1,7 @@
 /* Frontend Global Styles */
 .ems-frontend-wrapper {
     padding: 12px;
-    max-width: 650px;
+    max-width: 600px;
     margin: 12px auto;
     background: #fff;
     border-radius: 12px;
@@ -9,7 +9,7 @@
 }
 
 /* Welcome Section */
-.welcome-section {
+.ems-frontend-wrapper .welcome-section {
     margin-bottom: 12px;
     text-align: center;
     padding: 12px;
@@ -18,52 +18,52 @@
     color: #fff;
 }
 
-.welcome-section h1 {
+.ems-frontend-wrapper .welcome-section h1 {
     margin: 0;
     font-size: 20px;
     font-weight: 600;
 }
 
-.current-date {
+.ems-frontend-wrapper .current-date {
     color: rgba(255, 255, 255, 0.9);
     margin-top: 4px;
     font-size: 13px;
 }
 
 /* Stats Cards */
-.dashboard-stats-wrapper {
+.ems-frontend-wrapper .dashboard-stats-wrapper {
     margin-bottom: 12px;
 }
 
-.dashboard-stats {
+.ems-frontend-wrapper .dashboard-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.stat-card {
+.ems-frontend-wrapper .stat-card {
     background: #fff;
     border-radius: 8px;
     transition: transform 0.2s ease;
     border: 1px solid #e5e7eb;
 }
 
-.stat-card:hover {
+.ems-frontend-wrapper .stat-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.stat-content {
+.ems-frontend-wrapper .stat-content {
     padding: 10px;
 }
 
-.stat-header {
+.ems-frontend-wrapper .stat-header {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
 }
 
-.stat-icon {
+.ems-frontend-wrapper .stat-icon {
     font-size: 18px;
     margin-right: 8px;
     background: #f0f5fa;
@@ -75,20 +75,20 @@
     border-radius: 8px;
 }
 
-.stat-label {
+.ems-frontend-wrapper .stat-label {
     font-size: 13px;
     color: #6b7280;
     font-weight: 500;
 }
 
-.stat-value {
+.ems-frontend-wrapper .stat-value {
     font-size: 18px;
     font-weight: 600;
     margin: 4px 0;
     color: #1e1e1e;
 }
 
-.stat-trend {
+.ems-frontend-wrapper .stat-trend {
     font-size: 12px;
     padding: 4px 8px;
     border-radius: 12px;
@@ -97,51 +97,61 @@
     gap: 4px;
 }
 
-.stat-trend.positive {
+.ems-frontend-wrapper .stat-trend.positive {
     color: #059669;
     background: #ecfdf5;
 }
 
-.stat-trend.negative {
+.ems-frontend-wrapper .stat-trend.negative {
     color: #dc2626;
     background: #fef2f2;
 }
 
 /* Sales Form */
-.sales-form {
+.ems-frontend-wrapper .sales-form {
     background: #fff;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
+    width: 100%;
+    overflow: hidden;
 }
 
-.sales-form .components-card-header {
+.ems-frontend-wrapper .sales-form .components-card-header {
     padding: 10px 14px;
     border-bottom: 1px solid #e5e7eb;
 }
 
-.sales-form .components-card-header h2 {
+.ems-frontend-wrapper .sales-form .components-card-header h2 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
     color: #1e1e1e;
 }
 
-.sales-form .components-card-body {
-    padding: 14px;
+.ems-frontend-wrapper .sales-form .components-card-body {
+    padding: 16px;
 }
 
-.sales-report-form {
+.ems-frontend-wrapper .sales-report-form {
     display: grid;
-    gap: 14px;
+    gap: 16px;
+    width: 100%;
 }
 
-.form-row {
+/* Form Row Styles */
+.ems-frontend-wrapper .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
+    margin-bottom: 16px;
+    width: 100%;
 }
 
-.form-group label {
+.ems-frontend-wrapper .form-group {
+    width: 100%;
+}
+
+.ems-frontend-wrapper .form-group label {
     display: block;
     margin-bottom: 8px;
     font-size: 13px;
@@ -149,30 +159,31 @@
     color: #4b5563;
 }
 
-.form-group input,
-.form-group textarea {
+.ems-frontend-wrapper .form-group input,
+.ems-frontend-wrapper .form-group textarea {
     width: 100%;
-    padding: 6px 10px;
+    padding: 8px 12px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     font-size: 14px;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.ems-frontend-wrapper .form-group input:focus,
+.ems-frontend-wrapper .form-group textarea:focus {
     border-color: #2271b1;
     outline: none;
     box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.1);
 }
 
-.form-group textarea {
+.ems-frontend-wrapper .form-group textarea {
     min-height: 70px;
     resize: vertical;
 }
 
 /* Submit Button */
-.button.button-primary {
+.ems-frontend-wrapper .button.button-primary {
     background: #2271b1;
     border: none;
     color: #fff;
@@ -189,39 +200,39 @@
     gap: 8px;
 }
 
-.button.button-primary:hover {
+.ems-frontend-wrapper .button.button-primary:hover {
     background: #135e96;
     transform: translateY(-1px);
 }
 
-.button.button-primary:disabled {
+.ems-frontend-wrapper .button.button-primary:disabled {
     background: #9ca3af;
     cursor: not-allowed;
     transform: none;
 }
 
 /* Notice Styles */
-.notice {
+.ems-frontend-wrapper .notice {
     padding: 12px 16px;
     margin-bottom: 20px;
     border-radius: 6px;
     font-size: 14px;
 }
 
-.notice-success {
+.ems-frontend-wrapper .notice-success {
     background: #ecfdf5;
     border: 1px solid #059669;
     color: #059669;
 }
 
-.notice-error {
+.ems-frontend-wrapper .notice-error {
     background: #fef2f2;
     border: 1px solid #dc2626;
     color: #dc2626;
 }
 
 /* Loading State */
-.ems-loading {
+.ems-frontend-wrapper .ems-loading {
     text-align: center;
     padding: 40px;
     font-size: 14px;
@@ -236,27 +247,33 @@
         max-width: calc(100% - 24px);
     }
 
-    .dashboard-stats {
+    .ems-frontend-wrapper .dashboard-stats {
         grid-template-columns: 1fr;
     }
     
-    .form-row {
+    .ems-frontend-wrapper .form-row {
         grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
     }
 
-    .welcome-section {
+    .ems-frontend-wrapper .welcome-section {
         padding: 10px;
     }
 
-    .welcome-section h1 {
+    .ems-frontend-wrapper .welcome-section h1 {
         font-size: 17px;
     }
 
-    .stat-value {
+    .ems-frontend-wrapper .stat-value {
         font-size: 16px;
     }
 
-    .form-group textarea {
+    .ems-frontend-wrapper .sales-form .components-card-body {
+        padding: 12px;
+    }
+
+    .ems-frontend-wrapper .form-group textarea {
         min-height: 50px;
     }
 }
@@ -268,17 +285,22 @@
         padding: 6px;
     }
 
-    .stat-content {
+    .ems-frontend-wrapper .stat-content {
         padding: 6px;
     }
 
-    .form-row {
-        gap: 10px;
+    .ems-frontend-wrapper .sales-form .components-card-body {
+        padding: 10px;
+    }
+
+    .ems-frontend-wrapper .form-group input,
+    .ems-frontend-wrapper .form-group textarea {
+        padding: 6px 10px;
     }
 }
 
 /* Access Denied Styles */
-.access-denied {
+.ems-frontend-wrapper .access-denied {
     text-align: center;
     padding: 32px 20px;
     background: #fff;
@@ -286,51 +308,27 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.access-denied .notice {
+.ems-frontend-wrapper .access-denied .notice {
     display: inline-flex;
     margin: 0 auto 16px;
     padding: 10px 20px;
 }
 
-.access-denied-help {
+.ems-frontend-wrapper .access-denied-help {
     color: #6b7280;
     margin: 0;
     font-size: 14px;
 }
 
-.amount-input-wrapper {
+.ems-frontend-wrapper .amount-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.currency-symbol {
+.ems-frontend-wrapper .currency-symbol {
     font-size: 20px;
     color: #555;
     padding: 0 8px;
     line-height: 40px;
 }
-
-/* Update the date input styles */
-.sales-report-form input[type="date"] {
-    width: 100%;
-    height: 35px;
-    padding: 4px 6px;
-    border: 1px solid #757575;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-}
-
-/* Make the calendar icon part of the clickable area */
-.sales-report-form input[type="date"]::-webkit-calendar-picker-indicator {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-} 

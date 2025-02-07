@@ -4,106 +4,106 @@
 }
 
 /* Dashboard Styles */
-.ems-dashboard {
+.ems-admin-wrapper .ems-dashboard {
     max-width: 100%;
 }
 
-.ems-stats-grid {
+.ems-admin-wrapper .ems-stats-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 30px;
 }
 
-.ems-stats-grid .components-card.ems-stat-card {
+.ems-admin-wrapper .ems-stats-grid .components-card.ems-stat-card {
     margin: 0;
     height: 100%;
 }
 
-.ems-stat-card .components-card-body {
+.ems-admin-wrapper .ems-stat-card .components-card-body {
     text-align: center;
     padding: 20px;
 }
 
-.ems-stat-card h3 {
+.ems-admin-wrapper .ems-stat-card h3 {
     margin: 0 0 10px;
     font-size: 14px;
     color: #1e1e1e;
     font-weight: 600;
 }
 
-.ems-stat-value {
+.ems-admin-wrapper .ems-stat-value {
     font-size: 28px;
     font-weight: 600;
     color: #2271b1;
     line-height: 1.3;
 }
 
-.ems-stat-card.active .ems-stat-value {
+.ems-admin-wrapper .ems-stat-card.active .ems-stat-value {
     color: #00a32a;
 }
 
-.ems-stat-card.inactive .ems-stat-value {
+.ems-admin-wrapper .ems-stat-card.inactive .ems-stat-value {
     color: #cc1818;
 }
 
-.ems-stat-card.blocked .ems-stat-value {
+.ems-admin-wrapper .ems-stat-card.blocked .ems-stat-value {
     color: #d63638;
 }
 
-.charts-grid {
+.ems-admin-wrapper .charts-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.chart-container {
+.ems-admin-wrapper .chart-container {
     height: 300px;
     padding: 20px;
 }
 
 /* Employee Management Styles */
-.employee-list {
+.ems-admin-wrapper .employee-list {
     margin-top: 20px;
 }
 
-.employee-form form {
+.ems-admin-wrapper .employee-form form {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
     margin-bottom: 40px;
 }
 
-.form-row {
+.ems-admin-wrapper .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-bottom: 16px;
 }
 
-.salary-field,
-.phone-field {
+.ems-admin-wrapper .salary-field,
+.ems-admin-wrapper .phone-field {
     width: 100%;
 }
 
-.address-field {
+.ems-admin-wrapper .address-field {
     width: 100%;
     min-height: 60px;
 }
 
 /* Sales Management Styles */
-.ems-sales-header {
+.ems-admin-wrapper .ems-sales-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 30px;
 }
 
-.shortcode-info-card {
+.ems-admin-wrapper .shortcode-info-card {
     max-width: 400px;
 }
 
-.shortcode-container {
+.ems-admin-wrapper .shortcode-container {
     background: #f0f0f1;
     padding: 12px;
     border-radius: 4px;
@@ -111,35 +111,35 @@
     position: relative;
 }
 
-.copy-hint {
+.ems-admin-wrapper .copy-hint {
     font-size: 12px;
     color: #757575;
     margin-left: 10px;
 }
 
 /* Settings Styles */
-.ems-settings {
+.ems-admin-wrapper .ems-settings {
     max-width: 800px;
 }
 
-.settings-section {
+.ems-admin-wrapper .settings-section {
     margin-bottom: 30px;
 }
 
 /* Panel Grid for Address and Emergency Contact */
-.employee-form form > .components-panel:nth-child(2),
-.employee-form form > .components-panel:nth-child(3) {
+.ems-admin-wrapper .employee-form form > .components-panel:nth-child(2),
+.ems-admin-wrapper .employee-form form > .components-panel:nth-child(3) {
     display: inline-block;
     width: calc(50% - 10px);
     vertical-align: top;
 }
 
-.employee-form form > .components-panel:nth-child(2) {
+.ems-admin-wrapper .employee-form form > .components-panel:nth-child(2) {
     margin-right: 20px;
 }
 
 /* Form Actions */
-.form-actions {
+.ems-admin-wrapper .form-actions {
     margin-top: 30px;
     text-align: right;
     display: flex;
@@ -147,82 +147,82 @@
     gap: 10px;
 }
 
-.form-actions .components-button {
+.ems-admin-wrapper .form-actions .components-button {
     min-width: 120px;
-    height: 35px !important;
-    min-height: 35px !important;
+    height: 35px;
+    min-height: 35px;
 }
 
-.form-actions .cancel-button {
-    background-color: #fff !important;
-    color: #d63638 !important;
-    border: 1px solid #d63638 !important;
-    padding: 6px 12px !important;
-    border-radius: 2px !important;
-    transition: all 0.2s ease !important;
-    font-size: 13px !important;
-    line-height: 1.4 !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
+.ems-admin-wrapper .form-actions .cancel-button {
+    background-color: #fff;
+    color: #d63638;
+    border: 1px solid #d63638;
+    padding: 6px 12px;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.form-actions .cancel-button:hover {
-    background-color: #d63638 !important;
-    color: #fff !important;
-    border-color: #d63638 !important;
+.ems-admin-wrapper .form-actions .cancel-button:hover {
+    background-color: #d63638;
+    color: #fff;
+    border-color: #d63638;
 }
 
-.form-actions .cancel-button .dashicon {
-    width: 16px !important;
-    height: 16px !important;
-    font-size: 16px !important;
+.ems-admin-wrapper .form-actions .cancel-button .dashicon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
 }
 
 /* Panel Body Styles */
-.components-panel__body {
+.ems-admin-wrapper .components-panel__body {
     height: 100%;
 }
 
 /* Responsive Adjustments */
 @media screen and (max-width: 1400px) {
-    .ems-stats-grid {
+    .ems-admin-wrapper .ems-stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .employee-form form {
+    .ems-admin-wrapper .employee-form form {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (max-width: 782px) {
-    .ems-stats-grid,
-    .charts-grid,
-    .employee-form form {
+    .ems-admin-wrapper .ems-stats-grid,
+    .ems-admin-wrapper .charts-grid,
+    .ems-admin-wrapper .employee-form form {
         grid-template-columns: 1fr;
     }
     
-    .form-row {
+    .ems-admin-wrapper .form-row {
         grid-template-columns: 1fr;
     }
     
-    .ems-stat-card .components-card-body {
+    .ems-admin-wrapper .ems-stat-card .components-card-body {
         padding: 16px;
     }
     
-    .employee-form form > .components-panel:nth-child(2),
-    .employee-form form > .components-panel:nth-child(3) {
+    .ems-admin-wrapper .employee-form form > .components-panel:nth-child(2),
+    .ems-admin-wrapper .employee-form form > .components-panel:nth-child(3) {
         width: 100%;
         margin-right: 0;
     }
 }
 
 /* Sales Page Styles */
-.ems-sales-page {
+.ems-admin-wrapper .ems-sales-page {
     padding: 0 24px;
 }
 
-.ems-admin-header {
+.ems-admin-wrapper .ems-admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,25 +230,25 @@
     border-bottom: 1px solid #e2e4e7;
 }
 
-.ems-admin-header-title h1 {
+.ems-admin-wrapper .ems-admin-header-title h1 {
     margin: 0 0 8px;
     font-size: 23px;
     font-weight: 400;
     color: #1e1e1e;
 }
 
-.ems-header-description {
+.ems-admin-wrapper .ems-header-description {
     margin: 0;
     color: #757575;
     font-size: 13px;
 }
 
-.ems-admin-header-actions {
+.ems-admin-wrapper .ems-admin-header-actions {
     display: flex;
     align-items: center;
 }
 
-.ems-shortcode-wrapper {
+.ems-admin-wrapper .ems-shortcode-wrapper {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -258,13 +258,13 @@
     border: 1px solid #e2e4e7;
 }
 
-.ems-shortcode-label {
+.ems-admin-wrapper .ems-shortcode-label {
     font-size: 13px;
     font-weight: 500;
     color: #1e1e1e;
 }
 
-.ems-shortcode-container {
+.ems-admin-wrapper .ems-shortcode-container {
     background: #f0f0f1;
     padding: 6px 12px;
     border-radius: 3px;
@@ -275,62 +275,62 @@
     transition: all 0.2s ease;
 }
 
-.ems-shortcode-container:hover {
+.ems-admin-wrapper .ems-shortcode-container:hover {
     background: #e5e5e5;
 }
 
-.ems-shortcode-container code {
+.ems-admin-wrapper .ems-shortcode-container code {
     font-size: 13px;
     color: #1e1e1e;
 }
 
-.copy-hint {
+.ems-admin-wrapper .copy-hint {
     color: #757575;
     font-size: 12px;
     white-space: nowrap;
 }
 
 /* Sales Grid and Cards */
-.ems-sales-grid {
+.ems-admin-wrapper .ems-sales-grid {
     display: grid;
     gap: 24px;
 }
 
-.employee-sales-card {
+.ems-admin-wrapper .employee-sales-card {
     background: #fff;
     border: 1px solid #e2e4e7;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.employee-sales-card-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 16px 24px !important;
+.ems-admin-wrapper .employee-sales-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
     border-bottom: 1px solid #e2e4e7;
 }
 
-.employee-sales-card-header h2 {
+.ems-admin-wrapper .employee-sales-card-header h2 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
     color: #1e1e1e;
 }
 
-.download-csv-button {
+.ems-admin-wrapper .download-csv-button {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.ems-table-responsive {
+.ems-admin-wrapper .ems-table-responsive {
     margin: 0 auto;
     padding: 20px;
     overflow-x: auto;
 }
 
-.ems-table {
+.ems-admin-wrapper .ems-table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
@@ -339,39 +339,39 @@
     overflow: hidden;
 }
 
-.widefat th,
-.widefat td {
+.ems-admin-wrapper .widefat th,
+.ems-admin-wrapper .widefat td {
     padding: 8px;
     vertical-align: middle;
 }
 
-.widefat th:nth-child(1), /* Name column */
-.widefat td:nth-child(1) {
+.ems-admin-wrapper .widefat th:nth-child(1), /* Name column */
+.ems-admin-wrapper .widefat td:nth-child(1) {
     width: 20%;
 }
 
-.widefat th:nth-child(2), /* Designation column */
-.widefat td:nth-child(2) {
+.ems-admin-wrapper .widefat th:nth-child(2), /* Designation column */
+.ems-admin-wrapper .widefat td:nth-child(2) {
     width: 15%;
 }
 
-.widefat th:nth-child(3), /* Phone column */
-.widefat td:nth-child(3) {
+.ems-admin-wrapper .widefat th:nth-child(3), /* Phone column */
+.ems-admin-wrapper .widefat td:nth-child(3) {
     width: 15%;
 }
 
-.widefat th:nth-child(4), /* Status column */
-.widefat td:nth-child(4) {
+.ems-admin-wrapper .widefat th:nth-child(4), /* Status column */
+.ems-admin-wrapper .widefat td:nth-child(4) {
     width: 15%;
 }
 
-.widefat th:nth-child(5), /* Actions column */
-.widefat td:nth-child(5) {
+.ems-admin-wrapper .widefat th:nth-child(5), /* Actions column */
+.ems-admin-wrapper .widefat td:nth-child(5) {
     width: 35%;
     min-width: 200px; /* Ensure minimum width for action buttons */
 }
 
-.ems-table thead th {
+.ems-admin-wrapper .ems-table thead th {
     background-color: #f0f0f1;
     color: #1e1e1e;
     font-weight: 600;
@@ -380,137 +380,137 @@
     border-bottom: 2px solid #ddd;
 }
 
-.ems-table tbody td {
+.ems-admin-wrapper .ems-table tbody td {
     padding: 14px 16px;
     text-align: center;
     border-bottom: 1px solid #f0f0f1;
     color: #50575e;
 }
 
-.ems-table tbody tr:hover {
+.ems-admin-wrapper .ems-table tbody tr:hover {
     background-color: #f8f9fa;
 }
 
-.ems-table tfoot tr {
+.ems-admin-wrapper .ems-table tfoot tr {
     background-color: #f8f9fa;
 }
 
-.ems-table tfoot th {
+.ems-admin-wrapper .ems-table tfoot th {
     padding: 16px;
     text-align: center;
     font-weight: 600;
     color: #1e1e1e;
 }
 
-.amount-cell {
+.ems-admin-wrapper .amount-cell {
     font-family: monospace;
     font-weight: 600;
     color: #2271b1;
 }
 
-.ems-notice {
+.ems-admin-wrapper .ems-notice {
     margin: 0 0 24px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 782px) {
-    .ems-sales-page {
+    .ems-admin-wrapper .ems-sales-page {
         padding: 0 16px;
     }
 
-    .ems-admin-header {
+    .ems-admin-wrapper .ems-admin-header {
         flex-direction: column;
         gap: 24px;
         padding: 16px 0;
     }
 
-    .ems-shortcode-wrapper {
+    .ems-admin-wrapper .ems-shortcode-wrapper {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
         padding: 12px;
     }
 
-    .ems-shortcode-container {
+    .ems-admin-wrapper .ems-shortcode-container {
         width: 100%;
         justify-content: space-between;
     }
 
-    .employee-sales-card-header {
-        padding: 12px 16px !important;
+    .ems-admin-wrapper .employee-sales-card-header {
+        padding: 12px 16px;
     }
 
-    .ems-table-responsive {
+    .ems-admin-wrapper .ems-table-responsive {
         padding: 0 16px;
     }
 
-    .ems-table th,
-    .ems-table td {
+    .ems-admin-wrapper .ems-table th,
+    .ems-admin-wrapper .ems-table td {
         padding: 8px;
     }
 }
 
 /* Settings Page Styles */
-.ems-settings-page {
+.ems-admin-wrapper .ems-settings-page {
     padding: 0 24px;
 }
 
-.ems-settings-grid {
+.ems-admin-wrapper .ems-settings-grid {
     display: grid;
     gap: 24px;
     margin-top: 24px;
 }
 
-.ems-settings-grid .ems-card {
+.ems-admin-wrapper .ems-settings-grid .ems-card {
     background: #fff;
     border: 1px solid #e2e4e7;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.ems-settings-actions {
+.ems-admin-wrapper .ems-settings-actions {
     margin-top: 24px;
     padding: 16px 0;
     text-align: right;
 }
 
-.components-panel__body-toggle {
-    font-weight: 600 !important;
+.ems-admin-wrapper .components-panel__body-toggle {
+    font-weight: 600;
 }
 
-.ems-settings-grid .components-base-control {
+.ems-admin-wrapper .ems-settings-grid .components-base-control {
     margin-bottom: 24px;
 }
 
-.ems-settings-grid .components-base-control:last-child {
+.ems-admin-wrapper .ems-settings-grid .components-base-control:last-child {
     margin-bottom: 0;
 }
 
-.ems-settings-grid .components-base-control__help {
+.ems-admin-wrapper .ems-settings-grid .components-base-control__help {
     margin-top: 4px;
     color: #757575;
 }
 
 /* Responsive adjustments */
 @media (min-width: 782px) {
-    .ems-settings-grid {
+    .ems-admin-wrapper .ems-settings-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 781px) {
-    .ems-settings-page {
+    .ems-admin-wrapper .ems-settings-page {
         padding: 0 16px;
     }
 }
 
 /* Admin Layout Styles */
-.ems-admin-layout {
+.ems-admin-wrapper .ems-admin-layout {
     display: flex;
     min-height: calc(100vh - 32px);
     margin: -20px 0 0 -20px;
 }
 
-.ems-admin-sidebar {
+.ems-admin-wrapper .ems-admin-sidebar {
     width: 240px;
     background: #1e1e1e;
     color: #fff;
@@ -522,26 +522,26 @@
     overflow-y: auto;
 }
 
-.ems-plugin-brand {
+.ems-admin-wrapper .ems-plugin-brand {
     padding: 20px;
     border-bottom: 1px solid #2d2d2d;
 }
 
-.ems-plugin-brand h2 {
+.ems-admin-wrapper .ems-plugin-brand h2 {
     color: #fff;
     font-size: 1.2em;
     margin: 0;
     padding: 0;
 }
 
-.ems-admin-nav {
+.ems-admin-wrapper .ems-admin-nav {
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.ems-admin-nav .nav-button {
+.ems-admin-wrapper .ems-admin-nav .nav-button {
     justify-content: flex-start;
     padding: 12px 16px;
     width: 100%;
@@ -555,26 +555,26 @@
     gap: 12px;
 }
 
-.ems-admin-nav .nav-button:hover {
+.ems-admin-wrapper .ems-admin-nav .nav-button:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
-.ems-admin-nav .nav-button.active {
+.ems-admin-wrapper .ems-admin-nav .nav-button.active {
     background: var(--wp-admin-theme-color);
     color: #fff;
 }
 
-.ems-admin-nav .nav-button.active:hover {
+.ems-admin-wrapper .ems-admin-nav .nav-button.active:hover {
     background: var(--wp-admin-theme-color-darker-10);
 }
 
-.ems-admin-nav .nav-button svg {
+.ems-admin-wrapper .ems-admin-nav .nav-button svg {
     width: 20px;
     height: 20px;
     fill: currentColor;
 }
 
-.ems-admin-content {
+.ems-admin-wrapper .ems-admin-content {
     flex-grow: 1;
     padding: 24px;
     background: #f0f0f1;
@@ -583,55 +583,55 @@
 
 /* Responsive Styles */
 @media screen and (max-width: 782px) {
-    .ems-admin-layout {
+    .ems-admin-wrapper .ems-admin-layout {
         flex-direction: column;
         margin: -10px 0 0 -10px;
     }
 
-    .ems-admin-sidebar {
+    .ems-admin-wrapper .ems-admin-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #2d2d2d;
     }
 
-    .ems-plugin-brand {
+    .ems-admin-wrapper .ems-plugin-brand {
         padding: 16px;
     }
 
-    .ems-admin-nav {
+    .ems-admin-wrapper .ems-admin-nav {
         padding: 12px;
         flex-direction: row;
         flex-wrap: wrap;
         gap: 8px;
     }
 
-    .ems-admin-nav .nav-button {
+    .ems-admin-wrapper .ems-admin-nav .nav-button {
         width: calc(50% - 4px);
         padding: 8px 12px;
         justify-content: center;
     }
 
-    .ems-admin-content {
+    .ems-admin-wrapper .ems-admin-content {
         padding: 16px;
     }
 }
 
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
-    .ems-admin-content {
+    .ems-admin-wrapper .ems-admin-content {
         background: #1e1e1e;
     }
 }
 
 /* Add this to your existing admin sidebar styles */
-.ems-sidebar-image {
+.ems-admin-wrapper .ems-sidebar-image {
     padding: 20px;
     text-align: center;
     margin-top: 20px;
     position: relative;
 }
 
-.ems-sidebar-image img {
+.ems-admin-wrapper .ems-sidebar-image img {
     max-width: calc(100% - 20px);
     height: auto;
     border-radius: 8px;
@@ -640,128 +640,128 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.ems-sidebar-image img:hover {
+.ems-admin-wrapper .ems-sidebar-image img:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 782px) {
-    .ems-sidebar-image {
+    .ems-admin-wrapper .ems-sidebar-image {
         display: none;
     }
 }
 
 /* Update when WP admin menu is collapsed */
 @media screen and (min-width: 783px) {
-    .folded .ems-admin-sidebar {
+    .folded .ems-admin-wrapper .ems-admin-sidebar {
         width: 36px;
     }
     
-    .folded .ems-sidebar-image {
+    .folded .ems-admin-wrapper .ems-sidebar-image {
         display: none;
     }
 }
 
-.ems-action-buttons {
+.ems-admin-wrapper .ems-action-buttons {
     display: flex;
     gap: 4px;
     align-items: center;
 }
 
-.ems-action-buttons button {
-    padding: 2px 8px !important;
-    height: 24px !important;
-    min-height: 24px !important;
+.ems-admin-wrapper .ems-action-buttons button {
+    padding: 2px 8px;
+    height: 24px;
+    min-height: 24px;
     white-space: nowrap;
-    font-size: 12px !important;
+    font-size: 12px;
 }
 
-.ems-action-buttons .download-button {
-    background-color: #2271b1 !important;
-    color: #fff !important;
-    border-color: #2271b1 !important;
+.ems-admin-wrapper .ems-action-buttons .download-button {
+    background-color: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
 }
 
-.ems-action-buttons .download-button:hover {
-    background-color: #135e96 !important;
-    border-color: #135e96 !important;
+.ems-admin-wrapper .ems-action-buttons .download-button:hover {
+    background-color: #135e96;
+    border-color: #135e96;
 }
 
-.ems-action-buttons .edit-button {
-    background-color: #fff !important;
-    color: #2271b1 !important;
-    border-color: #2271b1 !important;
+.ems-admin-wrapper .ems-action-buttons .edit-button {
+    background-color: #fff;
+    color: #2271b1;
+    border-color: #2271b1;
 }
 
-.ems-action-buttons .edit-button:hover {
-    background-color: #f0f0f1 !important;
+.ems-admin-wrapper .ems-action-buttons .edit-button:hover {
+    background-color: #f0f0f1;
 }
 
-.ems-action-buttons .delete-button {
-    background-color: #fff !important;
-    color: #d63638 !important;
-    border: 1px solid #d63638 !important;
-    padding: 2px 8px !important;
-    height: 24px !important;
-    min-height: 24px !important;
-    border-radius: 2px !important;
-    transition: all 0.2s ease !important;
+.ems-admin-wrapper .ems-action-buttons .delete-button {
+    background-color: #fff;
+    color: #d63638;
+    border: 1px solid #d63638;
+    padding: 2px 8px;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 2px;
+    transition: all 0.2s ease;
 }
 
-.ems-action-buttons .delete-button:hover {
-    background-color: #d63638 !important;
-    color: #fff !important;
-    border-color: #d63638 !important;
+.ems-admin-wrapper .ems-action-buttons .delete-button:hover {
+    background-color: #d63638;
+    color: #fff;
+    border-color: #d63638;
 }
 
-.ems-table-actions {
+.ems-admin-wrapper .ems-table-actions {
     margin-bottom: 16px;
     display: flex;
     justify-content: flex-end;
 }
 
-.ems-table-actions .download-csv-button {
-    background-color: #2271b1 !important;
-    color: #fff !important;
-    border-color: #2271b1 !important;
-    padding: 4px 12px !important;
-    height: auto !important;
+.ems-admin-wrapper .ems-table-actions .download-csv-button {
+    background-color: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+    padding: 4px 12px;
+    height: auto;
     min-height: 32px;
 }
 
-.ems-table-actions .download-csv-button:hover {
-    background-color: #135e96 !important;
-    border-color: #135e96 !important;
+.ems-admin-wrapper .ems-table-actions .download-csv-button:hover {
+    background-color: #135e96;
+    border-color: #135e96;
 }
 
 /* Card Styles */
-.employee-sales-card {
+.ems-admin-wrapper .employee-sales-card {
     margin: 20px 0;
     border-radius: 8px;
     overflow: hidden;
 }
 
-.employee-sales-card-header {
+.ems-admin-wrapper .employee-sales-card-header {
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #f0f0f1;
 }
 
 /* Form Styles */
-.employee-form .components-select-control {
-    margin-bottom: 10px !important;
+.ems-admin-wrapper .employee-form .components-select-control {
+    margin-bottom: 10px;
 } 
 
-.ems-employees .components-input-control__container {
-    margin-bottom: 10px !important;
+.ems-admin-wrapper .ems-employees .components-input-control__container {
+    margin-bottom: 10px;
 }
 
 /* Status Badge Styles */
-.status-active,
-.status-inactive,
-.status-blocked,
-.status-unknown {
+.ems-admin-wrapper .status-active,
+.ems-admin-wrapper .status-inactive,
+.ems-admin-wrapper .status-blocked,
+.ems-admin-wrapper .status-unknown {
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 12px;
@@ -771,25 +771,25 @@
     min-width: 80px;
 }
 
-.status-active {
+.ems-admin-wrapper .status-active {
     background-color: #e6f6ed;
     color: #00844c;
     border: 1px solid #a6e9c7;
 }
 
-.status-inactive {
+.ems-admin-wrapper .status-inactive {
     background-color: #fff4e5;
     color: #995700;
     border: 1px solid #ffd599;
 }
 
-.status-blocked {
+.ems-admin-wrapper .status-blocked {
     background-color: #ffebeb;
     color: #cc1818;
     border: 1px solid #ffb4b4;
 }
 
-.status-unknown {
+.ems-admin-wrapper .status-unknown {
     background-color: #f0f0f1;
     color: #50575e;
     border: 1px solid #dcdcde;
