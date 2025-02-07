@@ -311,8 +311,8 @@ const EmployeeDashboard = () => {
                             </div>
                         </div>
                         <div className="form-group">
+                        <label>{__('Description', 'employee-management-system')}</label>
                             <TextareaControl
-                                label={__('Description', 'employee-management-system')}
                                 value={formData.description}
                                 onChange={value => handleInputChange('description', value)}
                                 rows={4}
