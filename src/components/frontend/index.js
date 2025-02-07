@@ -296,9 +296,10 @@ const EmployeeDashboard = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>{__('Amount', 'employee-management-system')}</label>
+                                <label htmlFor="sale-amount">{__('Amount', 'employee-management-system')}</label>
                                     
                                     <input
+                                        id="sale-amount"
                                         type="number"
                                         value={formData.amount}
                                         onChange={(e) => handleInputChange('amount', e.target.value)}
@@ -311,8 +312,9 @@ const EmployeeDashboard = () => {
                             </div>
                         </div>
                         <div className="form-group">
-                        <label>{__('Description', 'employee-management-system')}</label>
+                            <label htmlFor="sale-description">{__('Description', 'employee-management-system')}</label>
                             <TextareaControl
+                                id="sale-description"
                                 value={formData.description}
                                 onChange={value => handleInputChange('description', value)}
                                 rows={4}
