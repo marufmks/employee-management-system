@@ -68,19 +68,19 @@ final class Employee_Management_System {
      * Define constants
      */
     private function define_constants() {
-        define( 'EMS_VERSION', self::VERSION );
-        define( 'EMS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-        define( 'EMS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-        define( 'EMS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+        define( 'EMPLMASY_VERSION', self::VERSION );
+        define( 'EMPLMASY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+        define( 'EMPLMASY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+        define( 'EMPLMASY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
     }
 
     /**
      * Include files
      */
     private function includes() {
-        require_once EMS_PLUGIN_DIR . 'includes/class-ems-loader.php';
-        require_once EMS_PLUGIN_DIR . 'includes/class-ems-database.php';
-        require_once EMS_PLUGIN_DIR . 'includes/class-ems-settings.php';
+        require_once EMPLMASY_PLUGIN_DIR . 'includes/class-emplmasy-loader.php';
+        require_once EMPLMASY_PLUGIN_DIR . 'includes/class-emplmasy-database.php';
+        require_once EMPLMASY_PLUGIN_DIR . 'includes/class-emplmasy-settings.php';
     }
 
     /**
@@ -96,10 +96,10 @@ final class Employee_Management_System {
      * Activate plugin
      */
     public function activate() {
-        $database = EMS_Database::instance();
+        $database = EMPLMASY_Database::instance();
         $database->create_tables();
         
-        add_option( 'ems_activation_time', time() );
+        add_option( 'emplmasy_activation_time', time() );
         flush_rewrite_rules();
     }
 
@@ -114,8 +114,8 @@ final class Employee_Management_System {
      * Initialize plugin
      */
     public function init_plugin() {
-        EMS_Loader::instance()->init();
-        do_action( 'ems_loaded' );
+        EMPLMASY_Loader::instance()->init();
+        do_action( 'emplmasy_loaded' );
     }
 
     /**

@@ -5,21 +5,21 @@ import EmployeeDashboard from './components/frontend';
 import './styles/admin.css';
 import './styles/frontend.css';
 
-const adminRoot = document.getElementById('ems-admin-root');
+const adminRoot = document.getElementById('emplmasy-admin-root');
 if (adminRoot) {
     const root = createRoot(adminRoot);
     root.render(
-        <div className="ems-admin-wrapper">
+        <div className="emplmasy-admin-wrapper">
             <AdminApp />
         </div>
     );
 } 
 
-const employeeRoot = document.getElementById('ems-employee-root');
+const employeeRoot = document.getElementById('emplmasy-employee-root');
 if (employeeRoot) {
     const root = createRoot(employeeRoot);
     root.render(
-        <div className="ems-frontend-wrapper">
+        <div className="emplmasy-frontend-wrapper">
             <EmployeeDashboard />
         </div>
     );

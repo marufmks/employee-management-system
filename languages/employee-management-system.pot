@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-07T17:16:28+01:00\n"
+"POT-Creation-Date: 2025-02-09T18:59:50+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: employee-management-system\n"
@@ -39,72 +39,72 @@ msgstr ""
 msgid "https://github.com/marufmks"
 msgstr ""
 
-#: includes/class-ems-loader.php:91
-#: includes/class-ems-loader.php:92
+#: includes/class-emplmasy-loader.php:77
+#: includes/class-emplmasy-loader.php:78
 #: build/index.js:1
 #: src/components/admin/Layout/index.js:41
 #: src/components/admin/Layout/index.js:59
 msgid "Employee Management"
 msgstr ""
 
-#: includes/class-ems-loader.php:169
+#: includes/class-emplmasy-loader.php:155
 msgid "Please log in to view the dashboard"
 msgstr ""
 
-#: includes/class-ems-loader.php:171
+#: includes/class-emplmasy-loader.php:157
 msgid "Log in"
 msgstr ""
 
-#: includes/class-ems-restapi.php:195
+#: includes/class-emplmasy-restapi.php:228
 msgid "Settings updated successfully"
 msgstr ""
 
-#: includes/class-ems-restapi.php:257
+#: includes/class-emplmasy-restapi.php:290
 msgid "Failed to create employee"
 msgstr ""
 
-#: includes/class-ems-restapi.php:321
+#: includes/class-emplmasy-restapi.php:354
 msgid "Failed to update employee"
 msgstr ""
 
-#: includes/class-ems-restapi.php:331
+#: includes/class-emplmasy-restapi.php:364
 msgid "Employee updated successfully"
 msgstr ""
 
 #. translators: %s: field name that is missing (e.g., 'date', 'amount', or 'description')
-#: includes/class-ems-restapi.php:356
+#: includes/class-emplmasy-restapi.php:389
 msgid "Missing required field: %s"
 msgstr ""
 
-#: includes/class-ems-restapi.php:368
+#: includes/class-emplmasy-restapi.php:401
 msgid "Amount must be a positive number"
 msgstr ""
 
-#: includes/class-ems-restapi.php:378
+#: includes/class-emplmasy-restapi.php:411
 msgid "Invalid date format"
 msgstr ""
 
-#: includes/class-ems-restapi.php:399
+#: includes/class-emplmasy-restapi.php:432
 msgid "Could not save sale record"
 msgstr ""
 
-#: includes/class-ems-restapi.php:410
+#: includes/class-emplmasy-restapi.php:443
 msgid "Sale recorded successfully"
 msgstr ""
 
-#: includes/class-ems-restapi.php:581
+#: includes/class-emplmasy-restapi.php:614
 msgid "Please log in to access the dashboard."
 msgstr ""
 
-#: includes/class-ems-restapi.php:594
+#: includes/class-emplmasy-restapi.php:627
 msgid "You are not registered as an employee."
 msgstr ""
 
-#: includes/class-ems-restapi.php:602
+#: includes/class-emplmasy-restapi.php:635
 msgid "Your employee account is not active. Please contact your administrator."
 msgstr ""
 
-#: includes/class-ems-restapi.php:740
+#: includes/class-emplmasy-restapi.php:773
 msgid "Employee not found"
 msgstr ""
 
@@ -483,7 +483,7 @@ msgstr ""
 
 #: build/index.js:1
 #: src/components/admin/Settings/index.js:174
-#: src/components/frontend/index.js:330
+#: src/components/frontend/index.js:332
 msgid "Saving..."
 msgstr ""
 
@@ -542,7 +542,7 @@ msgstr ""
 
 #: build/index.js:1
 #: src/components/admin/Sales/index.js:178
-#: src/components/frontend/index.js:314
+#: src/components/frontend/index.js:315
 msgid "Description"
 msgstr ""
 
@@ -613,11 +613,11 @@ msgid "Failed to save sale record."
 msgstr ""
 
 #: build/index.js:1
-#: src/components/frontend/index.js:319
+#: src/components/frontend/index.js:321
 msgid "Enter sale details..."
 msgstr ""
 
 #: build/index.js:1
-#: src/components/frontend/index.js:331
+#: src/components/frontend/index.js:333
 msgid "Submit Report"
 msgstr ""

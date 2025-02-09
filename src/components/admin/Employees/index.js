@@ -60,7 +60,7 @@ const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
     try {
       setIsLoadingUsers(true);
       const response = await apiFetch({
-        path: "ems/v1/available-users",
+        path: "emplmasy/v1/available-users",
         method: "GET",
       });
       setUsers(response);
@@ -382,7 +382,7 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
   const downloadEmployeeCSV = async (employeeId) => {
     try {
       const response = await apiFetch({
-        path: `ems/v1/employees/${employeeId}/export-csv`,
+        path: `emplmasy/v1/employees/${employeeId}/export-csv`,
         method: 'GET'
       });
       
@@ -500,7 +500,7 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
                 })()}
               </td>
               <td>
-                <div className="ems-action-buttons">
+                <div className="emplmasy-action-buttons">
                   <Button
                     variant="secondary"
                     onClick={() => downloadEmployeeCSV(employee.id)}
@@ -546,7 +546,7 @@ const Employees = () => {
   const fetchEmployees = async () => {
     try {
       const response = await apiFetch({
-        path: "ems/v1/employees",
+        path: "emplmasy/v1/employees",
         method: "GET",
       });
       setEmployees(response);
@@ -574,7 +574,7 @@ const Employees = () => {
 
       if (isEditing) {
         await apiFetch({
-          path: `ems/v1/employees/${currentEmployee.id}`,
+          path: `emplmasy/v1/employees/${currentEmployee.id}`,
           method: "PUT",
           data: formData,
         });
@@ -585,7 +585,7 @@ const Employees = () => {
         );
       } else {
         await apiFetch({
-          path: "ems/v1/employees",
+          path: "emplmasy/v1/employees",
           method: "POST",
           data: formData,
         });
@@ -638,7 +638,7 @@ const Employees = () => {
 
     try {
       await apiFetch({
-        path: `ems/v1/employees/${id}`,
+        path: `emplmasy/v1/employees/${id}`,
         method: "DELETE",
       });
       fetchEmployees();
@@ -657,7 +657,7 @@ const Employees = () => {
     );
 
   return (
-    <div className="ems-employees">
+    <div className="emplmasy-employees">
       <EmployeeForm
         employee={currentEmployee}
         onSubmit={handleSubmit}

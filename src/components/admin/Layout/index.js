@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLayout = ({ currentPath, onNavigate, children }) => {
-    const navItems = [
+    const navItemplmasy = [
         {
             id: 'dashboard',
             label: __('Dashboard', 'employee-management-system'),
@@ -35,13 +35,13 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
     ];
 
     return (
-        <div className="ems-admin-layout">
-            <div className="ems-admin-sidebar">
-                <div className="ems-plugin-brand">
+        <div className="emplmasy-admin-layout">
+            <div className="emplmasy-admin-sidebar">
+                <div className="emplmasy-plugin-brand">
                     <h2>{__('Employee Management', 'employee-management-system')}</h2>
                 </div>
-                <nav className="ems-admin-nav">
-                    {navItems.map(item => (
+                <nav className="emplmasy-admin-nav">
+                    {navItemplmasy.map(item => (
                         <Button
                             key={item.id}
                             icon={item.icon}
@@ -53,14 +53,14 @@ const AdminLayout = ({ currentPath, onNavigate, children }) => {
                         </Button>
                     ))}
                 </nav>
-                <div className="ems-sidebar-image">
+                <div className="emplmasy-sidebar-image">
                     <img 
-                        src={emsData.pluginUrl + '/public/employee_management.jpg'} 
+                        src={emplmasyData.pluginUrl + '/public/employee_management.jpg'} 
                         alt={__('Employee Management', 'employee-management-system')}
                     />
                 </div>
             </div>
-            <div className="ems-admin-content">
+            <div className="emplmasy-admin-content">
                 {children}
             </div>
             <ToastContainer

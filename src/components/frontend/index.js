@@ -33,8 +33,8 @@ const EmployeeDashboard = () => {
     });
 
     useEffect(() => {
-        if (window.emsData && window.emsData.nonce) {
-            apiFetch.use(apiFetch.createNonceMiddleware(window.emsData.nonce));
+        if (window.emplmasyData && window.emplmasyData.nonce) {
+            apiFetch.use(apiFetch.createNonceMiddleware(window.emplmasyData.nonce));
         }
         checkAccess();
         fetchSettings();
@@ -53,7 +53,7 @@ const EmployeeDashboard = () => {
         try {
             setIsLoading(true);
             const response = await apiFetch({
-                path: 'ems/v1/employee/access',
+                path: 'emplmasy/v1/employee/access',
                 method: 'GET'
             });
 
@@ -75,7 +75,7 @@ const EmployeeDashboard = () => {
             setError(null);
             
             const response = await apiFetch({
-                path: 'ems/v1/employee/stats',
+                path: 'emplmasy/v1/employee/stats',
                 method: 'GET'
             });
 
@@ -112,7 +112,7 @@ const EmployeeDashboard = () => {
     const fetchSettings = async () => {
         try {
             const response = await apiFetch({
-                path: 'ems/v1/settings',
+                path: 'emplmasy/v1/settings',
                 method: 'GET'
             });
 
@@ -152,7 +152,7 @@ const EmployeeDashboard = () => {
         
         try {
             const response = await apiFetch({
-                path: 'ems/v1/sales',
+                path: 'emplmasy/v1/sales',
                 method: 'POST',
                 data: formData
             });
@@ -187,8 +187,8 @@ const EmployeeDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="ems-frontend ems-dashboard-wrapper">
-                <div className="ems-loading">
+            <div className="emplmasy-frontend emplmasy-dashboard-wrapper">
+                <div className="emplmasy-loading">
                     {__('Loading...', 'employee-management-system')}
                 </div>
             </div>
@@ -197,7 +197,7 @@ const EmployeeDashboard = () => {
 
     if (!hasAccess || error) {
         return (
-            <div className="ems-frontend ems-dashboard-wrapper">
+            <div className="emplmasy-frontend emplmasy-dashboard-wrapper">
                 <div className="access-denied">
                     <div className="notice notice-error">
                         <p>{error || __('Access denied.', 'employee-management-system')}</p>
@@ -211,7 +211,7 @@ const EmployeeDashboard = () => {
     }
 
     return (
-        <div className="ems-frontend ems-dashboard-wrapper">
+        <div className="emplmasy-frontend emplmasy-dashboard-wrapper">
             {/* Welcome Section */}
             <div className="welcome-section">
                 <h1>{__('Welcome', 'employee-management-system')}, {userData.name}</h1>

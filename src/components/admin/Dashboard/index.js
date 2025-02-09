@@ -47,8 +47,8 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
         try {
             const [employeeStats, monthlySales] = await Promise.all([
-                apiFetch({ path: 'ems/v1/dashboard/employee-stats' }),
-                apiFetch({ path: 'ems/v1/dashboard/monthly-sales' })
+                apiFetch({ path: 'emplmasy/v1/dashboard/employee-stats' }),
+                apiFetch({ path: 'emplmasy/v1/dashboard/monthly-sales' })
             ]);
 
             setStats(employeeStats);
@@ -88,35 +88,35 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="ems-admin ems-dashboard-wrapper">
-            <div className="ems-dashboard">
+        <div className="emplmasy-admin emplmasy-dashboard-wrapper">
+            <div className="emplmasy-dashboard">
                 {/* Stats Cards */}
-                <div className="ems-stats-grid">
-                    <Card className="ems-stat-card">
+                <div className="emplmasy-stats-grid">
+                    <Card className="emplmasy-stat-card">
                         <CardBody>
                             <h3>{__('Total Employees', 'employee-management-system')}</h3>
-                            <div className="ems-stat-value">{stats.totalEmployees}</div>
+                            <div className="emplmasy-stat-value">{stats.totalEmployees}</div>
                         </CardBody>
                     </Card>
 
-                    <Card className="ems-stat-card active">
+                    <Card className="emplmasy-stat-card active">
                         <CardBody>
                             <h3>{__('Active Employees', 'employee-management-system')}</h3>
-                            <div className="ems-stat-value">{stats.activeEmployees}</div>
+                            <div className="emplmasy-stat-value">{stats.activeEmployees}</div>
                         </CardBody>
                     </Card>
 
-                    <Card className="ems-stat-card inactive">
+                    <Card className="emplmasy-stat-card inactive">
                         <CardBody>
                             <h3>{__('Inactive Employees', 'employee-management-system')}</h3>
-                            <div className="ems-stat-value">{stats.inactiveEmployees}</div>
+                            <div className="emplmasy-stat-value">{stats.inactiveEmployees}</div>
                         </CardBody>
                     </Card>
 
-                    <Card className="ems-stat-card blocked">
+                    <Card className="emplmasy-stat-card blocked">
                         <CardBody>
                             <h3>{__('Blocked Employees', 'employee-management-system')}</h3>
-                            <div className="ems-stat-value">{stats.blockedEmployees}</div>
+                            <div className="emplmasy-stat-value">{stats.blockedEmployees}</div>
                         </CardBody>
                     </Card>
                 </div>

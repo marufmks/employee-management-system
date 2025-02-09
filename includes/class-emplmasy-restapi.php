@@ -3,17 +3,17 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class EMS_RestAPI
+class EMPLMASY_RestAPI
 {
     private static $instance = null;
-    private $namespace = 'ems/v1';
-    private $settings_key = 'ems_settings';
+    private $namespace = 'emplmasy/v1';
+    private $settings_key = 'emplmasy_settings';
     private $database;
 
     private function __construct()
     {
         add_action('rest_api_init', array($this, 'register_routes'));
-        $this->database = EMS_Database::instance();
+        $this->database = EMPLMASY_Database::instance();
     }
 
     public static function instance()
@@ -50,9 +50,24 @@ class EMS_RestAPI
             array(
                 'methods' => 'PUT',
                 'callback' => array($this, 'update_employee'),
-                'permission_callback' => function () {
-                    return current_user_can('edit_posts');
-                },
+                'permission_callback' => function($request) {
+                    $employee_id = $request['id'];
+                    $user_id = get_current_user_id();
+                    
+                    // Admin can edit any employee
+                    if (current_user_can('manage_options')) {
+                        return true;
+                    }
+                    
+                    // Employee can only edit their own data
+                    global $wpdb;
+                    $employee = $wpdb->get_row($wpdb->prepare(
+                        "SELECT user_id FROM {$wpdb->prefix}emplmasy_employees WHERE id = %d",
+                        $employee_id
+                    ));
+                    
+                    return $employee && $employee->user_id === $user_id;
+                }
             ),
         ));
 
@@ -70,20 +85,32 @@ class EMS_RestAPI
             ),
         ));
 
-        register_rest_route('ems/v1', '/sales', array(
+        register_rest_route('emplmasy/v1', '/sales', array(
             'methods' => 'POST',
             'callback' => array($this, 'save_sale'),
-            'permission_callback' => function () {
-                return is_user_logged_in();
+            'permission_callback' => function() {
+                // Check if user is both logged in and an active employee
+                if (!is_user_logged_in()) {
+                    return false;
+                }
+                
+                global $wpdb;
+                $user_id = get_current_user_id();
+                $employee = $wpdb->get_row($wpdb->prepare(
+                    "SELECT status FROM {$wpdb->prefix}emplmasy_employees WHERE user_id = %d",
+                    $user_id
+                ));
+                
+                return $employee && $employee->status === 'active';
             },
         ));
 
         // Frontend employee stats endpoint (for logged-in employee)
-        register_rest_route('ems/v1', '/employee/stats', array(
+        register_rest_route('emplmasy/v1', '/employee/stats', array(
             'methods' => 'GET',
             'callback' => array($this, 'get_frontend_employee_stats'),
-            'permission_callback' => function () {
-                return is_user_logged_in();
+            'permission_callback' => function() {
+                return is_user_logged_in(); // Only logged-in users can get their stats
             },
         ));
 
@@ -147,7 +174,13 @@ class EMS_RestAPI
 
     public function check_admin_permission()
     {
-        return current_user_can('manage_options');
+        // Check if user can manage_options (admin capability)
+        if (!current_user_can('manage_options')) {
+            return false;
+        }
+        
+        // Additional security checks can be added here
+        return true;
     }
 
     /**
@@ -157,12 +190,12 @@ class EMS_RestAPI
     {
         $default_settings = array(
             // General Settings
-            'dateFormat' => get_option('ems_date_format', 'Y-m-d'),
-            'currencySymbol' => get_option('ems_currency_symbol', '$'),
-            'currencyPosition' => get_option('ems_currency_position', 'before'),
+            'dateFormat' => get_option('emplmasy_date_format', 'Y-m-d'),
+            'currencySymbol' => get_option('emplmasy_currency_symbol', '$'),
+            'currencyPosition' => get_option('emplmasy_currency_position', 'before'),
 
             // System Settings
-            'deleteDataOnUninstall' => get_option('ems_delete_data_uninstall', false)
+            'deleteDataOnUninstall' => get_option('emplmasy_delete_data_uninstall', false)
         );
 
         return rest_ensure_response($default_settings);
@@ -185,7 +218,7 @@ class EMS_RestAPI
 
         // Update options in WordPress
         foreach ($settings as $key => $value) {
-            $option_name = 'ems_' . preg_replace('/([A-Z])/', '_$1', $key);
+            $option_name = 'emplmasy_' . preg_replace('/([A-Z])/', '_$1', $key);
             $option_name = strtolower($option_name);
             update_option($option_name, $value);
         }
@@ -205,14 +238,14 @@ class EMS_RestAPI
      */
     public function get_employees($request)
     {
-        $employees = wp_cache_get('ems_all_employees');
+        $employees = wp_cache_get('emplmasy_all_employees');
 
         if (false === $employees) {
             global $wpdb;
             $employees = $wpdb->get_results(
-                "SELECT * FROM {$wpdb->prefix}ems_employees ORDER BY id DESC"
+                "SELECT * FROM {$wpdb->prefix}emplmasy_employees ORDER BY id DESC"
             );
-            wp_cache_set('ems_all_employees', $employees, '', 300);
+            wp_cache_set('emplmasy_all_employees', $employees, '', 300);
         }
 
         $employees = is_array($employees) ? $employees : array();
@@ -225,7 +258,7 @@ class EMS_RestAPI
     public function create_employee($request)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
+        $table_name = $wpdb->prefix . 'emplmasy_employees';
         $params = $request->get_params();
 
         $employee_data = array(
@@ -258,7 +291,7 @@ class EMS_RestAPI
         }
 
         // Invalidate cache
-        wp_cache_delete('ems_all_employees');
+        wp_cache_delete('emplmasy_all_employees');
 
         $employee_data['id'] = $wpdb->insert_id;
         return new WP_REST_Response($employee_data, 201);
@@ -267,7 +300,7 @@ class EMS_RestAPI
     public function delete_employee($request)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
+        $table_name = $wpdb->prefix . 'emplmasy_employees';
 
         $id = (int) $request['id'];
 
@@ -283,7 +316,7 @@ class EMS_RestAPI
     public function update_employee($request)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
+        $table_name = $wpdb->prefix . 'emplmasy_employees';
         $id = (int) $request['id'];
         $params = $request->get_json_params();
 
@@ -324,7 +357,7 @@ class EMS_RestAPI
         }
 
         // Invalidate cache
-        wp_cache_delete('ems_all_employees');
+        wp_cache_delete('emplmasy_all_employees');
 
         return new WP_REST_Response(
             array(
@@ -388,7 +421,7 @@ class EMS_RestAPI
         );
 
         $result = $wpdb->insert(
-            $wpdb->prefix . 'ems_employee_sales',
+            $wpdb->prefix . 'emplmasy_employee_sales',
             $data,
             array('%d', '%s', '%f', '%s')
         );
@@ -402,8 +435,8 @@ class EMS_RestAPI
         }
 
         // Invalidate relevant caches
-        wp_cache_delete('ems_employee_stats_' . $user_id);
-        wp_cache_delete('ems_all_sales');
+        wp_cache_delete('emplmasy_employee_stats_' . $user_id);
+        wp_cache_delete('emplmasy_all_sales');
 
         return rest_ensure_response([
             'success' => true,
@@ -418,38 +451,38 @@ class EMS_RestAPI
     public function get_employee_stats($request)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employees';
+        $table_name = $wpdb->prefix . 'emplmasy_employees';
 
         // Remove unnecessary prepare and fix interpolated variables
         $stats = array(
             'totalEmployees' => $wpdb->get_var(
-                "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees"
+                "SELECT COUNT(*) FROM {$wpdb->prefix}emplmasy_employees"
             ),
             'activeEmployees' => $wpdb->get_var(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}emplmasy_employees WHERE status = %s",
                     'active'
                 )
             ),
             'inactiveEmployees' => $wpdb->get_var(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}emplmasy_employees WHERE status = %s",
                     'inactive'
                 )
             ),
             'blockedEmployees' => $wpdb->get_var(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employees WHERE status = %s",
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}emplmasy_employees WHERE status = %s",
                     'blocked'
                 )
             )
         );
 
         // Get sales data
-        $sales_table = $wpdb->prefix . 'ems_employee_sales';
+        $sales_table = $wpdb->prefix . 'emplmasy_employee_sales';
         $sales_data = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d ORDER BY date DESC",
+                "SELECT * FROM {$wpdb->prefix}emplmasy_employee_sales WHERE user_id = %d ORDER BY date DESC",
                 get_current_user_id()
             )
         );
@@ -459,7 +492,7 @@ class EMS_RestAPI
         $monthly_stats = $wpdb->get_row(
             $wpdb->prepare(
                 "SELECT COUNT(*) as count, SUM(amount) as total 
-                FROM {$wpdb->prefix}ems_employee_sales 
+                FROM {$wpdb->prefix}emplmasy_employee_sales 
                 WHERE user_id = %d 
                 AND DATE_FORMAT(date, '%%Y-%%m') = %s",
                 get_current_user_id(),
@@ -474,11 +507,11 @@ class EMS_RestAPI
     public function get_monthly_sales()
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ems_employee_sales';
+        $table_name = $wpdb->prefix . 'emplmasy_employee_sales';
 
         $results = $wpdb->get_results(
             "SELECT DATE_FORMAT(date, '%Y-%m') as month, SUM(amount) as total
-             FROM {$wpdb->prefix}ems_employee_sales
+             FROM {$wpdb->prefix}emplmasy_employee_sales
              WHERE date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
              GROUP BY month
              ORDER BY month ASC"
@@ -508,7 +541,7 @@ class EMS_RestAPI
     public function get_all_sales()
     {
         // Try to get from cache first
-        $sales = wp_cache_get('ems_all_sales');
+        $sales = wp_cache_get('emplmasy_all_sales');
 
         if (false === $sales) {
             global $wpdb;
@@ -516,13 +549,13 @@ class EMS_RestAPI
             // Remove unnecessary prepare since there are no variables to escape
             $sales = $wpdb->get_results(
                 "SELECT s.*, u.display_name as employee_name 
-                FROM {$wpdb->prefix}ems_employee_sales s 
+                FROM {$wpdb->prefix}emplmasy_employee_sales s 
                 LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID 
                 ORDER BY s.date DESC"
             );
 
             // Cache for 5 minutes
-            wp_cache_set('ems_all_sales', $sales, '', 300);
+            wp_cache_set('emplmasy_all_sales', $sales, '', 300);
         }
 
         return rest_ensure_response($sales);
@@ -535,7 +568,7 @@ class EMS_RestAPI
 
         $sales = $wpdb->get_results($wpdb->prepare(
             "SELECT date, amount, description 
-            FROM {$wpdb->prefix}ems_employee_sales 
+            FROM {$wpdb->prefix}emplmasy_employee_sales 
             WHERE user_id = %d 
             ORDER BY date DESC",
             $employee_id
@@ -584,7 +617,7 @@ class EMS_RestAPI
         }
 
         $employee = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}ems_employees WHERE user_id = %d",
+            "SELECT * FROM {$wpdb->prefix}emplmasy_employees WHERE user_id = %d",
             $user_id
         ));
 
@@ -617,12 +650,12 @@ class EMS_RestAPI
     {
         global $wpdb;
         $current_user_id = get_current_user_id();
-        $sales_table = $wpdb->prefix . 'ems_employee_sales';
+        $sales_table = $wpdb->prefix . 'emplmasy_employee_sales';
 
         // Fix interpolated variables in queries
         $sales = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}ems_employee_sales WHERE user_id = %d ORDER BY date DESC",
+                "SELECT * FROM {$wpdb->prefix}emplmasy_employee_sales WHERE user_id = %d ORDER BY date DESC",
                 $current_user_id
             )
         );
@@ -636,7 +669,7 @@ class EMS_RestAPI
         // Fix monthly sales query
         $monthly_sales = $wpdb->get_var(
             $wpdb->prepare(
-                "SELECT COUNT(*) FROM {$wpdb->prefix}ems_employee_sales 
+                "SELECT COUNT(*) FROM {$wpdb->prefix}emplmasy_employee_sales 
                 WHERE user_id = %d 
                 AND YEAR(date) = %s 
                 AND MONTH(date) = %s",
@@ -649,7 +682,7 @@ class EMS_RestAPI
         // Fix current and previous month sales queries
         $current_month_sales = $wpdb->get_var(
             $wpdb->prepare(
-                "SELECT SUM(amount) FROM {$wpdb->prefix}ems_employee_sales 
+                "SELECT SUM(amount) FROM {$wpdb->prefix}emplmasy_employee_sales 
                 WHERE user_id = %d 
                 AND YEAR(date) = %s 
                 AND MONTH(date) = %s",
@@ -661,7 +694,7 @@ class EMS_RestAPI
 
         $previous_month_sales = $wpdb->get_var(
             $wpdb->prepare(
-                "SELECT SUM(amount) FROM {$wpdb->prefix}ems_employee_sales 
+                "SELECT SUM(amount) FROM {$wpdb->prefix}emplmasy_employee_sales 
                 WHERE user_id = %d 
                 AND YEAR(date) = %s 
                 AND MONTH(date) = %s",
@@ -702,7 +735,7 @@ class EMS_RestAPI
         $users = $wpdb->get_results(
             "SELECT u.ID, u.display_name 
             FROM {$wpdb->users} u 
-            LEFT JOIN {$wpdb->prefix}ems_employees e ON u.ID = e.user_id 
+            LEFT JOIN {$wpdb->prefix}emplmasy_employees e ON u.ID = e.user_id 
             WHERE e.id IS NULL"
         );
 
@@ -728,7 +761,7 @@ class EMS_RestAPI
         // Fetch employee details along with associated user data
         $employee = $wpdb->get_row($wpdb->prepare(
             "SELECT e.*, u.display_name AS name, u.user_email AS email
-            FROM {$wpdb->prefix}ems_employees e
+            FROM {$wpdb->prefix}emplmasy_employees e
             LEFT JOIN {$wpdb->users} u ON e.user_id = u.ID
             WHERE e.id = %d",
             $employee_id

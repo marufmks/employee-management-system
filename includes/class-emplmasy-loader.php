@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * EMS_Loader class
+ * EMPLMASY_Loader class
  */
-class EMS_Loader {
+class EMPLMASY_Loader {
 
     /**
      * Class instance
@@ -24,7 +24,7 @@ class EMS_Loader {
     /**
      * REST API instance
      *
-     * @var EMS_RestAPI
+     * @var EMPLMASY_RestAPI
      */
     private $rest_api;
 
@@ -52,17 +52,14 @@ class EMS_Loader {
      * Load dependencies
      */
     private function load_dependencies() {
-        require_once EMS_PLUGIN_DIR . 'includes/class-ems-restapi.php';
-        $this->rest_api = EMS_RestAPI::instance();
+        require_once EMPLMASY_PLUGIN_DIR . 'includes/class-emplmasy-restapi.php';
+        $this->rest_api = EMPLMASY_RestAPI::instance();
     }
 
     /**
      * Initialize hooks
      */
     private function init_hooks() {
-        // Text domain
-        add_action( 'init', [ $this, 'load_textdomain' ] );
-
         // Admin hooks
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
@@ -70,17 +67,6 @@ class EMS_Loader {
         // Frontend hooks
         add_shortcode( 'employee_dashboard', [ $this, 'render_employee_dashboard' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_frontend_assets' ] );
-    }
-
-    /**
-     * Load text domain
-     */
-    public function load_textdomain() {
-        load_plugin_textdomain(
-            'employee-management-system', 
-            false, 
-            dirname( __FILE__ ) . '/languages/' 
-        );
     }
 
     /**
@@ -102,7 +88,7 @@ class EMS_Loader {
      * Render admin page
      */
     public function render_admin_page() {
-        echo '<div id="ems-admin-root" class="wrap"></div>';
+        echo '<div id="emplmasy-admin-root" class="wrap"></div>';
     }
 
     /**
@@ -131,11 +117,11 @@ class EMS_Loader {
      * Common asset enqueuing
      */
     private function enqueue_assets( $context = 'admin' ) {
-        $asset_file = include EMS_PLUGIN_DIR . 'build/index.asset.php';
+        $asset_file = include EMPLMASY_PLUGIN_DIR . 'build/index.asset.php';
         
         wp_enqueue_script(
-            "ems-{$context}",
-            EMS_PLUGIN_URL . 'build/index.js',
+            "emplmasy-{$context}",
+            EMPLMASY_PLUGIN_URL . 'build/index.js',
             $asset_file['dependencies'],
             $asset_file['version'],
             true
@@ -143,19 +129,19 @@ class EMS_Loader {
 
         wp_enqueue_style( 'wp-components' );
         wp_enqueue_style(
-            "ems-{$context}-style",
-            EMS_PLUGIN_URL . 'build/index.css',
+            "emplmasy-{$context}-style",
+            EMPLMASY_PLUGIN_URL . 'build/index.css',
             [ 'wp-components' ],
             $asset_file['version']
         );
 
-        wp_localize_script( "ems-{$context}", 'emsData', [
-            'restUrl' => esc_url_raw( rest_url( 'ems/v1' ) ),
+        wp_localize_script( "emplmasy-{$context}", 'emplmasyData', [
+            'restUrl' => esc_url_raw( rest_url( 'emplmasy/v1' ) ),
             'nonce' => wp_create_nonce( 'wp_rest' ),
             'userId' => get_current_user_id(),
             'isAdmin' => $context === 'admin',
             'userName' => $context === 'frontend' ? wp_get_current_user()->display_name : '',
-            'pluginUrl' => EMS_PLUGIN_URL
+            'pluginUrl' => EMPLMASY_PLUGIN_URL
         ]);
     }
 
@@ -165,13 +151,13 @@ class EMS_Loader {
     public function render_employee_dashboard() {
         if ( ! is_user_logged_in() ) {
             return sprintf(
-                '<div class="ems-frontend ems-dashboard-wrapper"><div class="notice notice-error"><p>%s <a href="%s">%s</a></p></div></div>',
+                '<div class="emplmasy-frontend emplmasy-dashboard-wrapper"><div class="notice notice-error"><p>%s <a href="%s">%s</a></p></div></div>',
                 __( 'Please log in to view the dashboard', 'employee-management-system' ),
                 esc_url( wp_login_url( get_permalink() ) ),
                 __( 'Log in', 'employee-management-system' )
             );
         }
-        return '<div id="ems-employee-root"></div>';
+        return '<div id="emplmasy-employee-root"></div>';
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-class EMS_Settings {
+class EMPLMASY_Settings {
     private static $instance = null;
 
     public static function instance() {
@@ -10,7 +10,7 @@ class EMS_Settings {
     }
 
     public function get_setting($key, $default = '') {
-        $option_name = 'ems_' . preg_replace('/([A-Z])/', '_$1', $key);
+        $option_name = 'emplmasy_' . preg_replace('/([A-Z])/', '_$1', $key);
         $option_name = strtolower($option_name);
         return get_option($option_name, $default);
     }

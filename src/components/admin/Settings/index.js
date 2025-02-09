@@ -39,7 +39,7 @@ const Settings = () => {
     const fetchSettings = async () => {
         try {
             const response = await apiFetch({
-                path: 'ems/v1/settings',
+                path: 'emplmasy/v1/settings',
                 method: 'GET'
             });
             setSettings(response);
@@ -74,7 +74,7 @@ const Settings = () => {
         setIsSaving(true);
         try {
             const response = await apiFetch({
-                path: 'ems/v1/settings',
+                path: 'emplmasy/v1/settings',
                 method: 'POST',
                 data: settings
             });
@@ -95,22 +95,22 @@ const Settings = () => {
     }
 
     return (
-        <div className="ems-admin-page ems-settings-page">
+        <div className="emplmasy-admin-page emplmasy-settings-page">
             
 
             {showNotice && (
                 <Notice 
                     status={noticeType}
                     isDismissible={false}
-                    className="ems-notice"
+                    className="emplmasy-notice"
                 >
                     {noticeMessage}
                 </Notice>
             )}
 
-            <div className="ems-settings-grid">
+            <div className="emplmasy-settings-grid">
                 {/* General Settings */}
-                <Card className="ems-card">
+                <Card className="emplmasy-card">
                     <Panel>
                         <PanelBody title={__('General Settings', 'employee-management-system')} initialOpen={true}>
                             <SelectControl
@@ -148,7 +148,7 @@ const Settings = () => {
                 </Card>
 
                 {/* System Settings */}
-                <Card className="ems-card">
+                <Card className="emplmasy-card">
                     <Panel>
                         <PanelBody title={__('System Settings', 'employee-management-system')} initialOpen={true}>
                             <ToggleControl
@@ -163,7 +163,7 @@ const Settings = () => {
                 </Card>
             </div>
 
-            <div className="ems-settings-actions">
+            <div className="emplmasy-settings-actions">
                 <Button
                     isPrimary
                     isBusy={isSaving}

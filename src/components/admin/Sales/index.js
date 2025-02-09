@@ -17,7 +17,7 @@ const Sales = () => {
     const fetchSales = async () => {
         try {
             const response = await apiFetch({
-                path: 'ems/v1/sales',
+                path: 'emplmasy/v1/sales',
                 method: 'GET'
             });
             setSales(response);
@@ -32,7 +32,7 @@ const Sales = () => {
     const handleDownloadCSV = async (employeeId) => {
         try {
             const response = await apiFetch({
-                path: `ems/v1/sales/download/${employeeId}`,
+                path: `emplmasy/v1/sales/download/${employeeId}`,
                 method: 'GET'
             });
             
@@ -99,8 +99,8 @@ const Sales = () => {
 
     if (isLoading) {
         return (
-            <div className="ems-loading-wrapper">
-                <div className="ems-loading">
+            <div className="emplmasy-loading-wrapper">
+                <div className="emplmasy-loading">
                     {__('Loading...', 'employee-management-system')}
                 </div>
             </div>
@@ -109,7 +109,7 @@ const Sales = () => {
 
     if (error) {
         return (
-            <div className="ems-error-wrapper">
+            <div className="emplmasy-error-wrapper">
                 <Notice status="error" isDismissible={false}>
                     {__('Error loading sales:', 'employee-management-system')} {error}
                 </Notice>
@@ -130,15 +130,15 @@ const Sales = () => {
     }, {});
 
     return (
-        <div className="ems-admin-page ems-sales-page">
-            <div className="ems-admin-header">
-                <div className="ems-admin-header-actions">
-                    <div className="ems-shortcode-wrapper">
-                        <span className="ems-shortcode-label">
+        <div className="emplmasy-admin-page emplmasy-sales-page">
+            <div className="emplmasy-admin-header">
+                <div className="emplmasy-admin-header-actions">
+                    <div className="emplmasy-shortcode-wrapper">
+                        <span className="emplmasy-shortcode-label">
                             {__('Shortcode:', 'employee-management-system')}
                         </span>
                         <div 
-                            className="ems-shortcode-container" 
+                            className="emplmasy-shortcode-container" 
                             onClick={handleCopyShortcode}
                             onKeyDown={(e) => e.key === 'Enter' && handleCopyShortcode()}
                             role="button"
@@ -154,23 +154,23 @@ const Sales = () => {
                 </div>
             </div>
             
-            <div className="ems-sales-grid">
+            <div className="emplmasy-sales-grid">
                 {Object.entries(salesByEmployee).map(([employeeId, data]) => (
-                    <Card key={employeeId} className="ems-card employee-sales-card">
+                    <Card key={employeeId} className="emplmasy-card employee-sales-card">
                         <CardHeader className="employee-sales-card-header">
                             <h2>{data.employee_name}</h2>
                             <Button
                                 variant="primary"
                                 onClick={() => handleDownloadCSV(employeeId)}
-                                className="ems-button download-csv-button"
+                                className="emplmasy-button download-csv-button"
                                 icon="download"
                             >
                                 {__('Download CSV', 'employee-management-system')}
                             </Button>
                         </CardHeader>
                         <CardBody>
-                            <div className="ems-table-responsive">
-                                <table className="ems-table">
+                            <div className="emplmasy-table-responsive">
+                                <table className="emplmasy-table">
                                     <thead>
                                         <tr>
                                             <th>{__('Date', 'employee-management-system')}</th>

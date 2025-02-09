@@ -3,7 +3,7 @@ Contributors: marufmks
 Donate link: https://github.com/marufmks
 Tags: employee management, sales tracking, employee dashboard, staff management, HR management
 Requires at least: 6.0
-Tested up to: 6.7.1
+Tested up to: 6.7
 Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
