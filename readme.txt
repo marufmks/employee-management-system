@@ -4,7 +4,7 @@ Donate link: https://github.com/marufmks
 Tags: employee management, sales tracking, employee dashboard, staff management, HR management
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -90,6 +90,11 @@ Use the shortcode [employee_dashboard] on any page where you want to display the
 
 == Changelog ==
 
+= 1.0.3 =
+* Fixed prefix issue
+* Updated version number
+* Fixed rest api permission issue
+
 = 1.0.2 =
 * Fixed CSV export security issues
 * Improved file download handling
@@ -135,6 +140,10 @@ The plugin does not:
 * Share data with third parties
 * Track users across websites
 * Store sensitive payment information
+
+Source Code:
+The source code for minified JavaScript and CSS files is available in the GitHub repository:
+https://github.com/marufmks/employee-management-system
 
 == Support ==
 
